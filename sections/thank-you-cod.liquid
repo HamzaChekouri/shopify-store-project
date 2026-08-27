@@ -1,0 +1,692 @@
+{%- comment -%}
+  Bayel Moss / DRSAMI — Thank You (COD) page
+  Displayed after EasySell submits an order. Goal: increase confirmation call
+  pickup rate + delivery acceptance rate.
+  Scoped under #ty-cod to avoid theme bleed.
+{%- endcomment -%}
+
+{%- liquid
+  assign wa_number = section.settings.whatsapp_number | default: '971542585701'
+  assign hero_h = section.settings.hero_headline | default: 'تهانينا! طلبك محجوز باسمك'
+  assign hero_s = section.settings.hero_sub
+  assign call_window = section.settings.call_window | default: 'خلال أقل من ١٠ دقائق'
+-%}
+
+<div id="ty-cod" class="ty-lp" dir="rtl" lang="ar" data-section-id="{{ section.id }}">
+
+  {%- comment -%} ============ HERO ============ {%- endcomment -%}
+  <section class="ty-hero">
+    <div class="ty-hero__inner">
+      <div class="ty-hero__check" aria-hidden="true">
+        <svg viewBox="0 0 60 60" width="72" height="72" role="img" aria-label="تم">
+          <circle cx="30" cy="30" r="28" fill="#2f6b3f"/>
+          <path d="M18 31 L27 40 L44 22" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h1 class="ty-hero__title">{{ hero_h }}</h1>
+      <p class="ty-hero__lead">{{ hero_s }}</p>
+      <div class="ty-hero__badges">
+        <span class="ty-badge">✓ من آخر الكميات المتوفرة</span>
+        <span class="ty-badge">💵 الدفع عند الاستلام</span>
+        <span class="ty-badge">🚚 شحن مجاني</span>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ============ CRITICAL — phone call notice (confirmation rate) ============ {%- endcomment -%}
+  <section class="ty-section">
+    <div class="ty-alert" role="note">
+      <span class="ty-alert__ic" aria-hidden="true">📞</span>
+      <div class="ty-alert__body">
+        <h2>مهم جداً: خلّ جوالك قريب منك</h2>
+        <p class="ty-alert__lead">
+          فريقنا بيتواصل معك <strong>{{ call_window }}</strong> لتأكيد الاسم، الإمارة، والعنوان قبل التجهيز والشحن.
+        </p>
+        <ul class="ty-alert__list">
+          <li><span class="ty-tick">✓</span> رد على المكالمة حتى نقدر نأكد العنوان بأسرع وقت.</li>
+          <li><span class="ty-tick">✓</span> الاتصال بيكون من رقم إماراتي — احفظه أو رد عليه حتى لو ما تعرفه.</li>
+          <li><span class="ty-x">✕</span> عدم الرد قد يؤخر شحن طلبك أو يلغيه.</li>
+        </ul>
+        <p class="ty-alert__hint">
+          💡 التأكيد بيكون <strong>بالاتصال الهاتفي</strong> — مو واتساب. تأكد إن رقمك يستقبل المكالمات.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ============ 3 STEPS TIMELINE ============ {%- endcomment -%}
+  <section class="ty-section">
+    <div class="ty-head">
+      <span class="ty-kicker">خطوات وصول طلبك</span>
+      <h2>وش الخطوات القادمة؟</h2>
+    </div>
+    <ol class="ty-steps">
+      <li class="ty-step">
+        <span class="ty-step__num">١</span>
+        <div>
+          <h3>تأكيد الطلب</h3>
+          <p>نتصل بك خلال دقائق لتأكيد الاسم والعنوان والإمارة.</p>
+        </div>
+      </li>
+      <li class="ty-step">
+        <span class="ty-step__num">٢</span>
+        <div>
+          <h3>تجهيز الشحنة</h3>
+          <p>بعد التأكيد، نجهّز طلبك بتغليف سرّي ونسلّمه لشركة التوصيل.</p>
+        </div>
+      </li>
+      <li class="ty-step">
+        <span class="ty-step__num">٣</span>
+        <div>
+          <h3>الدفع عند الاستلام</h3>
+          <p>يوصلك خلال ١-٣ أيام عمل. تدفع كاش للمندوب لما يوصل باب بيتك.</p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  {%- comment -%} ============ DELIVERY REMINDER (delivery rate) ============ {%- endcomment -%}
+  <section class="ty-section">
+    <div class="ty-head">
+      <span class="ty-kicker">قبل وصول طلبك ✨</span>
+      <h2>تذكيرات مهمة يوم التوصيل</h2>
+    </div>
+    <ul class="ty-tips">
+      <li>
+        <span class="ty-tips__ic" aria-hidden="true">🚚</span>
+        <div>
+          <strong>مندوب التوصيل بيتصل قبل الوصول</strong>
+          <span>خلّ جوالك قريب في يوم التوصيل — المندوب بيتصل قبل ما يوصل بربع ساعة تقريباً.</span>
+        </div>
+      </li>
+      <li>
+        <span class="ty-tips__ic" aria-hidden="true">💵</span>
+        <div>
+          <strong>جهّز مبلغ الطلب كاش</strong>
+          <span>يفضّل تجهيز المبلغ بالضبط أو قريب منه، حتى يخلص التسليم بسرعة.</span>
+        </div>
+      </li>
+      <li>
+        <span class="ty-tips__ic" aria-hidden="true">📦</span>
+        <div>
+          <strong>افحص المنتج قبل الدفع</strong>
+          <span>تقدر تفتح الطرد وتتأكد من المنتج قبل ما تدفع — حقّك محفوظ.</span>
+        </div>
+      </li>
+      <li>
+        <span class="ty-tips__ic" aria-hidden="true">🔒</span>
+        <div>
+          <strong>ضمان استرجاع ٣٠ يوم</strong>
+          <span>ما عجبتك النتيجة؟ تواصل معنا وننسّق لك الاسترجاع + مبلغك كامل.</span>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  {%- comment -%} ============ PRODUCT USAGE TIP ============ {%- endcomment -%}
+  <section class="ty-section">
+    <div class="ty-head">
+      <span class="ty-kicker">نصائح الاستخدام</span>
+      <h2>كيف تستفيد من بابل موس من أول مرة؟</h2>
+    </div>
+    <div class="ty-usage">
+      <div class="ty-usage__card">
+        <span class="ty-usage__ic" aria-hidden="true">🧴</span>
+        <strong>رجّ العلبة قبل الاستخدام</strong>
+        <span>حتى تتوزّع الرغوة بشكل متساوٍ.</span>
+      </div>
+      <div class="ty-usage__card">
+        <span class="ty-usage__ic" aria-hidden="true">🕒</span>
+        <strong>اتركها ٥ إلى ١٠ دقائق</strong>
+        <span>حسب درجة اللون اللي تبيها — كل ما زاد الوقت، غمق اللون.</span>
+      </div>
+      <div class="ty-usage__card">
+        <span class="ty-usage__ic" aria-hidden="true">💧</span>
+        <strong>اشطف بماء فاتر</strong>
+        <span>بدون شامبو مباشرة — الشامبو بعد ٢٤ ساعة لثبات أفضل للون.</span>
+      </div>
+      <div class="ty-usage__card">
+        <span class="ty-usage__ic" aria-hidden="true">🔁</span>
+        <strong>مرة إلى مرتين في الأسبوع</strong>
+        <span>للحفاظ على اللون وتغطية الشيب الجديد.</span>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ============ TRUST BADGES ============ {%- endcomment -%}
+  <section class="ty-section">
+    <div class="ty-trust">
+      <div class="ty-trust__item">
+        <span aria-hidden="true">✓</span>
+        <strong>منتج معتمد</strong>
+        <span>مطابق لمعايير الجودة</span>
+      </div>
+      <div class="ty-trust__item">
+        <span aria-hidden="true">☪️</span>
+        <strong>حلال</strong>
+        <span>مكونات عشبية ١٠٠٪</span>
+      </div>
+      <div class="ty-trust__item">
+        <span aria-hidden="true">🛡️</span>
+        <strong>ضمان ٣٠ يوم</strong>
+        <span>استرجاع كامل بدون أسئلة</span>
+      </div>
+      <div class="ty-trust__item">
+        <span aria-hidden="true">🇦🇪</span>
+        <strong>شحن داخل الإمارات</strong>
+        <span>١-٣ أيام عمل</span>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ============ REASSURING REVIEWS ============ {%- endcomment -%}
+  <section class="ty-section">
+    <div class="ty-head">
+      <span class="ty-kicker">تجارب حقيقية</span>
+      <h2>عملاء استلموا طلبهم قبلك</h2>
+    </div>
+    <div class="ty-reviews">
+      <article class="ty-review">
+        <div class="ty-review__stars">★★★★★</div>
+        <p>"الطلب وصلني بعد يومين من الاتصال، التغليف مرتب والمندوب محترم. اللون طلع طبيعي من أول استخدام."</p>
+        <footer><strong>عبدالله المنصوري</strong> · دبي</footer>
+      </article>
+      <article class="ty-review">
+        <div class="ty-review__stars">★★★★★</div>
+        <p>"التواصل كان سريع وواضح. اتصلوا يأكدون الطلب وشرحوا لي طريقة الاستخدام. تجربة راقية."</p>
+        <footer><strong>خالد العتيبي</strong> · أبوظبي</footer>
+      </article>
+      <article class="ty-review">
+        <div class="ty-review__stars">★★★★★</div>
+        <p>"دفعت كاش عند الاستلام كما وعدوا. المنتج ممتاز واللون ثابت. رجعت طلبت باقة تانية."</p>
+        <footer><strong>فيصل الشمري</strong> · الشارقة</footer>
+      </article>
+    </div>
+  </section>
+
+  {%- comment -%} ============ SUPPORT / WHATSAPP ============ {%- endcomment -%}
+  <section class="ty-section ty-support">
+    <div class="ty-support__inner">
+      <span class="ty-support__ic" aria-hidden="true">💬</span>
+      <h2>عندك سؤال بخصوص طلبك؟</h2>
+      <p>إذا احتجت أي مساعدة أو عندك استفسار عن الطلب، طريقة الاستخدام، أو موعد التواصل، تقدر تتواصل معنا مباشرة عبر واتساب.</p>
+      <a
+        class="ty-support__cta"
+        href="https://wa.me/{{ wa_number }}?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D8%8C%20%D8%B9%D9%86%D8%AF%D9%8A%20%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%A8%D8%AE%D8%B5%D9%88%D8%B5%20%D8%B7%D9%84%D8%A8%D9%8A"
+        target="_blank"
+        rel="noopener"
+      >
+        <svg viewBox="0 0 32 32" width="22" height="22" aria-hidden="true" fill="currentColor">
+          <path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.386.702 4.609 1.905 6.478L4 29l7.702-1.865A11.94 11.94 0 0 0 16 27c6.628 0 12-5.373 12-12S22.628 3 16.001 3z"/>
+        </svg>
+        <span>تواصل معنا عبر واتساب</span>
+      </a>
+      <span class="ty-support__note">خدمة العملاء متاحة يومياً من ٩ صباحاً إلى ٩ مساءً</span>
+    </div>
+  </section>
+
+  {%- comment -%} ============ FOOTER LINKS ============ {%- endcomment -%}
+  <footer class="ty-foot">
+    <p class="ty-foot__msg">شكراً لثقتك في <strong>بابل موس</strong> — نلتقي قريباً مع نتائج طبيعية 👌</p>
+    <nav class="ty-foot__nav" aria-label="روابط الصفحة">
+      <a href="/policies/refund-policy">سياسة الاسترجاع</a>
+      <a href="/policies/privacy-policy">الخصوصية</a>
+      <a href="/policies/shipping-policy">الشحن</a>
+      <a href="/pages/contact">تواصل معنا</a>
+    </nav>
+    <p class="ty-foot__copy">© {{ 'now' | date: '%Y' }} DRSAMI — كل الحقوق محفوظة</p>
+  </footer>
+
+  {%- comment -%} ============ FLOATING WHATSAPP ============ {%- endcomment -%}
+  <a
+    class="ty-wa"
+    href="https://wa.me/{{ wa_number }}?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D8%8C%20%D8%B9%D9%86%D8%AF%D9%8A%20%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%A8%D8%AE%D8%B5%D9%88%D8%B5%20%D8%B7%D9%84%D8%A8%D9%8A"
+    target="_blank"
+    rel="noopener"
+    aria-label="تواصل عبر واتساب"
+  >
+    <svg viewBox="0 0 32 32" width="26" height="26" aria-hidden="true" fill="currentColor">
+      <path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.386.702 4.609 1.905 6.478L4 29l7.702-1.865A11.94 11.94 0 0 0 16 27c6.628 0 12-5.373 12-12S22.628 3 16.001 3zm0 21.6a9.55 9.55 0 0 1-4.878-1.335l-.35-.208-4.573 1.108 1.135-4.455-.228-.365A9.542 9.542 0 0 1 6.4 15c0-5.293 4.307-9.6 9.6-9.6 5.293 0 9.6 4.307 9.6 9.6s-4.307 9.6-9.6 9.6z"/>
+    </svg>
+  </a>
+</div>
+
+{% stylesheet %}
+  /* Hide theme header/announcement on this page for a clean focus */
+  body.template-page-thank-you-cod #header-component,
+  body.template-page-thank-you-cod header.header,
+  body.template-page-thank-you-cod .shopify-section-header,
+  body.template-page-thank-you-cod .shopify-section-group-header-group,
+  body.template-page-thank-you-cod .header-wrapper,
+  body.template-page-thank-you-cod .announcement-bar,
+  body.template-page-thank-you-cod .utility-bar,
+  body.template-page-thank-you-cod .shopify-section-footer,
+  body.template-page-thank-you-cod footer.footer {
+    display: none !important;
+  }
+
+  #ty-cod {
+    --ty-bg: #f5efe4;
+    --ty-panel: #ffffff;
+    --ty-green-dark: #1e4a2b;
+    --ty-green: #2f6b3f;
+    --ty-green-soft: #d9e8dd;
+    --ty-gold: #b48a3a;
+    --ty-text: #1f2b21;
+    --ty-muted: #5c6b5e;
+    --ty-border: rgba(31, 43, 33, 0.10);
+    --ty-shadow: 0 12px 30px rgba(20, 40, 25, 0.08);
+    --ty-shadow-lg: 0 20px 50px rgba(20, 40, 25, 0.12);
+    --ty-radius: 18px;
+    --ty-radius-sm: 12px;
+
+    background: var(--ty-bg);
+    color: var(--ty-text);
+    font-family: 'DIN Next LT Arabic', 'Almarai', 'Cairo', 'Tajawal', system-ui, -apple-system, Segoe UI, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    direction: rtl;
+    text-align: right;
+    overflow-x: clip;
+    min-height: 100vh;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  #ty-cod *, #ty-cod *::before, #ty-cod *::after { box-sizing: border-box; }
+  #ty-cod img, #ty-cod svg { max-width: 100%; display: block; }
+  #ty-cod h1, #ty-cod h2, #ty-cod h3, #ty-cod p, #ty-cod ul, #ty-cod ol { margin: 0; padding: 0; }
+  #ty-cod ul, #ty-cod ol { list-style: none; }
+  #ty-cod a { color: inherit; text-decoration: none; }
+
+  /* ============ HERO ============ */
+  .ty-hero {
+    background: linear-gradient(180deg, var(--ty-green-soft) 0%, var(--ty-bg) 100%);
+    padding: 2.5rem 1rem 1.5rem;
+    text-align: center;
+  }
+  .ty-hero__inner { max-width: 640px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 0.9rem; }
+  .ty-hero__check { animation: tyPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  @keyframes tyPop { 0% { transform: scale(0.4); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+  .ty-hero__title {
+    font-size: clamp(1.4rem, 2.4vw + 1rem, 2rem);
+    font-weight: 800;
+    color: var(--ty-green-dark);
+    line-height: 1.3;
+  }
+  .ty-hero__lead { color: var(--ty-muted); font-size: 0.98rem; max-width: 560px; }
+  .ty-hero__badges { display: flex; flex-wrap: wrap; gap: 0.4rem; justify-content: center; margin-top: 0.5rem; }
+  .ty-badge {
+    background: #fff;
+    border: 1px solid var(--ty-border);
+    padding: 0.4rem 0.85rem;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--ty-green-dark);
+    box-shadow: 0 2px 8px rgba(20,40,25,0.05);
+  }
+
+  /* ============ SECTIONS ============ */
+  .ty-section { padding: 1.5rem 1rem; max-width: 900px; margin: 0 auto; }
+  .ty-head { text-align: center; max-width: 640px; margin: 0 auto 1.25rem; display: flex; flex-direction: column; gap: 0.4rem; }
+  .ty-kicker {
+    display: inline-block;
+    background: var(--ty-green-soft);
+    color: var(--ty-green-dark);
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 0.3rem 0.85rem;
+    border-radius: 999px;
+    letter-spacing: 0.02em;
+    margin: 0 auto;
+  }
+  .ty-head h2 { font-size: clamp(1.15rem, 1.5vw + 0.85rem, 1.5rem); font-weight: 800; color: var(--ty-green-dark); line-height: 1.35; }
+
+  /* ============ CRITICAL ALERT ============ */
+  .ty-alert {
+    background: #fff;
+    border: 2px solid var(--ty-gold);
+    border-radius: var(--ty-radius);
+    padding: 1.25rem 1.1rem;
+    display: flex;
+    gap: 0.9rem;
+    align-items: flex-start;
+    box-shadow: var(--ty-shadow-lg);
+    position: relative;
+    overflow: hidden;
+  }
+  .ty-alert::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(180,138,58,0.05), transparent 60%);
+    pointer-events: none;
+  }
+  .ty-alert__ic {
+    flex-shrink: 0;
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, var(--ty-gold), #d4a54e);
+    border-radius: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+    box-shadow: 0 6px 14px rgba(180,138,58,0.25);
+    animation: tyRing 1.6s ease-in-out infinite;
+  }
+  @keyframes tyRing {
+    0%, 100% { transform: rotate(0); }
+    10%, 30% { transform: rotate(-8deg); }
+    20%, 40% { transform: rotate(8deg); }
+    50% { transform: rotate(0); }
+  }
+  .ty-alert__body { flex: 1; position: relative; }
+  .ty-alert__body h2 { font-size: 1.15rem; font-weight: 800; color: var(--ty-green-dark); margin-bottom: 0.5rem; line-height: 1.35; }
+  .ty-alert__lead { font-size: 0.95rem; color: var(--ty-text); margin-bottom: 0.75rem; line-height: 1.65; }
+  .ty-alert__lead strong { color: var(--ty-green-dark); }
+  .ty-alert__list { display: flex; flex-direction: column; gap: 0.45rem; margin-bottom: 0.85rem; }
+  .ty-alert__list li { font-size: 0.92rem; color: var(--ty-text); line-height: 1.55; display: flex; gap: 0.5rem; align-items: flex-start; }
+  .ty-tick { color: var(--ty-green); font-weight: 900; flex-shrink: 0; }
+  .ty-x { color: #c74848; font-weight: 900; flex-shrink: 0; }
+  .ty-alert__hint {
+    background: #faf6ee;
+    border-radius: var(--ty-radius-sm);
+    padding: 0.7rem 0.85rem;
+    font-size: 0.88rem;
+    color: var(--ty-text);
+    line-height: 1.55;
+    border-right: 3px solid var(--ty-gold);
+  }
+
+  /* ============ STEPS ============ */
+  .ty-steps {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .ty-step {
+    background: #fff;
+    border-radius: var(--ty-radius);
+    padding: 1rem 1.1rem;
+    box-shadow: var(--ty-shadow);
+    border: 1px solid var(--ty-border);
+    display: flex;
+    gap: 0.9rem;
+    align-items: flex-start;
+  }
+  .ty-step__num {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--ty-green-dark), var(--ty-green));
+    color: #fff;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.05rem;
+    font-weight: 800;
+  }
+  .ty-step h3 { font-size: 1.02rem; font-weight: 800; color: var(--ty-green-dark); margin-bottom: 0.25rem; }
+  .ty-step p { font-size: 0.92rem; color: var(--ty-muted); line-height: 1.6; }
+
+  /* ============ TIPS ============ */
+  .ty-tips {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.7rem;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .ty-tips li {
+    background: #fff;
+    border-radius: var(--ty-radius);
+    padding: 0.95rem 1rem;
+    display: flex;
+    gap: 0.85rem;
+    align-items: flex-start;
+    border: 1px solid var(--ty-border);
+    box-shadow: var(--ty-shadow);
+  }
+  .ty-tips__ic {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    background: var(--ty-green-soft);
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+  }
+  .ty-tips li strong { display: block; font-weight: 800; color: var(--ty-green-dark); font-size: 0.98rem; margin-bottom: 0.15rem; }
+  .ty-tips li span { display: block; font-size: 0.88rem; color: var(--ty-muted); line-height: 1.55; }
+
+  /* ============ USAGE ============ */
+  .ty-usage {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.7rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .ty-usage__card {
+    background: #fff;
+    border-radius: var(--ty-radius);
+    padding: 1rem;
+    text-align: center;
+    border: 1px solid var(--ty-border);
+    box-shadow: var(--ty-shadow);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+  }
+  .ty-usage__ic {
+    width: 48px;
+    height: 48px;
+    background: var(--ty-green-soft);
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    margin-bottom: 0.35rem;
+  }
+  .ty-usage__card strong { font-size: 0.95rem; font-weight: 800; color: var(--ty-green-dark); line-height: 1.35; }
+  .ty-usage__card span { font-size: 0.82rem; color: var(--ty-muted); line-height: 1.5; }
+
+  /* ============ TRUST BADGES ============ */
+  .ty-trust {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0.6rem;
+    max-width: 800px;
+    margin: 0 auto;
+    background: var(--ty-green-dark);
+    padding: 1.25rem 1rem;
+    border-radius: var(--ty-radius);
+    color: #fff;
+  }
+  .ty-trust__item {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    align-items: center;
+    padding: 0.5rem 0.25rem;
+  }
+  .ty-trust__item > span:first-child {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: rgba(255,255,255,0.14);
+    border-radius: 10px;
+    font-size: 1.1rem;
+    margin-bottom: 0.3rem;
+    color: #fff;
+  }
+  .ty-trust__item strong { font-size: 0.92rem; font-weight: 800; color: #fff; }
+  .ty-trust__item span:last-child { font-size: 0.78rem; color: rgba(255,255,255,0.75); line-height: 1.45; }
+
+  /* ============ REVIEWS ============ */
+  .ty-reviews {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.7rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .ty-review {
+    background: #fff;
+    border-radius: var(--ty-radius);
+    padding: 1rem 1.1rem;
+    border: 1px solid var(--ty-border);
+    box-shadow: var(--ty-shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .ty-review__stars { color: #f5b400; letter-spacing: 2px; font-size: 0.95rem; }
+  .ty-review p { font-size: 0.92rem; color: var(--ty-text); line-height: 1.7; }
+  .ty-review footer { font-size: 0.85rem; color: var(--ty-muted); }
+  .ty-review footer strong { color: var(--ty-text); font-weight: 700; }
+
+  /* ============ SUPPORT ============ */
+  .ty-support__inner {
+    background: linear-gradient(135deg, var(--ty-green-dark), var(--ty-green));
+    color: #fff;
+    border-radius: var(--ty-radius);
+    padding: 1.75rem 1.25rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.7rem;
+    box-shadow: var(--ty-shadow-lg);
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .ty-support__ic {
+    width: 56px;
+    height: 56px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+  }
+  .ty-support__inner h2 { font-size: 1.2rem; font-weight: 800; color: #fff; }
+  .ty-support__inner p { font-size: 0.95rem; color: rgba(255,255,255,0.88); line-height: 1.65; max-width: 480px; }
+  .ty-support__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #25d366;
+    color: #fff !important;
+    padding: 0.85rem 1.5rem;
+    border-radius: 999px;
+    font-weight: 800;
+    font-size: 1rem;
+    box-shadow: 0 8px 20px rgba(37,211,102,0.35);
+    transition: transform 0.15s ease;
+    margin-top: 0.35rem;
+  }
+  .ty-support__cta:hover { transform: translateY(-2px); }
+  .ty-support__note { font-size: 0.82rem; color: rgba(255,255,255,0.7); }
+
+  /* ============ FOOTER ============ */
+  .ty-foot {
+    padding: 2rem 1rem 6rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .ty-foot__msg { font-size: 0.98rem; color: var(--ty-green-dark); font-weight: 600; }
+  .ty-foot__msg strong { color: var(--ty-gold); font-weight: 800; }
+  .ty-foot__nav { display: flex; flex-wrap: wrap; gap: 0.4rem 1.2rem; justify-content: center; }
+  .ty-foot__nav a { font-size: 0.85rem; color: var(--ty-muted); border-bottom: 1px dashed transparent; }
+  .ty-foot__nav a:hover { color: var(--ty-green-dark); border-bottom-color: var(--ty-green-dark); }
+  .ty-foot__copy { font-size: 0.8rem; color: var(--ty-muted); }
+
+  /* ============ FLOATING WHATSAPP ============ */
+  .ty-wa {
+    position: fixed;
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 1rem);
+    inset-inline-start: 1rem;
+    inset-inline-end: auto;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: #25d366;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 12px 24px rgba(37, 211, 102, 0.35);
+    z-index: 50;
+    transition: transform 0.15s ease;
+  }
+  .ty-wa:hover { transform: scale(1.06); }
+
+  /* ============ DESKTOP ============ */
+  @media (min-width: 750px) {
+    .ty-hero { padding: 4rem 1rem 2.5rem; }
+    .ty-section { padding: 2.25rem 1rem; }
+    .ty-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .ty-tips { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .ty-reviews { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ty-alert__ic, .ty-hero__check { animation: none; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Thank You (COD)",
+  "tag": "section",
+  "class": "ty-cod-wrapper",
+  "settings": [
+    {
+      "type": "text",
+      "id": "hero_headline",
+      "label": "Hero headline",
+      "default": "تهانينا! طلبك محجوز باسمك"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_sub",
+      "label": "Hero sub-text",
+      "default": "المرجو تخصيص دقيقة لقراءة التذكيرات بالأسفل — فيها خطوات تأكيد الطلب ونصائح الاستخدام حتى يتم تجهيز شحنتك بدون تأخير."
+    },
+    {
+      "type": "text",
+      "id": "call_window",
+      "label": "Call time-window",
+      "default": "خلال أقل من ١٠ دقائق"
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_number",
+      "label": "WhatsApp number (international, no +)",
+      "default": "971542585701"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Thank You (COD)",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

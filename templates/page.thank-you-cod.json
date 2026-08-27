@@ -1,0 +1,23 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "thank-you-cod",
+      "settings": {
+        "whatsapp_number": "971542585701",
+        "hero_headline": "تهانينا! طلبك محجوز باسمك",
+        "hero_sub": "المرجو تخصيص دقيقة لقراءة التذكيرات بالأسفل — فيها خطوات تأكيد الطلب ونصائح الاستخدام حتى يتم تجهيز شحنتك بدون تأخير.",
+        "call_window": "خلال أقل من ١٠ دقائق"
+      }
+    }
+  },
+  "order": ["main"]
+}
