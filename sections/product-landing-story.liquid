@@ -165,119 +165,51 @@
     </div>
   </section>
 
-  {%- comment -%} ============ OFFERS + FORM ============ {%- endcomment -%}
+  {%- comment -%} ============ ORDER SECTION (EasySell renders its own form + offers) ============ {%- endcomment -%}
   <section class="bm-section bm-order" id="lp-order">
     <div class="bm-section__head">
-      <span class="bm-kicker">العرض</span>
-      <h2 class="bm-section__title">اختر باقتك ووفّر أكثر</h2>
-      <p class="bm-section__sub">كل الباقات شحن مجاني + الدفع عند الاستلام. الأسعار بـدرهم إماراتي.</p>
+      <span class="bm-kicker">اطلب الآن</span>
+      <h2 class="bm-section__title">اختر باقتك وسجّل بياناتك بالأسفل</h2>
+      <p class="bm-section__sub">كل الباقات شحن مجاني + الدفع عند الاستلام داخل الإمارات. الأسعار بـدرهم إماراتي.</p>
     </div>
 
-    <div class="bm-order__layout">
-      {%- comment -%} OFFERS {%- endcomment -%}
-      <div class="bm-offers" role="radiogroup" aria-label="اختر الباقة">
-        <label class="bm-offer" data-offer="1">
-          <input type="radio" name="bm-offer" value="1" data-qty="1" data-price="{{ price_1 }}" data-compare="{{ compare_1 }}">
-          <div class="bm-offer__card">
-            <div class="bm-offer__head">
-              <span class="bm-offer__qty">علبة واحدة</span>
-              <span class="bm-offer__hint">توصيل مجاني · الدفع عند الاستلام</span>
-            </div>
-            <div class="bm-offer__prices">
-              <span class="bm-offer__price">{{ price_1 }} <span>درهم</span></span>
-              <span class="bm-offer__compare">{{ compare_1 }} درهم</span>
-            </div>
-            <p class="bm-offer__blurb">خيار مناسب إذا حاب تجرّب المنتج أول مرة.</p>
-          </div>
-        </label>
-
-        <label class="bm-offer bm-offer--featured" data-offer="2">
-          <span class="bm-offer__badge">الأكثر طلباً 🔥</span>
-          <input type="radio" name="bm-offer" value="2" data-qty="2" data-price="{{ price_2 }}" data-compare="{{ compare_2 }}" checked>
-          <div class="bm-offer__card">
-            <div class="bm-offer__head">
-              <span class="bm-offer__qty">علبتين</span>
-              <span class="bm-offer__hint">توصيل مجاني · الدفع عند الاستلام</span>
-            </div>
-            <div class="bm-offer__prices">
-              <span class="bm-offer__price">{{ price_2 }} <span>درهم</span></span>
-              <span class="bm-offer__compare">{{ compare_2 }} درهم</span>
-            </div>
-            <p class="bm-offer__blurb">الخيار الأكثر طلباً — كمية تكفيك مدة أطول.</p>
-          </div>
-        </label>
-
-        <label class="bm-offer" data-offer="3">
-          <span class="bm-offer__badge bm-offer__badge--gold">أفضل قيمة 👑</span>
-          <input type="radio" name="bm-offer" value="3" data-qty="3" data-price="{{ price_3 }}" data-compare="{{ compare_3 }}">
-          <div class="bm-offer__card">
-            <div class="bm-offer__head">
-              <span class="bm-offer__qty">٣ علب</span>
-              <span class="bm-offer__hint">توصيل مجاني · الدفع عند الاستلام</span>
-            </div>
-            <div class="bm-offer__prices">
-              <span class="bm-offer__price">{{ price_3 }} <span>درهم</span></span>
-              <span class="bm-offer__compare">{{ compare_3 }} درهم</span>
-            </div>
-            <p class="bm-offer__blurb">أفضل قيمة — كمية أكبر بسعر أوفر.</p>
-          </div>
-        </label>
+    <div class="bm-order__intro">
+      <ul class="bm-order__benefits" aria-label="مزايا الطلب">
+        <li><span class="bm-order__benefit-ic" aria-hidden="true">💵</span><div><strong>ادفع كاش عند الاستلام</strong><span>ما تدفع أي شي الحين — تدفع لما يوصلك الطلب.</span></div></li>
+        <li><span class="bm-order__benefit-ic" aria-hidden="true">🚚</span><div><strong>توصيل مجاني داخل الإمارات</strong><span>يوصلك خلال ١-٣ أيام عمل مع رسالة تتبّع.</span></div></li>
+        <li><span class="bm-order__benefit-ic" aria-hidden="true">🔒</span><div><strong>ضمان استرجاع ٣٠ يوم</strong><span>ما عجبتك النتيجة؟ نرجّع لك مبلغك كامل.</span></div></li>
+      </ul>
+      <div class="bm-order__pointer" aria-hidden="true">
+        <span>اختر الباقة واملأ بياناتك بالأسفل</span>
+        <span class="bm-order__pointer-arrow">↓</span>
       </div>
-
-      {%- comment -%}
-        FORM — Compatible EasySell COD Form & Upsells.
-        EasySell détecte automatiquement les form[action="/cart/add"] avec un bouton
-        [name="add"] et ouvre son popup au clic — nous ne collectons donc PAS les
-        infos client ici (nom/téléphone/adresse). EasySell s'en charge dans son propre popup.
-      {%- endcomment -%}
-      <form
-        method="post"
-        action="{{ routes.cart_add_url }}"
-        class="bm-form bm-form--easysell"
-        id="bm-order-form"
-        accept-charset="UTF-8"
-        enctype="multipart/form-data"
-        data-product-form
-        data-easysell-form
-      >
-        <input type="hidden" name="form_type" value="product">
-        <input type="hidden" name="utf8" value="✓">
-        <input type="hidden" name="id" value="{{ variant_id }}" data-bm-variant>
-        <input type="hidden" name="quantity" value="2" data-bm-quantity>
-        <input type="hidden" name="properties[Offer]" value="2 units" data-bm-offer-prop>
-        <input type="hidden" name="properties[Country]" value="AE" data-bm-country-prop>
-
-        <div class="bm-form__head">
-          <h3 class="bm-form__title">اطلب الآن — الدفع عند الاستلام</h3>
-          <p class="bm-form__sub">اختَر الباقة المناسبة، ثم اضغط الزر واملأ بياناتك في النافذة. فريقنا بيتواصل معك لتأكيد الطلب — ما يصير أي دفع الحين.</p>
-        </div>
-
-        <ul class="bm-form__benefits" aria-label="مزايا الطلب">
-          <li><span aria-hidden="true">💵</span> ادفع كاش لما يوصلك الطلب</li>
-          <li><span aria-hidden="true">🚚</span> توصيل مجاني داخل الإمارات</li>
-          <li><span aria-hidden="true">🔒</span> ضمان استرجاع ٣٠ يوم</li>
-        </ul>
-
-        <div class="bm-notice">📍 التوصيل داخل الإمارات — الأسعار بـدرهم إماراتي</div>
-
-        <button
-          type="submit"
-          name="add"
-          class="bm-form__cta"
-          data-bm-submit
-        >
-          <span class="bm-form__cta-icon" aria-hidden="true">🛒</span>
-          <span data-bm-cta-label>اطلب الآن · {{ price_2 }} درهم</span>
-          <span class="bm-form__cta-arrow" aria-hidden="true">←</span>
-        </button>
-
-        <ul class="bm-form__trust" aria-label="ضمانات">
-          <li>✓ الدفع عند الاستلام</li>
-          <li>✓ توصيل داخل الإمارات</li>
-          <li>✓ تأكيد الطلب قبل الشحن</li>
-        </ul>
-      </form>
     </div>
+
+    {%- comment -%}
+      Hidden form: EasySell COD app renders its OWN visible form (offers + name/phone/city
+      + CTA "اطلب الحين !") right below via native_placement="after". We keep this hidden
+      form as the anchor EasySell hooks onto to detect the product and inject its widget.
+      EasySell's injected CSS already hides [name="add"] / [action$="/cart/add"] button,
+      so we don't render our own visible CTA anymore.
+    {%- endcomment -%}
+    <form
+      method="post"
+      action="{{ routes.cart_add_url }}"
+      class="bm-form bm-form--anchor"
+      id="bm-order-form"
+      accept-charset="UTF-8"
+      enctype="multipart/form-data"
+      data-product-form
+      data-easysell-form
+      aria-hidden="true"
+    >
+      <input type="hidden" name="form_type" value="product">
+      <input type="hidden" name="utf8" value="✓">
+      <input type="hidden" name="id" value="{{ variant_id }}">
+      <input type="hidden" name="quantity" value="1">
+      <input type="hidden" name="properties[Country]" value="AE">
+      <button type="submit" name="add" hidden aria-hidden="true" tabindex="-1">اطلب</button>
+    </form>
   </section>
 
   {%- comment -%} ============ PROBLEM ============ {%- endcomment -%}
@@ -570,11 +502,9 @@
   /* ============ RESET BUTTON TEXT to guarantee white on green CTAs
      (overrides any inherited base.css / dawn theme button styles) ============ */
   #bayel-moss-lp .bm-hero__cta,
-  #bayel-moss-lp .bm-form__cta,
   #bayel-moss-lp .bm-final__cta,
   #bayel-moss-lp .bm-header__cta,
-  #bayel-moss-lp .bm-header__drawer-cta,
-  #bayel-moss-lp .bm-offer__badge {
+  #bayel-moss-lp .bm-header__drawer-cta {
     color: #ffffff !important;
     text-transform: none !important;
     letter-spacing: 0.005em;
@@ -879,11 +809,12 @@
     40%  { box-shadow: 0 0 0 14px rgba(180,138,58,0.15), 0 22px 44px -28px rgba(15,30,20,0.28); }
     100% { box-shadow: 0 0 0 0 rgba(180,138,58,0), 0 22px 44px -28px rgba(15,30,20,0.28); }
   }
-  #bayel-moss-lp .bm-form.is-flash {
+  #bayel-moss-lp .bm-order.is-flash .bm-order__intro {
     animation: bmFormFlash 1.4s ease-out 1;
+    border-radius: 20px;
   }
   @media (prefers-reduced-motion: reduce) {
-    #bayel-moss-lp .bm-form.is-flash { animation: none; }
+    #bayel-moss-lp .bm-order.is-flash .bm-order__intro { animation: none; }
   }
   .bm-section__head {
     text-align: center;
@@ -993,298 +924,106 @@
   .bm-ugc__caption strong { font-size: 0.98rem; color: var(--bm-text); }
   .bm-ugc__caption span { font-size: 0.78rem; color: var(--bm-muted); }
 
-  /* ============ ORDER (OFFERS + FORM) ============ */
+  /* ============ ORDER SECTION (EasySell injects its own form + offers below the intro) ============ */
   .bm-order {
     background: linear-gradient(180deg, transparent 0%, rgba(217,232,221,0.4) 100%);
+    padding-bottom: 1.5rem;
   }
-  .bm-order__layout {
-    display: grid;
-    gap: 1.5rem;
+  .bm-order__intro {
     max-width: 640px;
-    margin: 0 auto;
-  }
-
-  /* Offers */
-  .bm-offers {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-  .bm-offer {
-    position: relative;
-    display: block;
-    cursor: pointer;
-  }
-  .bm-offer input {
-    position: absolute;
-    opacity: 0;
-    inset: 0;
-    cursor: pointer;
-  }
-  .bm-offer__card {
-    background: #fff;
-    border: 2px solid var(--bm-border);
-    border-radius: var(--bm-radius);
-    padding: 1rem 1.1rem;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    grid-template-areas: 'head prices' 'blurb blurb';
-    gap: 0.4rem 0.6rem;
-    align-items: center;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
-    box-shadow: var(--bm-shadow);
-  }
-  .bm-offer input:checked ~ .bm-offer__card {
-    border-color: var(--bm-green);
-    box-shadow: 0 0 0 4px var(--bm-green-soft), var(--bm-shadow);
-  }
-  .bm-offer__card:hover { transform: translateY(-1px); }
-  .bm-offer__head {
-    grid-area: head;
-    display: flex;
-    flex-direction: column;
-    gap: 0.15rem;
-  }
-  .bm-offer__qty {
-    font-weight: 800;
-    font-size: 1.05rem;
-    color: var(--bm-text);
-  }
-  .bm-offer__hint {
-    font-size: 0.75rem;
-    color: var(--bm-muted);
-  }
-  .bm-offer__prices {
-    grid-area: prices;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.1rem;
-  }
-  .bm-offer__price {
-    font-weight: 900;
-    font-size: 1.35rem;
-    color: var(--bm-green-dark);
-    line-height: 1;
-  }
-  .bm-offer__price span { font-size: 0.72rem; font-weight: 700; }
-  .bm-offer__compare {
-    font-size: 0.78rem;
-    color: var(--bm-muted);
-    text-decoration: line-through;
-  }
-  .bm-offer__blurb {
-    grid-area: blurb;
-    font-size: 0.82rem;
-    color: var(--bm-muted);
-    line-height: 1.5;
-    padding-top: 0.35rem;
-    border-top: 1px dashed var(--bm-border);
-    margin-top: 0.2rem;
-  }
-  .bm-offer__badge {
-    position: absolute;
-    top: -10px;
-    right: 12px;
-    background: var(--bm-green-dark);
-    color: #fff;
-    padding: 0.22rem 0.75rem;
-    border-radius: 999px;
-    font-size: 0.72rem;
-    font-weight: 800;
-    z-index: 2;
-    box-shadow: 0 4px 10px rgba(30,74,43,0.25);
-  }
-  .bm-offer__badge--gold {
-    background: var(--bm-gold);
-  }
-  .bm-offer--featured .bm-offer__card {
-    border-color: var(--bm-green);
-  }
-
-  /* Form */
-  .bm-form {
-    background: #fff;
-    border-radius: var(--bm-radius-lg);
-    padding: 1.5rem 1.15rem;
-    box-shadow: var(--bm-shadow-lg);
+    margin: 0 auto 1.25rem;
+    background: #ffffff;
     border: 1px solid var(--bm-border);
-    display: flex;
-    flex-direction: column;
-    gap: 0.9rem;
+    border-radius: 20px;
+    padding: 1.5rem 1.25rem 1.25rem;
+    box-shadow: 0 22px 44px -28px rgba(15,30,20,0.18);
   }
-  .bm-form__head {
-    text-align: right;
-    margin-bottom: 0.3rem;
-  }
-  .bm-form__title {
-    font-size: 1.35rem;
-    font-weight: 900;
-    color: var(--bm-text);
-    margin: 0 0 0.35rem;
-  }
-  .bm-form__sub {
-    font-size: 0.85rem;
-    color: var(--bm-muted);
-    line-height: 1.55;
-  }
-  .bm-field {
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-  }
-  .bm-field label {
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: var(--bm-text);
-  }
-  .bm-req { color: #c8442b; margin-inline-start: 3px; }
-  .bm-field input {
-    width: 100%;
-    min-height: 52px;
-    padding: 0.75rem 1rem;
-    border: 1.5px solid var(--bm-border);
-    border-radius: var(--bm-radius-sm);
-    background: #fbfaf7;
-    font-size: 1rem;
-    font-family: inherit;
-    color: var(--bm-text);
-    transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
-    text-align: right;
-    direction: rtl;
-    -webkit-appearance: none;
-    appearance: none;
-  }
-  .bm-field input::placeholder {
-    color: rgba(31,43,33,0.35);
-  }
-  .bm-field input:focus {
-    outline: none;
-    border-color: var(--bm-green);
-    box-shadow: 0 0 0 3px var(--bm-green-soft);
-    background: #fff;
-  }
-  .bm-field__phone {
-    position: relative;
-    display: flex;
-    align-items: stretch;
-    background: #fbfaf7;
-    border: 1.5px solid var(--bm-border);
-    border-radius: var(--bm-radius-sm);
-    overflow: hidden;
-    transition: border-color 0.15s ease, box-shadow 0.15s ease;
-  }
-  .bm-field__phone:focus-within {
-    border-color: var(--bm-green);
-    box-shadow: 0 0 0 3px var(--bm-green-soft);
-  }
-  .bm-field__phone input {
-    border: none;
-    background: transparent;
-    box-shadow: none;
-    flex: 1;
-    min-height: 50px;
-    padding: 0.75rem 0.9rem;
-    text-align: left;
-    direction: ltr;
-  }
-  .bm-field__phone input:focus { box-shadow: none; }
-  .bm-field__cc {
-    background: var(--bm-green-soft);
-    color: var(--bm-green-dark);
-    padding: 0 1rem;
-    display: flex;
-    align-items: center;
-    font-weight: 800;
-    font-size: 0.95rem;
-    border-inline-start: 1.5px solid var(--bm-border);
-    direction: ltr;
-  }
-
-  .bm-notice {
-    background: rgba(30,74,43,0.06);
-    border: 1px dashed rgba(30,74,43,0.2);
-    color: var(--bm-green-dark);
-    padding: 0.7rem 0.9rem;
-    border-radius: var(--bm-radius-sm);
-    font-size: 0.85rem;
-    font-weight: 600;
-    text-align: center;
-  }
-
-  .bm-form__cta {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.6rem;
-    background: linear-gradient(180deg, #3a8250 0%, var(--bm-green-dark) 100%);
-    color: #fff;
-    border: none;
-    padding: 1rem 1.25rem;
-    border-radius: 999px;
-    font-weight: 900;
-    font-size: 1.05rem;
-    cursor: pointer;
-    box-shadow: 0 12px 28px rgba(30, 74, 43, 0.28);
-    transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
-    min-height: 58px;
-    font-family: inherit;
-  }
-  .bm-form__cta:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 16px 32px rgba(30, 74, 43, 0.35);
-  }
-  .bm-form__cta:disabled { opacity: 0.65; cursor: wait; }
-  .bm-form__cta-icon { font-size: 1.1rem; }
-
-  .bm-form__trust {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.5rem 1rem;
-    font-size: 0.82rem;
-    color: var(--bm-muted);
-    font-weight: 600;
-    margin-top: 0.2rem;
-  }
-
-  /* EasySell mode: benefits list replaces the old inline input fields */
-  .bm-form__benefits {
-    display: flex;
-    flex-direction: column;
-    gap: 0.55rem;
-    margin: 0.25rem 0 0.5rem;
+  .bm-order__benefits {
+    display: grid;
+    gap: 0.75rem;
+    margin: 0;
     padding: 0;
     list-style: none;
   }
-  .bm-form__benefits li {
+  .bm-order__benefits li {
     display: flex;
-    align-items: center;
-    gap: 0.65rem;
-    padding: 0.75rem 0.9rem;
-    background: rgba(217, 232, 221, 0.35);
-    border: 1px solid rgba(30, 74, 43, 0.09);
-    border-radius: var(--bm-radius-sm);
-    font-size: 0.92rem;
-    font-weight: 700;
-    color: var(--bm-green-dark);
+    align-items: flex-start;
+    gap: 0.85rem;
+    padding: 0.75rem 0.85rem;
+    background: #f6f2e6;
+    border: 1px solid #e6ddc4;
+    border-radius: 14px;
   }
-  .bm-form__benefits li span {
+  .bm-order__benefits li strong {
+    display: block;
+    font-size: 0.98rem;
+    font-weight: 800;
+    color: var(--bm-green-dark);
+    margin-bottom: 0.15rem;
+  }
+  .bm-order__benefits li span:not(.bm-order__benefit-ic) {
+    display: block;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--bm-muted);
+  }
+  .bm-order__benefit-ic {
     display: inline-flex;
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     align-items: center;
     justify-content: center;
     background: #fff;
     border-radius: 50%;
-    font-size: 1rem;
+    font-size: 1.15rem;
     box-shadow: 0 2px 6px rgba(30, 74, 43, 0.12);
     flex: none;
   }
-  .bm-form__cta-arrow {
+  .bm-order__pointer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    padding: 0.6rem 0.9rem;
+    background: linear-gradient(135deg, var(--bm-green-dark) 0%, var(--bm-green) 100%);
+    color: #fff;
+    border-radius: 12px;
+    font-size: 0.92rem;
+    font-weight: 700;
+  }
+  .bm-order__pointer-arrow {
+    display: inline-flex;
+    animation: bmPointerBounce 1.2s ease-in-out infinite;
     font-size: 1.15rem;
-    line-height: 1;
-    transform: translateY(-1px);
+  }
+  @keyframes bmPointerBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(4px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .bm-order__pointer-arrow { animation: none; }
+  }
+
+  /* Anchor form is invisible — EasySell reads it and hides the button itself */
+  #bayel-moss-lp .bm-form--anchor {
+    position: absolute;
+    width: 0;
+    height: 0;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    pointer-events: none;
+  }
+
+  /* Give EasySell's injected form some breathing room and consistent centering */
+  #bayel-moss-lp .easysell-form-container,
+  #bayel-moss-lp [class*="easysell-form"],
+  #bayel-moss-lp .es-form,
+  #bayel-moss-lp [id*="easysell-form"] {
+    max-width: 640px;
+    margin-inline: auto;
   }
 
   /* ============ PROBLEM ============ */
@@ -1614,12 +1353,6 @@
     }
     .bm-ugc__card { flex: 1; max-width: none; }
 
-    .bm-order__layout {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      gap: 1.5rem;
-      max-width: 980px;
-    }
-
     .bm-problem__grid {
       grid-template-columns: minmax(0, 320px) minmax(0, 1fr);
       gap: 2rem;
@@ -1681,28 +1414,6 @@
     const root = document.getElementById('bayel-moss-lp');
     if (!root) return;
 
-    /* -------- OFFERS -> quantity + line properties -------- */
-    const offerInputs = root.querySelectorAll('input[name="bm-offer"]');
-    const qtyInput = root.querySelector('[data-bm-quantity]');
-    const offerProp = root.querySelector('[data-bm-offer-prop]');
-    const ctaLabel = root.querySelector('[data-bm-cta-label]');
-    const price1 = Number(root.dataset.price1) || 189;
-
-    function applyOffer(input) {
-      if (!input) return;
-      const qty = Number(input.dataset.qty) || 1;
-      const price = Number(input.dataset.price) || price1;
-      if (qtyInput) qtyInput.value = qty;
-      if (offerProp) offerProp.value = qty + ' units';
-      if (ctaLabel) ctaLabel.textContent = 'اطلب الآن · ' + price + ' درهم';
-    }
-
-    offerInputs.forEach((inp) => {
-      inp.addEventListener('change', () => applyOffer(inp));
-    });
-    const checked = root.querySelector('input[name="bm-offer"]:checked');
-    if (checked) applyOffer(checked);
-
     /* -------- UGC: click to play/pause -------- */
     const cards = root.querySelectorAll('.bm-ugc__card');
     cards.forEach((card) => {
@@ -1730,12 +1441,8 @@
       video.addEventListener('ended', () => card.classList.remove('is-playing'));
     });
 
-    /* -------- Country prop always AE for this store -------- */
-    const countryProp = root.querySelector('[data-bm-country-prop]');
-    if (countryProp) countryProp.value = root.dataset.defaultCountry || 'AE';
-
     /* -------- Smooth-scroll for ALL internal anchor links (header CTA, hero CTA, drawer, final CTA, footer nav) -------- */
-    const orderForm = root.querySelector('.bm-form');
+    const orderForm = root.querySelector('.bm-order');
     const localHeader = root.querySelector('.bm-header');
     let flashTimer = null;
 
