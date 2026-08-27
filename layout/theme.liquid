@@ -59,6 +59,18 @@
   </head>
 
   <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }} template-{{ request.page_type }}{% if template.suffix != blank %} template-{{ request.page_type }}-{{ template.suffix }}{% endif %}">
+    {%- comment -%} Redirect homepage to landing page {%- endcomment -%}
+    {% if request.page_type == 'index' %}
+      <script>
+        (function() {
+          // Only redirect if not in Shopify design mode (theme editor)
+          if (!document.documentElement.classList.contains('shopify-design-mode')) {
+            window.location.href = '/products/bublemouss?view=bayel-moss-lp';
+          }
+        })();
+      </script>
+    {% endif %}
+
     {% render 'skip-to-content-link', href: '#MainContent', text: 'accessibility.skip_to_text' %}
 
     {% render 'chat-drawer' %}
