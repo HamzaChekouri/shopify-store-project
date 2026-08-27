@@ -1780,6 +1780,24 @@
       }
     });
 
+    /* -------- Same handler for footer links (footer is outside #bayel-moss-lp root) -------- */
+    const footerRoot = document.getElementById('bm-footer');
+    if (footerRoot) {
+      footerRoot.addEventListener('click', (e) => {
+        const a = e.target.closest('a[href^="#"]');
+        if (!a) return;
+        const href = a.getAttribute('href');
+        if (!href || href === '#' || href === '#top') return;
+        const target = root.querySelector(href) || document.querySelector(href);
+        if (!target) return;
+        e.preventDefault();
+        smoothScrollTo(target);
+        if (href === '#lp-order' || (orderForm && target.contains(orderForm)) || target === orderForm) {
+          setTimeout(flashOrderForm, 350);
+        }
+      });
+    }
+
     /* -------- Burger toggle -------- */
     const burger = root.querySelector('[data-bm-burger]');
     const drawer = root.querySelector('[data-bm-drawer]');
