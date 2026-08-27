@@ -5,6 +5,14 @@
   {% endif %}
   lang="{{ request.locale.iso_code }}"
 >
+  {%- liquid
+    assign is_product_landing_template = false
+    if request.page_type == 'product' and template.suffix != blank
+      if template.suffix == 'landing' or template.suffix == 'bayel-moss-lp'
+        assign is_product_landing_template = true
+      endif
+    endif
+  -%}
   <head>
     {%- if settings.favicon != blank -%}
       <link
@@ -174,14 +182,14 @@
         data-page-transition-enabled="{{ settings.page_transition_enabled }}"
         data-product-transition="{{ settings.transition_to_main_product }}"
         data-template="{{ template }}"
-        {% if request.page_type == 'product' and template.suffix == 'landing' %}
+        {% if is_product_landing_template %}
           dir="rtl"
         {% endif %}
       >
         {{ content_for_layout }}
       </main>
 
-      {% unless request.page_type == 'product' and template.suffix == 'landing' %}
+      {% unless is_product_landing_template %}
         <footer>
           {% sections 'footer-group' %}
         </footer>

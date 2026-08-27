@@ -1,118 +1,287 @@
-<section class="lp-footer-section" dir="rtl">
-  <div class="lp-footer-section__inner">
-    <div class="lp-footer-section__brand">
-      <p class="lp-footer-section__eyebrow">{{ shop.name }}</p>
-      <h2>صفحة بيع مخصّصة لمنتج واحد</h2>
-      <p>
-        بنية هبوط مركّزة تشبه الحملات الإعلانية الحديثة: بطل بصري قوي، ثقة، شرح، أسئلة شائعة، ثم طلب واضح.
+{%- comment -%}
+  Bayel Moss LP — Isolated footer
+  Scoped under #bm-footer so it does not affect the rest of the theme.
+{%- endcomment -%}
+
+{%- liquid
+  assign wa_number = section.settings.whatsapp_number | default: '971542585701'
+  assign email = section.settings.email | default: shop.email
+  assign brand = section.settings.brand_name | default: 'بابل موس'
+  assign brand_latin = section.settings.brand_latin | default: 'BAYEL MOSS'
+  assign year = 'now' | date: '%Y'
+-%}
+
+<footer id="bm-footer" class="bm-footer" dir="rtl" lang="ar">
+  <div class="bm-footer__inner">
+
+    <div class="bm-footer__brand">
+      <div class="bm-footer__logo">
+        <span class="bm-footer__logo-mark" aria-hidden="true">◆</span>
+        <div class="bm-footer__logo-text">
+          <strong>{{ brand }}</strong>
+          <span>{{ brand_latin }}</span>
+        </div>
+      </div>
+      <p class="bm-footer__tagline">
+        موس رغوي عشبي لتغطية الشيب — طبيعي، آمن، وسهل الاستخدام في البيت.
       </p>
+      <ul class="bm-footer__trust" aria-label="ضمانات">
+        <li>✓ الدفع عند الاستلام</li>
+        <li>✓ توصيل مجاني</li>
+        <li>✓ ضمان ٣٠ يوم</li>
+      </ul>
     </div>
 
-    <div class="lp-footer-section__column">
+    <nav class="bm-footer__col" aria-label="المتجر">
       <h3>المتجر</h3>
-      <a href="#lp-offer">اطلب الآن</a>
-      <a href="#lp-how">طريقة العرض</a>
+      <a href="#lp-order">اطلب الآن</a>
+      <a href="#lp-how">طريقة الاستخدام</a>
       <a href="#lp-reviews">التقييمات</a>
-    </div>
+      <a href="#lp-reviews-video">فيديوهات العملاء</a>
+    </nav>
 
-    <div class="lp-footer-section__column">
+    <nav class="bm-footer__col" aria-label="المساعدة">
       <h3>المساعدة</h3>
       <a href="#lp-faq">الأسئلة الشائعة</a>
-      <a href="{{ routes.root_url }}">الرئيسية</a>
-      <a href="{{ routes.cart_url }}">السلة</a>
-    </div>
+      <a href="{{ routes.root_url }}policies/shipping-policy">سياسة الشحن</a>
+      <a href="{{ routes.root_url }}policies/refund-policy">سياسة الاسترجاع</a>
+      <a href="{{ routes.root_url }}policies/privacy-policy">سياسة الخصوصية</a>
+    </nav>
 
-    <div class="lp-footer-section__column">
-      <h3>تواصل</h3>
-      {% if shop.email != blank %}
-        <a href="mailto:{{ shop.email }}">{{ shop.email }}</a>
+    <div class="bm-footer__col bm-footer__col--contact" aria-label="تواصل معنا">
+      <h3>تواصل معنا</h3>
+      <a
+        class="bm-footer__wa"
+        href="https://wa.me/{{ wa_number }}"
+        target="_blank"
+        rel="noopener"
+      >
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="currentColor">
+          <path d="M12.04 2C6.58 2 2.15 6.43 2.15 11.89c0 1.96.55 3.83 1.6 5.44L2 22l4.79-1.27a9.87 9.87 0 0 0 5.25 1.5h.01c5.46 0 9.89-4.43 9.89-9.89S17.5 2 12.04 2zM17.4 15.9c-.23.65-1.32 1.18-1.85 1.25-.47.07-1.05.09-1.7-.12-.4-.14-.9-.31-1.55-.6-2.72-1.18-4.5-3.94-4.63-4.12-.13-.18-1.11-1.47-1.11-2.8s.7-1.99.95-2.26c.25-.27.55-.34.73-.34.18 0 .36 0 .52.01.17.01.4-.06.62.47.23.55.79 1.92.86 2.06.07.14.12.31.02.5-.09.19-.14.31-.28.47-.14.16-.29.36-.42.48-.14.14-.28.29-.12.57.16.28.72 1.19 1.55 1.93 1.07.95 1.97 1.24 2.25 1.38.28.14.44.12.6-.07.16-.19.7-.82.88-1.1.18-.28.37-.23.62-.14.25.09 1.6.75 1.88.89.28.14.46.21.53.32.07.11.07.64-.16 1.29z"/>
+        </svg>
+        واتساب: +{{ wa_number }}
+      </a>
+      {% if email != blank %}
+        <a href="mailto:{{ email }}" class="bm-footer__link">
+          <span class="bm-footer__ico" aria-hidden="true">✉</span>
+          {{ email }}
+        </a>
       {% endif %}
-      <span>© {{ 'now' | date: '%Y' }} {{ shop.name }}</span>
-      <span>تصميم هبوط مخصص داخل Shopify</span>
+      <p class="bm-footer__addr">توصيل داخل جميع إمارات الدولة</p>
     </div>
   </div>
-</section>
+
+  <div class="bm-footer__bar">
+    <div class="bm-footer__bar-inner">
+      <div class="bm-footer__pay" aria-label="طرق الدفع">
+        <span class="bm-pay bm-pay--cod">COD</span>
+        <span class="bm-pay bm-pay--visa">VISA</span>
+        <span class="bm-pay bm-pay--mc">Mastercard</span>
+        <span class="bm-pay bm-pay--apple">Apple Pay</span>
+      </div>
+      <p class="bm-footer__copy">© {{ year }} {{ brand }} · جميع الحقوق محفوظة.</p>
+    </div>
+  </div>
+</footer>
 
 {% stylesheet %}
-  .lp-footer-section {
-    margin-top: 2rem;
-    background: #163024;
-    color: rgba(255, 249, 240, 0.9);
-    font-family: 'DIN Next LT Arabic', 'SF Pro Arabic', 'Geeza Pro', Tahoma, var(--font-body--family), sans-serif;
+  /* All rules scoped to #bm-footer to avoid theme bleed */
+
+  #bm-footer {
+    background: #0f2417;
+    color: #e6ede8;
+    font-family: 'DIN Next LT Arabic', 'Almarai', 'Cairo', 'Tajawal', system-ui, -apple-system, Segoe UI, sans-serif;
+    direction: rtl;
+    text-align: right;
+    line-height: 1.7;
+    font-size: 15px;
+    padding-bottom: env(safe-area-inset-bottom);
   }
 
-  .lp-footer-section__inner {
-    width: min(1180px, calc(100% - 2rem));
+  #bm-footer *,
+  #bm-footer *::before,
+  #bm-footer *::after { box-sizing: border-box; }
+
+  #bm-footer a { color: inherit; text-decoration: none; transition: color 0.15s ease, opacity 0.15s ease; }
+  #bm-footer a:hover { color: #ffffff; opacity: 1; }
+
+  #bm-footer h3 {
+    color: #ffffff;
+    font-size: 0.98rem;
+    font-weight: 900;
+    letter-spacing: 0.01em;
+    margin: 0 0 0.85rem;
+    position: relative;
+    padding-bottom: 0.55rem;
+  }
+  #bm-footer h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    inset-inline-end: 0;
+    width: 28px;
+    height: 2px;
+    background: #caa04a;
+    border-radius: 2px;
+  }
+
+  .bm-footer__inner {
+    width: min(1180px, 100%);
     margin: 0 auto;
+    padding: 2.25rem 1.15rem 1.5rem;
     display: grid;
-    gap: 1.5rem;
-    padding: 2.5rem 0 3rem;
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
   }
 
-  .lp-footer-section__eyebrow {
-    margin: 0 0 0.6rem;
-    color: #caa04a;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    font-size: 0.82rem;
-  }
-
-  .lp-footer-section h2,
-  .lp-footer-section h3,
-  .lp-footer-section p {
+  /* Brand block */
+  .bm-footer__brand { display: flex; flex-direction: column; gap: 0.9rem; }
+  .bm-footer__logo { display: flex; align-items: center; gap: 0.6rem; }
+  .bm-footer__logo-mark { color: #caa04a; font-size: 1.6rem; line-height: 1; }
+  .bm-footer__logo-text { display: flex; flex-direction: column; gap: 0.1rem; }
+  .bm-footer__logo-text strong { color: #ffffff; font-size: 1.15rem; font-weight: 900; line-height: 1.1; }
+  .bm-footer__logo-text span { color: #caa04a; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.18em; }
+  .bm-footer__tagline {
+    color: rgba(230, 237, 232, 0.78);
     margin: 0;
+    font-size: 0.92rem;
+    line-height: 1.75;
+    max-width: 44ch;
+  }
+  .bm-footer__trust {
+    list-style: none;
+    padding: 0;
+    margin: 0.4rem 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 0.85rem;
+    font-size: 0.82rem;
+    color: rgba(230, 237, 232, 0.82);
+    font-weight: 600;
+  }
+  .bm-footer__trust li { display: inline-flex; }
+
+  /* Columns */
+  .bm-footer__col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    font-size: 0.92rem;
+  }
+  .bm-footer__col a {
+    color: rgba(230, 237, 232, 0.85);
+    padding: 0.15rem 0;
+  }
+  .bm-footer__col a:hover { color: #ffffff; }
+
+  /* Contact */
+  .bm-footer__col--contact a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    color: #ffffff;
+    font-weight: 700;
+  }
+  .bm-footer__wa {
+    background: #25d366;
+    color: #0f2417 !important;
+    padding: 0.55rem 0.95rem !important;
+    border-radius: 999px;
+    align-self: flex-start;
+    font-weight: 800;
+    font-size: 0.9rem;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .bm-footer__wa:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(37, 211, 102, 0.35); color: #0f2417 !important; }
+  .bm-footer__link .bm-footer__ico {
+    display: inline-flex;
+    width: 26px;
+    height: 26px;
+    background: rgba(202, 160, 74, 0.14);
+    color: #caa04a;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+  }
+  .bm-footer__addr {
+    color: rgba(230, 237, 232, 0.72);
+    margin: 0.35rem 0 0;
+    font-size: 0.85rem;
   }
 
-  .lp-footer-section h2 {
-    font-family: 'DIN Next LT Arabic', 'SF Pro Arabic', 'Geeza Pro', Tahoma, var(--font-heading--family), sans-serif;
-    font-size: clamp(1.8rem, 4vw, 2.8rem);
-    line-height: 1.05;
+  /* Bottom bar */
+  .bm-footer__bar {
+    background: #081a10;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .bm-footer__bar-inner {
+    width: min(1180px, 100%);
+    margin: 0 auto;
+    padding: 0.95rem 1.15rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: center;
+    text-align: center;
+  }
+  .bm-footer__pay {
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.4rem;
+  }
+  .bm-pay {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.35rem 0.75rem;
+    border-radius: 8px;
+    font-size: 0.72rem;
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    background: rgba(255, 255, 255, 0.05);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    min-height: 30px;
+  }
+  .bm-pay--cod { background: #caa04a; color: #0f2417; border-color: transparent; }
+  .bm-pay--visa { background: #1a1f71; color: #ffffff; border-color: transparent; }
+  .bm-pay--mc { background: linear-gradient(90deg, #eb001b 0%, #f79e1b 100%); color: #ffffff; border-color: transparent; }
+  .bm-pay--apple { background: #000000; color: #ffffff; border-color: transparent; }
+  .bm-footer__copy {
+    color: rgba(230, 237, 232, 0.62);
+    margin: 0;
+    font-size: 0.78rem;
   }
 
-  .lp-footer-section h3 {
-    font-family: 'DIN Next LT Arabic', 'SF Pro Arabic', 'Geeza Pro', Tahoma, var(--font-heading--family), sans-serif;
-  }
-
-  .lp-footer-section p,
-  .lp-footer-section span,
-  .lp-footer-section a {
-    color: rgba(255, 249, 240, 0.8);
-    line-height: 1.9;
-  }
-
-  .lp-footer-section__column {
-    display: grid;
-    gap: 0.45rem;
-    align-content: start;
-  }
-
-  .lp-footer-section__column a {
-    text-decoration: none;
-  }
-
-  .lp-footer-section__column a:hover {
-    color: #fff;
-  }
-
-  @media screen and (min-width: 750px) {
-    .lp-footer-section__inner {
-      grid-template-columns: minmax(0, 1.3fr) repeat(3, minmax(0, 0.6fr));
-      align-items: start;
+  @media (min-width: 750px) {
+    .bm-footer__inner {
+      grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+      gap: 2.5rem;
+      padding: 3rem 1.15rem 2rem;
+    }
+    .bm-footer__bar-inner {
+      flex-direction: row;
+      justify-content: space-between;
+      text-align: initial;
     }
   }
 {% endstylesheet %}
 
 {% schema %}
 {
-  "name": "Product landing footer",
+  "name": "Bayel Moss Footer",
   "tag": "section",
-  "class": "section-wrapper",
-  "settings": [],
+  "class": "bm-footer-wrapper",
+  "settings": [
+    { "type": "text", "id": "brand_name", "label": "Brand (Arabic)", "default": "بابل موس" },
+    { "type": "text", "id": "brand_latin", "label": "Brand (Latin)", "default": "BAYEL MOSS" },
+    { "type": "text", "id": "whatsapp_number", "label": "WhatsApp number (no +)", "default": "971542585701" },
+    { "type": "text", "id": "email", "label": "Contact email" }
+  ],
   "presets": [
-    {
-      "name": "Product landing footer",
-      "category": "Footer"
-    }
+    { "name": "Bayel Moss Footer", "category": "Footer" }
   ]
 }
 {% endschema %}

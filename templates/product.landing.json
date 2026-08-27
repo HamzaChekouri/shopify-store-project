@@ -217,6 +217,57 @@
               },
               "blocks": {}
             },
+            "customer_name_Xw2a1": {
+              "type": "product-custom-property",
+              "settings": {
+                "property_heading": "الاسم الكامل",
+                "property_description": "اكتب الاسم المستلم للطلب",
+                "property_key": "Customer name",
+                "input_type": "text",
+                "max_length": 45,
+                "required": true,
+                "placeholder": "الاسم الكامل",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "customer_phone_Mp91s": {
+              "type": "product-custom-property",
+              "settings": {
+                "property_heading": "رقم الجوال",
+                "property_description": "مثال: +212 أو +966",
+                "property_key": "Customer phone",
+                "input_type": "text",
+                "max_length": 45,
+                "required": true,
+                "placeholder": "+212 6 00 00 00 00",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "customer_city_V3f2k": {
+              "type": "product-custom-property",
+              "settings": {
+                "property_heading": "المدينة",
+                "property_description": "المدينة أو المنطقة للتوصيل",
+                "property_key": "Customer city",
+                "input_type": "text",
+                "max_length": 45,
+                "required": true,
+                "placeholder": "المدينة",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
             "buy_buttons_eYQEYi": {
               "type": "buy-buttons",
               "settings": {
@@ -308,6 +359,9 @@
             "group_icgrde",
             "divider_VJhene",
             "variant_picker_R3rGDr",
+            "customer_name_Xw2a1",
+            "customer_phone_Mp91s",
+            "customer_city_V3f2k",
             "buy_buttons_eYQEYi",
             "text_aEtTtq"
           ]

@@ -495,42 +495,42 @@
     }
   }
 
-  body.template-product-landing {
+  :is(body.template-product-landing, body.template-product-bayel-moss-lp) {
     background: #f5efe3;
     color: #163024;
   }
 
-  body.template-product-landing #MainContent {
+  :is(body.template-product-landing, body.template-product-bayel-moss-lp) #MainContent {
     direction: rtl;
     font-family: 'DIN Next LT Arabic', 'SF Pro Arabic', 'Geeza Pro', Tahoma, var(--font-body--family), sans-serif;
   }
 
-  body.template-product-landing #MainContent .section {
+  :is(body.template-product-landing, body.template-product-bayel-moss-lp) #MainContent .section {
     text-align: right;
   }
 
-  body.template-product-landing #MainContent :is(h1, h2, h3, h4, h5, h6, strong, summary, .button) {
+  :is(body.template-product-landing, body.template-product-bayel-moss-lp) #MainContent :is(h1, h2, h3, h4, h5, h6, strong, summary, .button) {
     font-family: 'DIN Next LT Arabic', 'SF Pro Arabic', 'Geeza Pro', Tahoma, var(--font-heading--family), sans-serif;
   }
 
-  body.template-product-landing .page-wrapper {
+  :is(body.template-product-landing, body.template-product-bayel-moss-lp) .page-wrapper {
     background:
       radial-gradient(circle at top center, rgba(166, 213, 160, 0.35), rgba(166, 213, 160, 0) 28%),
       linear-gradient(180deg, #f7f2e8 0%, #f3ede2 100%);
   }
 
-  body.template-product-landing .shopify-section:has(> .announcement-bar) {
+  :is(body.template-product-landing, body.template-product-bayel-moss-lp) .shopify-section:has(> .announcement-bar) {
     display: none;
   }
 
-  body.template-product-landing #header-component {
+  :is(body.template-product-landing, body.template-product-bayel-moss-lp) #header-component {
     width: calc(100% - 24px);
     max-width: 1180px;
     margin: 14px auto 0;
   }
 
-  body.template-product-landing .header__underlay-closed,
-  body.template-product-landing .header__underlay-open {
+  :is(body.template-product-landing, body.template-product-bayel-moss-lp) .header__underlay-closed,
+  :is(body.template-product-landing, body.template-product-bayel-moss-lp) .header__underlay-open {
     background: rgba(250, 247, 241, 0.92);
     border: 1px solid rgba(22, 48, 36, 0.08);
     border-radius: 30px;
@@ -538,40 +538,40 @@
     backdrop-filter: blur(18px);
   }
 
-  body.template-product-landing .header__row--top:not(.divider--page-width),
-  body.template-product-landing .header__row--top.divider--page-width .header__columns,
-  body.template-product-landing .header__row--bottom {
+  :is(body.template-product-landing, body.template-product-bayel-moss-lp) .header__row--top:not(.divider--page-width),
+  :is(body.template-product-landing, body.template-product-bayel-moss-lp) .header__row--top.divider--page-width .header__columns,
+  :is(body.template-product-landing, body.template-product-bayel-moss-lp) .header__row--bottom {
     border-bottom: 0;
   }
 
-  body.template-product-landing #header-component .header__columns {
+  :is(body.template-product-landing, body.template-product-bayel-moss-lp) #header-component .header__columns {
     --padding-block-start: 18px;
     --padding-block-end: 18px;
   }
 
-  body.template-product-landing #header-component .search-action,
-  body.template-product-landing #header-component .dropdown-localization {
+  :is(body.template-product-landing, body.template-product-bayel-moss-lp) #header-component .search-action,
+  :is(body.template-product-landing, body.template-product-bayel-moss-lp) #header-component .dropdown-localization {
     display: none !important;
   }
 
-  body.template-product-landing #header-component a,
-  body.template-product-landing #header-component .button,
-  body.template-product-landing #header-component .header-actions__action,
-  body.template-product-landing #header-component .header__icon--menu {
+  :is(body.template-product-landing, body.template-product-bayel-moss-lp) #header-component a,
+  :is(body.template-product-landing, body.template-product-bayel-moss-lp) #header-component .button,
+  :is(body.template-product-landing, body.template-product-bayel-moss-lp) #header-component .header-actions__action,
+  :is(body.template-product-landing, body.template-product-bayel-moss-lp) #header-component .header__icon--menu {
     color: #163024;
   }
 
-  body.template-product-landing #header-component {
+  :is(body.template-product-landing, body.template-product-bayel-moss-lp) #header-component {
     font-family: 'DIN Next LT Arabic', 'SF Pro Arabic', 'Geeza Pro', Tahoma, var(--font-body--family), sans-serif;
   }
 
   @media screen and (max-width: 749px) {
-    body.template-product-landing #header-component {
+    :is(body.template-product-landing, body.template-product-bayel-moss-lp) #header-component {
       width: calc(100% - 18px);
       margin-top: 10px;
     }
 
-    body.template-product-landing #header-component .header__columns {
+    :is(body.template-product-landing, body.template-product-bayel-moss-lp) #header-component .header__columns {
       padding-inline: 0 8px;
     }
   }

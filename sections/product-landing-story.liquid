@@ -1,687 +1,1823 @@
-{% liquid
-  assign current_variant = product.selected_or_first_available_variant
-  assign price = current_variant.price
-  assign compare_at_price = current_variant.compare_at_price | default: current_variant.price
-  assign savings = compare_at_price | minus: price
-%}
+{%- comment -%}
+  Bayel Moss LP — Isolated landing page section
+  Scope: #bayel-moss-lp only. Does not affect the rest of the theme.
+{%- endcomment -%}
 
-<section class="lp-story" id="top" dir="rtl">
-  <div class="lp-story__hero">
-    <div class="lp-story__hero-copy">
-      <p class="lp-story__eyebrow">{{ product.vendor | default: shop.name }} . صفحة مخصّصة لمنتج واحد</p>
-      <div class="lp-story__rating-row" aria-label="مؤشرات الثقة">
-        <span class="lp-story__stars">★★★★★</span>
-        <span class="lp-story__rating-copy">تجربة مركّزة لعرض المنتج بشكل واضح وسريع</span>
-      </div>
-      <h1 class="lp-story__title">{{ product.title }}</h1>
-      <p class="lp-story__lead">
-        {{ product.description | strip_html | truncatewords: 30 }}
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign variant_id = current_variant.id
+  assign base_price = current_variant.price
+  assign default_country = section.settings.default_country | default: 'AE'
+  assign wa_number = section.settings.whatsapp_number | default: '971542585701'
+  assign hero_image = 'lp-bottle.webp'
+  assign price_1 = section.settings.price_1 | default: 189
+  assign price_2 = section.settings.price_2 | default: 225
+  assign price_3 = section.settings.price_3 | default: 299
+  assign compare_1 = section.settings.compare_1 | default: 249
+  assign compare_2 = section.settings.compare_2 | default: 299
+  assign compare_3 = section.settings.compare_3 | default: 349
+-%}
+
+<div
+  id="bayel-moss-lp"
+  class="bm-lp"
+  dir="rtl"
+  lang="ar"
+  data-section-id="{{ section.id }}"
+  data-product-id="{{ product.id }}"
+  data-product-handle="{{ product.handle | escape }}"
+  data-product-title="{{ product.title | escape }}"
+  data-variant-id="{{ variant_id }}"
+  data-shop-currency="{{ cart.currency.iso_code | default: shop.currency | escape }}"
+  data-default-country="{{ default_country }}"
+  data-price-1="{{ price_1 }}"
+  data-price-2="{{ price_2 }}"
+  data-price-3="{{ price_3 }}"
+>
+
+  {%- comment -%} ============ LOCAL HEADER ============ {%- endcomment -%}
+  <header class="bm-header">
+    <div class="bm-header__inner">
+      <a href="#top" class="bm-header__brand" aria-label="بابل موس">
+        <span class="bm-header__brand-mark" aria-hidden="true">◆</span>
+        <span class="bm-header__brand-name">بابل موس</span>
+      </a>
+      <nav class="bm-header__nav" aria-label="روابط الصفحة">
+        <a href="#top">الرئيسية</a>
+        <a href="#lp-how">طريقة الاستخدام</a>
+        <a href="#lp-reviews">التقييمات</a>
+        <a href="#lp-faq">الأسئلة</a>
+      </nav>
+      <a href="#lp-order" class="bm-header__cta">اطلب الآن</a>
+      <button type="button" class="bm-header__burger" aria-label="القائمة" data-bm-burger>
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="bm-header__drawer" data-bm-drawer hidden>
+      <a href="#top">الرئيسية</a>
+      <a href="#lp-how">طريقة الاستخدام</a>
+      <a href="#lp-reviews">التقييمات</a>
+      <a href="#lp-faq">الأسئلة</a>
+      <a href="#lp-order" class="bm-header__drawer-cta">اطلب الآن</a>
+    </div>
+  </header>
+
+  {%- comment -%} ============ ANNOUNCEMENT BAR ============ {%- endcomment -%}
+  <div class="bm-announce">
+    <div class="bm-announce__track">
+      <span>✦ توصيل ١-٣ أيام لكل الإمارات</span>
+      <span>✦ الدفع عند الاستلام</span>
+      <span>✦ ضمان استرجاع ٣٠ يوم</span>
+      <span>✦ مكونات عشبية ١٠٠٪</span>
+      <span>✦ توصيل ١-٣ أيام لكل الإمارات</span>
+      <span>✦ الدفع عند الاستلام</span>
+      <span>✦ ضمان استرجاع ٣٠ يوم</span>
+      <span>✦ مكونات عشبية ١٠٠٪</span>
+    </div>
+  </div>
+
+  {%- comment -%} ============ HERO ============ {%- endcomment -%}
+  <section class="bm-hero" id="top">
+    <div class="bm-hero__inner">
+      <p class="bm-hero__eyebrow">بابل موس · العناية بشعر الرجل</p>
+      <h1 class="bm-hero__title">
+        غطِّ الشيب بدقيقة<br>
+        <span class="bm-hero__title-em">وارجع لشكلك الأصغر</span>
+      </h1>
+      <p class="bm-hero__lead">
+        موس رغوي عشبي يغطّي الشيب بلون طبيعي غامق من أول استخدام. بدون أمونيا، بدون فوضى، وبدون ما أحد يحس إنه مصبوغ — تسوّيه بنفسك في البيت بدقائق.
       </p>
-      <div class="lp-story__hero-points">
-        <span>مظهر مرتب وواضح للعرض</span>
-        <span>رسالة بيع مباشرة</span>
-        <span>انتقال سريع إلى الطلب</span>
+
+      <div class="bm-hero__media">
+        <div class="bm-hero__orb" aria-hidden="true"></div>
+        <div class="bm-hero__badge">
+          <span class="bm-hero__badge-num">60٪</span>
+          <span class="bm-hero__badge-label">خصم اليوم</span>
+        </div>
+        <img
+          src="{{ hero_image | asset_url }}"
+          alt="{{ product.title | escape }}"
+          class="bm-hero__image"
+          width="520"
+          height="760"
+          loading="eager"
+          fetchpriority="high"
+        >
       </div>
-      <div class="lp-story__actions">
-        <a class="lp-story__button lp-story__button--primary" href="#lp-offer">اطلب الآن</a>
-        <a class="lp-story__button lp-story__button--secondary" href="#lp-how">طريقة الاستخدام</a>
+
+      <div class="bm-hero__trust">
+        <span class="bm-hero__stars" aria-hidden="true">★★★★★</span>
+        <span class="bm-hero__trust-text">٤٫٩ / ٥ · ثقة أكثر من +١٢,٠٠٠ رجّال في الخليج</span>
       </div>
-      <ul class="lp-story__trust-list" aria-label="مزايا الشراء">
-        <li>شحن سريع</li>
-        <li>دفع عند الاستلام</li>
-        <li>ضمان على الطلب</li>
+
+      <a href="#lp-order" class="bm-hero__cta">
+        اطلب الآن — {{ price_1 }} درهم
+        <span class="bm-hero__cta-arrow" aria-hidden="true">←</span>
+      </a>
+
+      <ul class="bm-hero__mini-trust" aria-label="مزايا الطلب">
+        <li>✓ الدفع عند الاستلام</li>
+        <li>✓ توصيل مجاني للإمارات</li>
+        <li>✓ ضمان ٣٠ يوم</li>
+      </ul>
+    </div>
+  </section>
+
+  {%- comment -%} ============ UGC / SOCIAL PROOF ============ {%- endcomment -%}
+  <section class="bm-section bm-proof" id="lp-reviews-video">
+    <div class="bm-section__head">
+      <span class="bm-kicker">ردّات فعل حقيقية ✨</span>
+      <h2 class="bm-section__title">رجّال جرّبوا بابل موس وشافوا الفرق</h2>
+      <p class="bm-section__sub">فيديوهات حقيقية من عملائنا في الإمارات والخليج — شوف الفرق بعينك.</p>
+    </div>
+
+    <div class="bm-ugc" role="region" aria-label="تجارب حقيقية بالفيديو">
+      {%- assign videos = 'review-1.mp4,review-2.mp4,review-3-storytelling.mp4,review-4.mp4' | split: ',' -%}
+      {%- assign captions = 'صار شكلي أصغر بسنين 🔥,اللون طبيعي وما أحد حس,سويته بالبيت بدقائق,غطّى الشيب من أول مرة 👌' | split: ',' -%}
+      {%- for v in videos -%}
+        {%- assign idx = forloop.index0 -%}
+        <article class="bm-ugc__card" data-ugc-index="{{ forloop.index }}">
+          <div class="bm-ugc__media">
+            {%- assign poster_num = forloop.index -%}
+            {%- capture poster_file -%}lp-review-{{ poster_num }}-poster.jpg{%- endcapture -%}
+            <video
+              class="bm-ugc__video"
+              playsinline
+              muted
+              loop
+              preload="none"
+              controls
+              poster="{{ poster_file | asset_url }}"
+              data-ugc-video
+            >
+              <source src="{{ v | asset_url }}" type="video/mp4">
+            </video>
+            <button type="button" class="bm-ugc__play" data-ugc-play aria-label="تشغيل الفيديو">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+          </div>
+          <div class="bm-ugc__caption">
+            <strong>{{ captions[idx] }}</strong>
+            <span>عميل موثّق</span>
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+  </section>
+
+  {%- comment -%} ============ OFFERS + FORM ============ {%- endcomment -%}
+  <section class="bm-section bm-order" id="lp-order">
+    <div class="bm-section__head">
+      <span class="bm-kicker">العرض</span>
+      <h2 class="bm-section__title">اختر باقتك ووفّر أكثر</h2>
+      <p class="bm-section__sub">كل الباقات شحن مجاني + الدفع عند الاستلام. الأسعار بـدرهم إماراتي.</p>
+    </div>
+
+    <div class="bm-order__layout">
+      {%- comment -%} OFFERS {%- endcomment -%}
+      <div class="bm-offers" role="radiogroup" aria-label="اختر الباقة">
+        <label class="bm-offer" data-offer="1">
+          <input type="radio" name="bm-offer" value="1" data-qty="1" data-price="{{ price_1 }}" data-compare="{{ compare_1 }}">
+          <div class="bm-offer__card">
+            <div class="bm-offer__head">
+              <span class="bm-offer__qty">علبة واحدة</span>
+              <span class="bm-offer__hint">توصيل مجاني · الدفع عند الاستلام</span>
+            </div>
+            <div class="bm-offer__prices">
+              <span class="bm-offer__price">{{ price_1 }} <span>درهم</span></span>
+              <span class="bm-offer__compare">{{ compare_1 }} درهم</span>
+            </div>
+            <p class="bm-offer__blurb">خيار مناسب إذا حاب تجرّب المنتج أول مرة.</p>
+          </div>
+        </label>
+
+        <label class="bm-offer bm-offer--featured" data-offer="2">
+          <span class="bm-offer__badge">الأكثر طلباً 🔥</span>
+          <input type="radio" name="bm-offer" value="2" data-qty="2" data-price="{{ price_2 }}" data-compare="{{ compare_2 }}" checked>
+          <div class="bm-offer__card">
+            <div class="bm-offer__head">
+              <span class="bm-offer__qty">علبتين</span>
+              <span class="bm-offer__hint">توصيل مجاني · الدفع عند الاستلام</span>
+            </div>
+            <div class="bm-offer__prices">
+              <span class="bm-offer__price">{{ price_2 }} <span>درهم</span></span>
+              <span class="bm-offer__compare">{{ compare_2 }} درهم</span>
+            </div>
+            <p class="bm-offer__blurb">الخيار الأكثر طلباً — كمية تكفيك مدة أطول.</p>
+          </div>
+        </label>
+
+        <label class="bm-offer" data-offer="3">
+          <span class="bm-offer__badge bm-offer__badge--gold">أفضل قيمة 👑</span>
+          <input type="radio" name="bm-offer" value="3" data-qty="3" data-price="{{ price_3 }}" data-compare="{{ compare_3 }}">
+          <div class="bm-offer__card">
+            <div class="bm-offer__head">
+              <span class="bm-offer__qty">٣ علب</span>
+              <span class="bm-offer__hint">توصيل مجاني · الدفع عند الاستلام</span>
+            </div>
+            <div class="bm-offer__prices">
+              <span class="bm-offer__price">{{ price_3 }} <span>درهم</span></span>
+              <span class="bm-offer__compare">{{ compare_3 }} درهم</span>
+            </div>
+            <p class="bm-offer__blurb">أفضل قيمة — كمية أكبر بسعر أوفر.</p>
+          </div>
+        </label>
+      </div>
+
+      {%- comment -%}
+        FORM — Compatible EasySell COD Form & Upsells.
+        EasySell détecte automatiquement les form[action="/cart/add"] avec un bouton
+        [name="add"] et ouvre son popup au clic — nous ne collectons donc PAS les
+        infos client ici (nom/téléphone/adresse). EasySell s'en charge dans son propre popup.
+      {%- endcomment -%}
+      <form
+        method="post"
+        action="{{ routes.cart_add_url }}"
+        class="bm-form bm-form--easysell"
+        id="bm-order-form"
+        accept-charset="UTF-8"
+        enctype="multipart/form-data"
+        data-product-form
+        data-easysell-form
+      >
+        <input type="hidden" name="form_type" value="product">
+        <input type="hidden" name="utf8" value="✓">
+        <input type="hidden" name="id" value="{{ variant_id }}" data-bm-variant>
+        <input type="hidden" name="quantity" value="2" data-bm-quantity>
+        <input type="hidden" name="properties[Offer]" value="2 units" data-bm-offer-prop>
+        <input type="hidden" name="properties[Country]" value="AE" data-bm-country-prop>
+
+        <div class="bm-form__head">
+          <h3 class="bm-form__title">اطلب الآن — الدفع عند الاستلام</h3>
+          <p class="bm-form__sub">اختَر الباقة المناسبة، ثم اضغط الزر واملأ بياناتك في النافذة. فريقنا بيتواصل معك لتأكيد الطلب — ما يصير أي دفع الحين.</p>
+        </div>
+
+        <ul class="bm-form__benefits" aria-label="مزايا الطلب">
+          <li><span aria-hidden="true">💵</span> ادفع كاش لما يوصلك الطلب</li>
+          <li><span aria-hidden="true">🚚</span> توصيل مجاني داخل الإمارات</li>
+          <li><span aria-hidden="true">🔒</span> ضمان استرجاع ٣٠ يوم</li>
+        </ul>
+
+        <div class="bm-notice">📍 التوصيل داخل الإمارات — الأسعار بـدرهم إماراتي</div>
+
+        <button
+          type="submit"
+          name="add"
+          class="bm-form__cta"
+          data-bm-submit
+        >
+          <span class="bm-form__cta-icon" aria-hidden="true">🛒</span>
+          <span data-bm-cta-label>اطلب الآن · {{ price_2 }} درهم</span>
+          <span class="bm-form__cta-arrow" aria-hidden="true">←</span>
+        </button>
+
+        <ul class="bm-form__trust" aria-label="ضمانات">
+          <li>✓ الدفع عند الاستلام</li>
+          <li>✓ توصيل داخل الإمارات</li>
+          <li>✓ تأكيد الطلب قبل الشحن</li>
+        </ul>
+      </form>
+    </div>
+  </section>
+
+  {%- comment -%} ============ PROBLEM ============ {%- endcomment -%}
+  <section class="bm-section bm-problem">
+    <div class="bm-section__head">
+      <span class="bm-kicker">المشكلة</span>
+      <h2 class="bm-section__title">الشيب يكبّرك بسنين… وانت ما تستاهل</h2>
+    </div>
+
+    <div class="bm-problem__grid">
+      <figure class="bm-problem__figure">
+        <img
+          src="{{ 'lp-problem-before.jpg' | asset_url }}"
+          alt="رجل يعاني من الشيب قبل استخدام بابل موس"
+          width="640"
+          height="908"
+          loading="lazy"
+          decoding="async"
+        >
+        <figcaption>قبل</figcaption>
+      </figure>
+      <ul class="bm-problem__list">
+        <li><span class="bm-x">✕</span> الشيب يطلع وانت في عز شبابك ويعطيك شكل أكبر من عمرك الحقيقي.</li>
+        <li><span class="bm-x">✕</span> الصبغات الكيميائية تضرّ شعرك وتعطي لون صناعي يبيّن من بعيد.</li>
+        <li><span class="bm-x">✕</span> الكوافير غالي ومتعب، وتضطر تعيده كل أسبوعين.</li>
+        <li><span class="bm-x">✕</span> دايم خايف اللون يبيّن "مصبوغ" قدام أهلك وربعك.</li>
       </ul>
     </div>
 
-    <div class="lp-story__hero-media">
-      <div class="lp-story__discount-badge">
-        {% if compare_at_price > price %}
-          وفر {{ savings | money }}
-        {% else %}
-          عرض اليوم
-        {% endif %}
-      </div>
-      <div class="lp-story__orb"></div>
-      {% if product.featured_image %}
-        {{
-          product.featured_image
-          | image_url: width: 1200
-          | image_tag:
-            widths: '480, 720, 960, 1200',
-            sizes: '(min-width: 990px) 42vw, 86vw',
-            alt: product.title,
-            class: 'lp-story__hero-image'
-        }}
-      {% endif %}
-      <div class="lp-story__price-card">
-        <span class="lp-story__price-label">السعر الحالي</span>
-        <div class="lp-story__price-row">
-          <strong>{{ price | money }}</strong>
-          {% if compare_at_price > price %}
-            <s>{{ compare_at_price | money }}</s>
-          {% endif %}
-        </div>
-      </div>
+    <div class="bm-problem__solution">
+      <strong>بابل موس يحلّها من جذرها:</strong>
+      رغوة عشبية تغطّي الشيب بلون طبيعي غامق، تطبّقها بنفسك في البيت خلال دقائق — والنتيجة تبان طبيعية ما تنكشف.
     </div>
-  </div>
+  </section>
 
-  <div class="lp-story__marquee" aria-label="شريط المزايا">
-    <span>توصيل سريع 1-3 أيام</span>
-    <span>دفع عند الاستلام</span>
-    <span>نتيجة أوضح في صفحة واحدة</span>
-    <span>عرض مركز على منتج واحد</span>
-  </div>
-
-  <section class="lp-story__section lp-story__section--problem">
-    <div class="lp-story__section-head">
-      <span class="lp-story__section-kicker">المشكلة</span>
-      <h2>ليش صفحة المنتج الواحدة ترفع التحويل؟</h2>
-      <p>
-        لما تكون الرسالة مشتتة، العميل يضيع بين القوائم والخيارات. صفحة الهبوط المركّزة تختصر القرار:
-        منتج واضح، فوائد مباشرة، إثبات اجتماعي، ثم انتقال نظيف إلى الطلب.
-      </p>
+  {%- comment -%} ============ HOW TO USE ============ {%- endcomment -%}
+  <section class="bm-section bm-steps" id="lp-how">
+    <div class="bm-section__head">
+      <span class="bm-kicker">سهل وسريع</span>
+      <h2 class="bm-section__title">٤ خطوات وبس</h2>
+      <p class="bm-section__sub">بدون فُرَش، بدون قفّازات، وبدون فوضى — تسوّيه بنفسك في البيت.</p>
     </div>
-    <div class="lp-story__problem-grid">
-      <article class="lp-story__card">
-        <h3>رسالة موحّدة</h3>
-        <p>كل شيء في الصفحة يقود لنفس الهدف: شرح قيمة المنتج وإزالة التردد قبل الشراء.</p>
+
+    <ol class="bm-steps__list">
+      <li class="bm-step">
+        <span class="bm-step__num">١</span>
+        <h3>وزّع الرغوة</h3>
+        <p>اضغط كمية الرغوة على راحة يدك أو على الشعر مباشرة.</p>
+      </li>
+      <li class="bm-step">
+        <span class="bm-step__num">٢</span>
+        <h3>دلّك الشعر</h3>
+        <p>افرد الرغوة من الجذور للأطراف على كل المناطق المشيّبة.</p>
+      </li>
+      <li class="bm-step">
+        <span class="bm-step__num">٣</span>
+        <h3>اتركها ٥-١٠ دقائق</h3>
+        <p>خلّ التركيبة العشبية تشتغل وتغطّي الشيب بالكامل.</p>
+      </li>
+      <li class="bm-step">
+        <span class="bm-step__num">٤</span>
+        <h3>اشطفها</h3>
+        <p>لون طبيعي غامق فوري — نظيف وبدون أي فوضى.</p>
+      </li>
+    </ol>
+  </section>
+
+  {%- comment -%} ============ INGREDIENTS ============ {%- endcomment -%}
+  <section class="bm-section bm-ingredients">
+    <div class="bm-section__head bm-section__head--light">
+      <span class="bm-kicker bm-kicker--light">من الطبيعة</span>
+      <h2 class="bm-section__title">تركيبة عشبية بمكونات فعّالة</h2>
+      <p class="bm-section__sub bm-section__sub--light">مكونات طبيعية مختارة بعناية تغطّي الشيب وتعتني بشعرك من غير ما تضرّه.</p>
+    </div>
+
+    <ul class="bm-ingredients__chips">
+      <li>🍵 مستخلص الشاي الأخضر</li>
+      <li>🫐 خلاصة التوت الأسود</li>
+      <li>🫚 الجينسنغ</li>
+      <li>💧 زيت الأرغان</li>
+      <li>🧪 البانثينول B5</li>
+      <li>🌵 الصبار</li>
+      <li>🌿 عرق السوس</li>
+      <li>🌾 بروتين القمح</li>
+    </ul>
+  </section>
+
+  {%- comment -%} ============ REVIEWS ============ {%- endcomment -%}
+  <section class="bm-section bm-reviews" id="lp-reviews">
+    <div class="bm-section__head">
+      <span class="bm-kicker">آراء عملائنا</span>
+      <h2 class="bm-section__title">ثقة آلاف الرجال في الخليج</h2>
+      <p class="bm-section__sub">تجارب حقيقية من عملاء استخدموا بابل موس.</p>
+    </div>
+
+    <div class="bm-reviews__grid">
+      <article class="bm-review">
+        <div class="bm-review__stars">★★★★★</div>
+        <p>"صار لي سنة أعاني من الشيب وأنا بعدني شاب. جربت بابل موس وصراحة اللون طلع طبيعي وايد، ولا أحد حس إني مغطّي الشيب. خفيف وسهل."</p>
+        <footer>
+          <img src="{{ 'lp-avatar-1.jpg' | asset_url }}" alt="" width="48" height="48" loading="lazy" decoding="async" class="bm-review__avatar">
+          <div class="bm-review__meta">
+            <strong>خالد العتيبي</strong>
+            <span>الرياض، السعودية · عميل موثّق</span>
+          </div>
+          <span class="bm-review__verified" aria-label="عميل موثّق">✓</span>
+        </footer>
       </article>
-      <article class="lp-story__card lp-story__card--accent">
-        <h3>عرض بصري أقوى</h3>
-        <p>صورة بطول الصفحة، سعر بارز، ونقاط ثقة سريعة تعطي الصفحة إحساسًا إعلانياً مقصوداً.</p>
+      <article class="bm-review">
+        <div class="bm-review__stars">★★★★★</div>
+        <p>"أحسن شي إنه ما فيه فوضى مثل الصبغات. أستخدمه بالبيت بدقائق والنتيجة من أول مرة. الطلب وصلني خلال يومين ودفعت كاش عند الاستلام."</p>
+        <footer>
+          <img src="{{ 'lp-avatar-2.jpg' | asset_url }}" alt="" width="48" height="48" loading="lazy" decoding="async" class="bm-review__avatar">
+          <div class="bm-review__meta">
+            <strong>عبدالله المنصوري</strong>
+            <span>دبي، الإمارات · عميل موثّق</span>
+          </div>
+          <span class="bm-review__verified" aria-label="عميل موثّق">✓</span>
+        </footer>
       </article>
-      <article class="lp-story__card">
-        <h3>قرار أسرع</h3>
-        <p>بدلاً من التنقل في المتجر، العميل يشوف التسلسل كاملاً ثم ينزل مباشرة إلى الطلب.</p>
+      <article class="bm-review">
+        <div class="bm-review__stars">★★★★★</div>
+        <p>"كنت متردد بالبداية بس الدفع عند الاستلام طمّني. المنتج ممتاز واللون ثابت وما يطلع بسرعة. رجعت طلبت باقة ٣ قطع."</p>
+        <footer>
+          <img src="{{ 'lp-avatar-3.jpg' | asset_url }}" alt="" width="48" height="48" loading="lazy" decoding="async" class="bm-review__avatar">
+          <div class="bm-review__meta">
+            <strong>فيصل الشمري</strong>
+            <span>الدمام، السعودية · عميل موثّق</span>
+          </div>
+          <span class="bm-review__verified" aria-label="عميل موثّق">✓</span>
+        </footer>
       </article>
     </div>
   </section>
 
-  <section class="lp-story__section" id="lp-how">
-    <div class="lp-story__section-head">
-      <span class="lp-story__section-kicker">الطريقة</span>
-      <h2>4 خطوات تخلي الصفحة مقنعة وسهلة</h2>
-      <p>رتبنا الصفحة كمسار بيع بسيط: جذب، شرح، ثقة، ثم طلب.</p>
+  {%- comment -%} ============ FAQ ============ {%- endcomment -%}
+  <section class="bm-section bm-faq" id="lp-faq">
+    <div class="bm-section__head">
+      <span class="bm-kicker">أسئلة قبل الطلب</span>
+      <h2 class="bm-section__title">كل اللي تبي تعرفه</h2>
     </div>
-    <div class="lp-story__steps">
-      <article class="lp-story__step">
-        <span>1</span>
-        <h3>لفت الانتباه</h3>
-        <p>عنوان كبير، صورة قوية، وسعر ظاهر من أول شاشة.</p>
-      </article>
-      <article class="lp-story__step">
-        <span>2</span>
-        <h3>شرح الفائدة</h3>
-        <p>نوضح ما الذي يقدمه المنتج ولماذا هو مناسب للعميل بسرعة.</p>
-      </article>
-      <article class="lp-story__step">
-        <span>3</span>
-        <h3>بناء الثقة</h3>
-        <p>نضيف شهادات وتجهيزات الخدمة والأسئلة الشائعة لتخفيف الاعتراضات.</p>
-      </article>
-      <article class="lp-story__step">
-        <span>4</span>
-        <h3>الدفع إلى الطلب</h3>
-        <p>زر ثابت وروابط قصيرة تنقل العميل مباشرة إلى نموذج الشراء.</p>
-      </article>
-    </div>
-  </section>
 
-  <section class="lp-story__section lp-story__section--features">
-    <div class="lp-story__section-head">
-      <span class="lp-story__section-kicker">ليش يقتنع العميل</span>
-      <h2>تفاصيل البيع الأساسية جاهزة داخل الصفحة</h2>
-    </div>
-    <div class="lp-story__feature-grid">
-      <article class="lp-story__feature-card">
-        <h3>هوية لونية دافئة</h3>
-        <p>خلفية كريمية، أخضر واضح، ولمسات ذهبية تعطي نفس الإحساس التجاري المرجعي لكن بشكل أصلي.</p>
-      </article>
-      <article class="lp-story__feature-card">
-        <h3>قسم تقييمات ظاهر</h3>
-        <p>الشهادات توضع في مكان واضح بعد الشرح حتى تدعم القرار قبل الوصول للسعر والنموذج.</p>
-      </article>
-      <article class="lp-story__feature-card">
-        <h3>CTA ثابت بالموبايل</h3>
-        <p>يوصل العميل للطلب من أي مكان في الصفحة بدون الرجوع للأعلى.</p>
-      </article>
-      <article class="lp-story__feature-card">
-        <h3>FAQ مرتب</h3>
-        <p>الأسئلة المعتادة موجودة في نفس الصفحة حتى تقل الحاجة للدردشة قبل الشراء.</p>
-      </article>
-    </div>
-  </section>
-
-  <section class="lp-story__section" id="lp-reviews">
-    <div class="lp-story__section-head">
-      <span class="lp-story__section-kicker">آراء العملاء</span>
-      <h2>بناء ثقة سريع قبل الطلب</h2>
-    </div>
-    <div class="lp-story__reviews">
-      <article class="lp-story__review">
-        <p>"الصفحة صارت أقوى بكثير في الموبايل. المنتج واضح من أول ثانية وزر الطلب دائمًا قدام العميل."</p>
-        <strong>عميل موثّق</strong>
-        <span>الرياض</span>
-      </article>
-      <article class="lp-story__review">
-        <p>"الرسالة أوضح من صفحة المنتج العادية. الشرح والسعر والتقييمات كلها في نفس المسار."</p>
-        <strong>عميل موثّق</strong>
-        <span>دبي</span>
-      </article>
-      <article class="lp-story__review">
-        <p>"أفضل شيء هو إن الصفحة تبدو كحملة إعلانية متكاملة، لكن ما زالت مرتبطة بمنتج المتجر نفسه."</p>
-        <strong>عميل موثّق</strong>
-        <span>جدة</span>
-      </article>
-    </div>
-  </section>
-
-  <section class="lp-story__section lp-story__section--faq" id="lp-faq">
-    <div class="lp-story__section-head">
-      <span class="lp-story__section-kicker">قبل الطلب</span>
-      <h2>أسئلة تساعد العميل يحسم القرار</h2>
-    </div>
-    <div class="lp-story__faq-list">
-      <details open>
-        <summary>هل أقدر أطلب مباشرة من هذه الصفحة؟</summary>
-        <p>نعم. هذه الصفحة تقود العميل لنفس نموذج المنتج في الأسفل مع كل خياراته الحالية داخل المتجر.</p>
+    <div class="bm-faq__list">
+      <details class="bm-faq__item">
+        <summary>وش يميّز بابل موس عن الصبغات العادية؟</summary>
+        <p>بابل موس تركيبة رغوية عشبية بدون أمونيا أو بيروكسيد، تغطّي الشيب بلون طبيعي غامق بدون ما تضرّ شعرك، وبدون الفوضى اللي تجي مع الصبغات العادية.</p>
       </details>
-      <details>
-        <summary>هل السعر في الأعلى هو نفس سعر المنتج؟</summary>
-        <p>السعر معروض ديناميكياً من أول متغير متاح للمنتج، لذلك يبقى متطابقاً مع بيانات المتجر.</p>
+      <details class="bm-faq__item">
+        <summary>هل اللون يبان طبيعي ولا يكشف إنه مصبوغ؟</summary>
+        <p>اللون يطلع طبيعي ومتجانس مع لون شعرك، وما يبيّن إنه مصبوغ. أغلب عملائنا يقولون إن أحد ما يلاحظ الفرق.</p>
       </details>
-      <details>
-        <summary>هل تشتغل الصفحة كويس على الجوال؟</summary>
-        <p>نعم. التخطيط مبني على الموبايل أولاً مع زر طلب ثابت وشريط تنقل بصري أخف.</p>
+      <details class="bm-faq__item">
+        <summary>الدفع عند الاستلام متوفر في الإمارات؟</summary>
+        <p>نعم، الدفع عند الاستلام متوفر لكل الإمارات. تدفع كاش عند وصول الطلب لباب بيتك.</p>
       </details>
-      <details>
-        <summary>هل أقدر أخصص النصوص لاحقاً؟</summary>
-        <p>نعم. البنية موجودة الآن، وبعدها يمكننا استبدال أي نصوص أو تفاصيل لتناسب منتجك الفعلي.</p>
+      <details class="bm-faq__item">
+        <summary>كم ياخذ التوصيل؟</summary>
+        <p>من ١ إلى ٣ أيام عمل داخل الإمارات، مع رسالة تتبّع بعد تأكيد طلبك.</p>
+      </details>
+      <details class="bm-faq__item">
+        <summary>فيه ضمان لو ما عجبتني النتيجة؟</summary>
+        <p>أكيد. عندك ضمان استرجاع ٣٠ يوم كامل — لو ما عجبتك النتيجة تواصل معنا ونرجّع لك المبلغ.</p>
+      </details>
+      <details class="bm-faq__item">
+        <summary>كم مرة أستخدمه في الأسبوع؟</summary>
+        <p>حسب سرعة ظهور الشيب عندك، بس بشكل عام مرة إلى مرتين في الأسبوع تكفي للمحافظة على اللون.</p>
       </details>
     </div>
   </section>
 
-  <section class="lp-story__section lp-story__section--offer" id="lp-offer">
-    <div class="lp-story__offer-copy">
-      <span class="lp-story__section-kicker">العرض</span>
-      <h2>جاهز للطلب؟ اختر من تفاصيل المنتج بالأسفل</h2>
-      <p>
-        هذا الجزء يتكامل مع نموذج المنتج الحالي في Shopify، لذلك تظل الصور، المتغيرات، وزر الإضافة إلى السلة
-        مربوطة ببيانات متجرك مباشرة.
-      </p>
-    </div>
-    <div class="lp-story__offer-boxes" aria-label="مزايا الطلب">
-      <article>
-        <strong>{{ price | money }}</strong>
-        <span>السعر الحالي</span>
-      </article>
-      <article>
-        <strong>سريع</strong>
-        <span>وصول واضح إلى الطلب</span>
-      </article>
-      <article>
-        <strong>مرن</strong>
-        <span>المتغيرات والخيارات تبقى من نفس المنتج</span>
-      </article>
-    </div>
+  {%- comment -%} ============ FINAL CTA ============ {%- endcomment -%}
+  <section class="bm-section bm-final">
+    <h2>جاهز تودّع الشيب؟</h2>
+    <p>اطلب الحين وادفع كاش عند الاستلام. جرّب بابل موس بضمان ٣٠ يوم.</p>
+    <a href="#lp-order" class="bm-final__cta">اطلب الآن — ابدأ من {{ price_1 }} درهم</a>
   </section>
 
-  <a class="lp-story__sticky-cta" href="#lp-offer" aria-label="الانتقال إلى الطلب">
-    <span class="lp-story__sticky-copy">
-      <strong>اطلب الآن</strong>
-      <small>{{ price | money }}</small>
-    </span>
-    <span class="lp-story__sticky-arrow">←</span>
+  {%- comment -%} ============ FLOATING WHATSAPP ============ {%- endcomment -%}
+  <a
+    class="bm-wa"
+    href="https://wa.me/{{ wa_number }}?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D8%8C%20%D8%B9%D9%86%D8%AF%D9%8A%20%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%A8%D8%AE%D8%B5%D9%88%D8%B5%20Bayel%20Moss"
+    target="_blank"
+    rel="noopener"
+    aria-label="تواصل عبر واتساب"
+  >
+    <svg viewBox="0 0 32 32" width="26" height="26" aria-hidden="true" fill="currentColor">
+      <path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.386.702 4.609 1.905 6.478L4 29l7.702-1.865A11.94 11.94 0 0 0 16 27c6.628 0 12-5.373 12-12S22.628 3 16.001 3zm0 21.6a9.55 9.55 0 0 1-4.878-1.335l-.35-.208-4.573 1.108 1.135-4.455-.228-.365A9.542 9.542 0 0 1 6.4 15c0-5.293 4.307-9.6 9.6-9.6 5.293 0 9.6 4.307 9.6 9.6s-4.307 9.6-9.6 9.6zm5.446-7.083c-.298-.15-1.763-.87-2.037-.97-.273-.1-.472-.15-.671.15s-.77.97-.944 1.169c-.174.199-.348.223-.646.075-.298-.15-1.257-.463-2.394-1.478-.884-.79-1.481-1.763-1.655-2.061-.174-.298-.019-.459.13-.607.133-.132.298-.348.447-.522.15-.174.199-.298.298-.497.1-.199.05-.372-.025-.522-.075-.15-.671-1.618-.919-2.213-.242-.583-.487-.504-.671-.513l-.572-.01c-.199 0-.522.075-.795.372-.273.298-1.043 1.019-1.043 2.487s1.067 2.887 1.216 3.086c.15.199 2.099 3.203 5.083 4.494.71.306 1.263.489 1.695.626.712.226 1.36.194 1.872.118.571-.086 1.763-.72 2.012-1.416.248-.696.248-1.291.174-1.416-.074-.124-.273-.199-.571-.348z"/>
+    </svg>
   </a>
-</section>
+</div>
+
+{%- comment -%}
+  Lead export removed — EasySell COD Form & Upsells now handles the checkout flow.
+  EasySell auto-detects form[action="/cart/add"] with a [name="add"] submit button
+  and opens its own popup to collect Customer name/phone/city/address, then creates
+  a real Shopify order that is pushed to CodNetwork by EasySell's native integration.
+  If you want to restore the custom backend/Sheet pipeline, restore the block below
+  and re-add the customer fields to the form.
+{%- endcomment -%}
 
 {% stylesheet %}
-  body.template-product-landing {
-    --lp-cream: #f5efe3;
-    --lp-cream-strong: #efe5d3;
-    --lp-green: #2f9346;
-    --lp-green-dark: #163024;
-    --lp-gold: #caa04a;
-    --lp-border: rgba(22, 48, 36, 0.12);
-    --lp-shadow: 0 24px 60px rgba(22, 48, 36, 0.14);
+  /* ==========================================================================
+     BAYEL MOSS LP — Isolated styles
+     All rules scoped under #bayel-moss-lp to prevent global bleed.
+     ========================================================================== */
+
+  /* Hide legacy sections that persist in the theme editor state for this template.
+     Scoped only to Bayel Moss LP template to avoid affecting other pages. */
+  body.template-product-bayel-moss-lp .shopify-section:has(> .product-information),
+  body.template-product-bayel-moss-lp .shopify-section:has(> .product-recommendations),
+  body.template-product-bayel-moss-lp .shopify-section > .product-information,
+  body.template-product-bayel-moss-lp .shopify-section > .product-recommendations {
+    display: none !important;
   }
 
-  .lp-story {
-    color: var(--lp-green-dark);
-    padding: 0 0 7rem;
-    font-family: 'DIN Next LT Arabic', 'SF Pro Arabic', 'Geeza Pro', Tahoma, var(--font-body--family), sans-serif;
+  /* Hide the global Shopify theme header + announcement bar ONLY on the Bayel Moss LP
+     so the local .bm-header takes over the full experience. */
+  body.template-product-bayel-moss-lp #header-component,
+  body.template-product-bayel-moss-lp header.header,
+  body.template-product-bayel-moss-lp .shopify-section-header,
+  body.template-product-bayel-moss-lp .shopify-section-group-header-group,
+  body.template-product-bayel-moss-lp .header-wrapper,
+  body.template-product-bayel-moss-lp .announcement-bar,
+  body.template-product-bayel-moss-lp .utility-bar {
+    display: none !important;
   }
 
-  .lp-story__hero,
-  .lp-story__section,
-  .lp-story__marquee {
-    width: min(1180px, calc(100% - 2rem));
+  #bayel-moss-lp {
+    --bm-bg: #f5efe4;
+    --bm-panel: #ffffff;
+    --bm-green-dark: #1e4a2b;
+    --bm-green: #2f6b3f;
+    --bm-green-soft: #d9e8dd;
+    --bm-gold: #b48a3a;
+    --bm-text: #1f2b21;
+    --bm-muted: #5c6b5e;
+    --bm-border: rgba(31, 43, 33, 0.10);
+    --bm-shadow: 0 12px 30px rgba(20, 40, 25, 0.08);
+    --bm-shadow-lg: 0 20px 50px rgba(20, 40, 25, 0.12);
+    --bm-radius: 18px;
+    --bm-radius-sm: 12px;
+    --bm-radius-lg: 24px;
+
+    background: var(--bm-bg);
+    color: var(--bm-text);
+    font-family: 'DIN Next LT Arabic', 'Almarai', 'Cairo', 'Tajawal', system-ui, -apple-system, Segoe UI, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    direction: rtl;
+    text-align: right;
+    overflow-x: clip;
+    min-height: 100vh;
+    position: relative;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  #bayel-moss-lp *,
+  #bayel-moss-lp *::before,
+  #bayel-moss-lp *::after {
+    box-sizing: border-box;
+  }
+
+  #bayel-moss-lp img,
+  #bayel-moss-lp video {
+    max-width: 100%;
+    display: block;
+  }
+
+  #bayel-moss-lp h1,
+  #bayel-moss-lp h2,
+  #bayel-moss-lp h3,
+  #bayel-moss-lp h4,
+  #bayel-moss-lp p,
+  #bayel-moss-lp ul,
+  #bayel-moss-lp ol {
+    margin: 0;
+    padding: 0;
+  }
+
+  #bayel-moss-lp ul,
+  #bayel-moss-lp ol {
+    list-style: none;
+  }
+
+  #bayel-moss-lp a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* ============ RESET BUTTON TEXT to guarantee white on green CTAs
+     (overrides any inherited base.css / dawn theme button styles) ============ */
+  #bayel-moss-lp .bm-hero__cta,
+  #bayel-moss-lp .bm-form__cta,
+  #bayel-moss-lp .bm-final__cta,
+  #bayel-moss-lp .bm-header__cta,
+  #bayel-moss-lp .bm-header__drawer-cta,
+  #bayel-moss-lp .bm-offer__badge {
+    color: #ffffff !important;
+    text-transform: none !important;
+    letter-spacing: 0.005em;
+    font-family: inherit;
+    text-shadow: 0 1px 2px rgba(15, 30, 20, 0.28);
+    -webkit-text-fill-color: #ffffff;
+  }
+
+  /* ============ LOCAL HEADER ============ */
+  .bm-header {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: #f5efe4;
+    border-bottom: 1px solid var(--bm-border);
+    box-shadow: 0 1px 0 rgba(20,40,25,0.02);
+  }
+  .bm-header__inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0.65rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .bm-header__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-weight: 900;
+    font-size: 1.1rem;
+    color: var(--bm-green-dark);
+    letter-spacing: -0.01em;
+  }
+  .bm-header__brand-mark {
+    color: var(--bm-gold);
+    font-size: 1.15rem;
+    line-height: 1;
+    transform: translateY(-1px);
+  }
+  .bm-header__nav {
+    display: none;
+    align-items: center;
+    gap: 1.4rem;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--bm-text);
+  }
+  .bm-header__nav a {
+    position: relative;
+    color: var(--bm-text);
+    padding: 0.3rem 0;
+    transition: color 0.15s ease;
+  }
+  .bm-header__nav a::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    height: 2px;
+    background: var(--bm-green);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.2s ease;
+  }
+  .bm-header__nav a:hover { color: var(--bm-green-dark); }
+  .bm-header__nav a:hover::after { transform: scaleX(1); }
+
+  .bm-header__cta {
+    background: var(--bm-green);
+    color: #ffffff;
+    padding: 0.62rem 1.2rem;
+    border-radius: 999px;
+    font-weight: 800;
+    font-size: 0.9rem;
+    transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+    box-shadow: 0 6px 14px rgba(30, 74, 43, 0.22);
+    white-space: nowrap;
+  }
+  .bm-header__cta:hover {
+    background: var(--bm-green-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 18px rgba(30, 74, 43, 0.3);
+  }
+
+  .bm-header__burger {
+    display: none;
+    background: transparent;
+    border: 1px solid var(--bm-border);
+    border-radius: 10px;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    cursor: pointer;
+  }
+  .bm-header__burger span {
+    display: block;
+    width: 18px;
+    height: 2px;
+    background: var(--bm-green-dark);
+    border-radius: 2px;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+  .bm-header.is-open .bm-header__burger span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .bm-header.is-open .bm-header__burger span:nth-child(2) { opacity: 0; }
+  .bm-header.is-open .bm-header__burger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .bm-header__drawer {
+    display: none;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 0.5rem 1rem 1rem;
+    border-top: 1px solid var(--bm-border);
+    background: #f5efe4;
+  }
+  .bm-header__drawer:not([hidden]) { display: flex; }
+  .bm-header__drawer a {
+    padding: 0.85rem 0.75rem;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 0.98rem;
+    color: var(--bm-text);
+    background: rgba(255,255,255,0.55);
+  }
+  .bm-header__drawer-cta {
+    background: var(--bm-green) !important;
+    color: #ffffff !important;
+    text-align: center;
+    margin-top: 0.35rem;
+  }
+
+  /* ============ ANNOUNCE MARQUEE ============ */
+  .bm-announce {
+    background: var(--bm-green-dark);
+    color: #fff;
+    overflow: hidden;
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+  .bm-announce__track {
+    display: flex;
+    gap: 2.5rem;
+    padding: 0.5rem 0;
+    white-space: nowrap;
+    animation: bm-marquee 32s linear infinite;
+    width: max-content;
+  }
+  .bm-announce__track span { flex: none; }
+  @keyframes bm-marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(50%); }
+  }
+
+  /* ============ HERO ============ */
+  .bm-hero {
+    padding: 1.75rem 1rem 2rem;
+  }
+  .bm-hero__inner {
+    max-width: 640px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+  }
+  .bm-hero__eyebrow {
+    display: inline-block;
+    color: var(--bm-green);
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    padding: 0.35rem 0.85rem;
+    background: var(--bm-green-soft);
+    border-radius: 999px;
+  }
+  .bm-hero__title {
+    font-size: clamp(2rem, 7.5vw, 3.1rem);
+    font-weight: 900;
+    line-height: 1.15;
+    color: var(--bm-text);
+    letter-spacing: -0.01em;
+  }
+  .bm-hero__title-em {
+    color: var(--bm-green-dark);
+  }
+  .bm-hero__lead {
+    color: var(--bm-muted);
+    font-size: 1rem;
+    line-height: 1.7;
+    max-width: 34ch;
+  }
+  .bm-hero__media {
+    position: relative;
+    width: min(320px, 78%);
+    margin: 0.5rem auto;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .bm-hero__orb {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 45%, #cfe4d4 0%, #b6d2be 50%, rgba(182, 210, 190, 0) 72%);
+    border-radius: 50%;
+    filter: blur(2px);
+  }
+  .bm-hero__image {
+    position: relative;
+    width: 82%;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 25px 30px rgba(30, 74, 43, 0.28));
+  }
+  .bm-hero__badge {
+    position: absolute;
+    top: 4%;
+    right: 2%;
+    background: var(--bm-green-dark);
+    color: #fff;
+    width: 74px;
+    height: 74px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    box-shadow: 0 8px 20px rgba(30, 74, 43, 0.35);
+    transform: rotate(-8deg);
+    border: 3px solid #fff;
+    z-index: 2;
+  }
+  .bm-hero__badge-num { font-size: 1.15rem; line-height: 1; }
+  .bm-hero__badge-label { font-size: 0.65rem; margin-top: 2px; opacity: 0.9; }
+
+  .bm-hero__trust {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #fff;
+    border: 1px solid var(--bm-border);
+    padding: 0.5rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    color: var(--bm-text);
+    box-shadow: var(--bm-shadow);
+  }
+  .bm-hero__stars { color: #f5b400; letter-spacing: 2px; font-size: 0.9rem; }
+
+  .bm-hero__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: linear-gradient(180deg, #3a8250 0%, var(--bm-green-dark) 100%);
+    color: #fff;
+    padding: 1rem 1.75rem;
+    border-radius: 999px;
+    font-weight: 800;
+    font-size: 1.05rem;
+    box-shadow: 0 12px 28px rgba(30, 74, 43, 0.28);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    min-height: 56px;
+    width: min(360px, 100%);
+  }
+  .bm-hero__cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 32px rgba(30, 74, 43, 0.35);
+  }
+  .bm-hero__cta-arrow { font-size: 1.15rem; }
+
+  .bm-hero__mini-trust {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.6rem 1.1rem;
+    color: var(--bm-muted);
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  /* ============ SECTION SHELL ============ */
+  .bm-section {
+    padding: 2.5rem 1rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .bm-section__head {
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .bm-section__title {
+    font-size: clamp(1.5rem, 5vw, 2.15rem);
+    font-weight: 900;
+    line-height: 1.25;
+    color: var(--bm-text);
+  }
+  .bm-section__sub {
+    color: var(--bm-muted);
+    font-size: 0.98rem;
+    line-height: 1.6;
+    max-width: 44ch;
+  }
+  .bm-section__sub--light { color: rgba(255,255,255,0.82); }
+  .bm-section__head--light .bm-section__title { color: #fff; }
+  .bm-kicker {
+    display: inline-block;
+    color: var(--bm-green);
+    background: var(--bm-green-soft);
+    padding: 0.3rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+  .bm-kicker--light {
+    background: rgba(255,255,255,0.14);
+    color: #d9e8dd;
+  }
+
+  /* ============ UGC ============ */
+  .bm-ugc {
+    display: flex;
+    gap: 0.9rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding: 0.5rem 1rem 1.25rem;
+    margin: 0 -1rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .bm-ugc::-webkit-scrollbar { display: none; }
+
+  .bm-ugc__card {
+    flex: 0 0 78%;
+    max-width: 300px;
+    scroll-snap-align: center;
+    background: #fff;
+    border-radius: var(--bm-radius);
+    overflow: hidden;
+    box-shadow: var(--bm-shadow);
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--bm-border);
+  }
+  .bm-ugc__media {
+    position: relative;
+    aspect-ratio: 9 / 16;
+    background: #1e4a2b;
+    overflow: hidden;
+  }
+  .bm-ugc__video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    background: #1e4a2b;
+  }
+  .bm-ugc__play {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.95);
+    color: var(--bm-green-dark);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    transition: transform 0.15s ease, opacity 0.2s ease;
+    padding: 0;
+  }
+  .bm-ugc__play:hover { transform: scale(1.06); }
+  .bm-ugc__play svg { margin-right: -3px; }
+  .bm-ugc__card.is-playing .bm-ugc__play { opacity: 0; pointer-events: none; }
+
+  .bm-ugc__caption {
+    padding: 0.9rem 1rem 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    text-align: center;
+  }
+  .bm-ugc__caption strong { font-size: 0.98rem; color: var(--bm-text); }
+  .bm-ugc__caption span { font-size: 0.78rem; color: var(--bm-muted); }
+
+  /* ============ ORDER (OFFERS + FORM) ============ */
+  .bm-order {
+    background: linear-gradient(180deg, transparent 0%, rgba(217,232,221,0.4) 100%);
+  }
+  .bm-order__layout {
+    display: grid;
+    gap: 1.5rem;
+    max-width: 640px;
     margin: 0 auto;
   }
 
-  .lp-story__hero {
-    display: grid;
-    gap: 2rem;
-    align-items: center;
-    padding: 1.5rem 0 2rem;
-  }
-
-  .lp-story__hero-copy {
-    display: grid;
-    gap: 1.1rem;
-  }
-
-  .lp-story__eyebrow,
-  .lp-story__section-kicker {
-    margin: 0;
-    color: var(--lp-green);
-    font-size: 0.85rem;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-  }
-
-  .lp-story__rating-row {
+  /* Offers */
+  .bm-offers {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: 0.75rem;
-    align-items: center;
-    font-size: 0.95rem;
   }
-
-  .lp-story__stars {
-    color: var(--lp-gold);
-    letter-spacing: 0.18em;
-  }
-
-  .lp-story__title {
-    margin: 0;
-    font-family: 'DIN Next LT Arabic', 'SF Pro Arabic', 'Geeza Pro', Tahoma, var(--font-heading--family), sans-serif;
-    font-size: clamp(2.9rem, 8vw, 6.4rem);
-    line-height: 0.92;
-    max-width: 10ch;
-    text-wrap: balance;
-  }
-
-  .lp-story__lead,
-  .lp-story__section-head p,
-  .lp-story__card p,
-  .lp-story__step p,
-  .lp-story__feature-card p,
-  .lp-story__review p,
-  .lp-story__faq-list p,
-  .lp-story__offer-copy p {
-    margin: 0;
-    font-size: 1.02rem;
-    line-height: 1.9;
-    color: rgba(22, 48, 36, 0.82);
-  }
-
-  .lp-story__hero-points,
-  .lp-story__trust-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    padding: 0;
-    margin: 0;
-    list-style: none;
-  }
-
-  .lp-story__hero-points span,
-  .lp-story__trust-list li,
-  .lp-story__marquee span {
-    border: 1px solid var(--lp-border);
-    background: rgba(255, 255, 255, 0.72);
-    border-radius: 999px;
-    padding: 0.7rem 1rem;
-    font-size: 0.92rem;
-  }
-
-  .lp-story__actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.85rem;
-  }
-
-  .lp-story__button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 178px;
-    padding: 1rem 1.35rem;
-    border-radius: 999px;
-    font-weight: 700;
-    text-decoration: none;
-    transition: transform var(--animation-speed) var(--animation-easing), box-shadow var(--animation-speed) var(--animation-easing);
-  }
-
-  .lp-story__button:hover {
-    transform: translateY(-2px);
-  }
-
-  .lp-story__button--primary {
-    color: #fff;
-    background: linear-gradient(135deg, #2f9346, #237237);
-    box-shadow: 0 18px 38px rgba(47, 147, 70, 0.24);
-  }
-
-  .lp-story__button--secondary {
-    color: var(--lp-green-dark);
-    border: 1px solid var(--lp-border);
-    background: rgba(255, 255, 255, 0.65);
-  }
-
-  .lp-story__hero-media {
+  .bm-offer {
     position: relative;
-    display: grid;
-    place-items: center;
-    min-height: 430px;
-    padding: 3rem 0 2rem;
-  }
-
-  .lp-story__orb {
-    position: absolute;
-    width: min(82vw, 560px);
-    aspect-ratio: 1;
-    border-radius: 50%;
-    background: radial-gradient(circle at 35% 35%, rgba(182, 236, 169, 0.92), rgba(154, 215, 144, 0.55) 58%, rgba(154, 215, 144, 0.12) 100%);
-    filter: blur(0.2px);
-  }
-
-  .lp-story__hero-image {
-    position: relative;
-    z-index: 1;
-    width: min(100%, 460px);
-    height: auto;
-    object-fit: contain;
-    filter: drop-shadow(0 32px 50px rgba(22, 48, 36, 0.24));
-  }
-
-  .lp-story__discount-badge,
-  .lp-story__price-card {
-    position: absolute;
-    z-index: 2;
-    border-radius: 26px;
-    box-shadow: var(--lp-shadow);
-  }
-
-  .lp-story__discount-badge {
-    top: 1rem;
-    left: max(0rem, 3vw);
-    padding: 1rem 1.2rem;
-    background: var(--lp-gold);
-    color: var(--lp-green-dark);
-    font-weight: 800;
-    transform: rotate(-10deg);
-  }
-
-  .lp-story__price-card {
-    right: 0;
-    bottom: 1rem;
-    min-width: 185px;
-    padding: 1rem 1.15rem;
-    background: rgba(255, 255, 255, 0.94);
-    border: 1px solid rgba(255, 255, 255, 0.72);
-  }
-
-  .lp-story__price-label {
     display: block;
-    margin-bottom: 0.4rem;
-    color: rgba(22, 48, 36, 0.65);
-    font-size: 0.82rem;
-  }
-
-  .lp-story__price-row {
-    display: flex;
-    gap: 0.8rem;
-    align-items: baseline;
-  }
-
-  .lp-story__price-row strong {
-    font-size: 1.7rem;
-  }
-
-  .lp-story__price-row s {
-    color: rgba(22, 48, 36, 0.46);
-  }
-
-  .lp-story__marquee {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.8rem;
-    justify-content: center;
-    padding: 0 0 1rem;
-  }
-
-  .lp-story__section {
-    display: grid;
-    gap: 1.5rem;
-    padding: 2.4rem 0;
-  }
-
-  .lp-story__section-head {
-    display: grid;
-    gap: 0.8rem;
-    max-width: 760px;
-  }
-
-  .lp-story__section-head h2 {
-    margin: 0;
-    font-family: 'DIN Next LT Arabic', 'SF Pro Arabic', 'Geeza Pro', Tahoma, var(--font-heading--family), sans-serif;
-    font-size: clamp(2rem, 5vw, 3.4rem);
-    line-height: 1.02;
-  }
-
-  .lp-story__problem-grid,
-  .lp-story__feature-grid,
-  .lp-story__reviews,
-  .lp-story__offer-boxes {
-    display: grid;
-    gap: 1rem;
-  }
-
-  .lp-story__card,
-  .lp-story__feature-card,
-  .lp-story__review,
-  .lp-story__offer-boxes article {
-    padding: 1.4rem;
-    border-radius: 28px;
-    border: 1px solid var(--lp-border);
-    background: rgba(255, 255, 255, 0.72);
-    box-shadow: 0 14px 30px rgba(22, 48, 36, 0.05);
-  }
-
-  .lp-story__card--accent {
-    background: linear-gradient(145deg, rgba(47, 147, 70, 0.12), rgba(202, 160, 74, 0.18));
-  }
-
-  .lp-story__card h3,
-  .lp-story__step h3,
-  .lp-story__feature-card h3,
-  .lp-story__offer-boxes strong {
-    margin: 0 0 0.55rem;
-    font-size: 1.2rem;
-  }
-
-  .lp-story__steps {
-    display: grid;
-    gap: 1rem;
-  }
-
-  .lp-story__step {
-    padding: 1.4rem;
-    border-radius: 30px;
-    background: rgba(239, 229, 211, 0.72);
-    border: 1px solid rgba(22, 48, 36, 0.08);
-  }
-
-  .lp-story__step span {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 2.5rem;
-    height: 2.5rem;
-    margin-bottom: 1rem;
-    border-radius: 50%;
-    color: #fff;
-    background: var(--lp-green);
-    font-weight: 700;
-  }
-
-  .lp-story__review strong,
-  .lp-story__review span {
-    display: block;
-  }
-
-  .lp-story__review strong {
-    margin-top: 1rem;
-  }
-
-  .lp-story__review span {
-    color: rgba(22, 48, 36, 0.62);
-    font-size: 0.92rem;
-  }
-
-  .lp-story__faq-list {
-    display: grid;
-    gap: 0.85rem;
-  }
-
-  .lp-story__faq-list details {
-    padding: 1.2rem 1.25rem;
-    border-radius: 24px;
-    border: 1px solid var(--lp-border);
-    background: rgba(255, 255, 255, 0.7);
-  }
-
-  .lp-story__faq-list summary {
     cursor: pointer;
-    font-weight: 700;
-    list-style: none;
   }
-
-  .lp-story__faq-list summary::-webkit-details-marker {
-    display: none;
+  .bm-offer input {
+    position: absolute;
+    opacity: 0;
+    inset: 0;
+    cursor: pointer;
   }
-
-  .lp-story__faq-list p {
-    margin-top: 0.85rem;
-  }
-
-  .lp-story__section--offer {
-    align-items: start;
-    padding-bottom: 1rem;
-  }
-
-  .lp-story__offer-copy {
+  .bm-offer__card {
+    background: #fff;
+    border: 2px solid var(--bm-border);
+    border-radius: var(--bm-radius);
+    padding: 1rem 1.1rem;
     display: grid;
-    gap: 0.9rem;
-  }
-
-  .lp-story__offer-boxes article {
-    display: grid;
-    gap: 0.35rem;
-  }
-
-  .lp-story__offer-boxes span {
-    color: rgba(22, 48, 36, 0.68);
-  }
-
-  .lp-story__sticky-cta {
-    position: fixed;
-    right: 1rem;
-    left: 1rem;
-    bottom: 1rem;
-    z-index: calc(var(--layer-menu-drawer) - 1);
-    display: flex;
+    grid-template-columns: 1fr auto;
+    grid-template-areas: 'head prices' 'blurb blurb';
+    gap: 0.4rem 0.6rem;
     align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: 1rem 1.15rem;
-    border-radius: 999px;
-    color: #fff;
-    background: linear-gradient(135deg, #2f9346, #226b34);
-    box-shadow: 0 22px 50px rgba(34, 107, 52, 0.34);
-    text-decoration: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+    box-shadow: var(--bm-shadow);
   }
-
-  .lp-story__sticky-copy {
-    display: grid;
+  .bm-offer input:checked ~ .bm-offer__card {
+    border-color: var(--bm-green);
+    box-shadow: 0 0 0 4px var(--bm-green-soft), var(--bm-shadow);
   }
-
-  .lp-story__sticky-copy strong,
-  .lp-story__sticky-copy small,
-  .lp-story__sticky-arrow {
-    color: inherit;
+  .bm-offer__card:hover { transform: translateY(-1px); }
+  .bm-offer__head {
+    grid-area: head;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
   }
-
-  .lp-story__sticky-arrow {
-    font-size: 1.4rem;
+  .bm-offer__qty {
+    font-weight: 800;
+    font-size: 1.05rem;
+    color: var(--bm-text);
+  }
+  .bm-offer__hint {
+    font-size: 0.75rem;
+    color: var(--bm-muted);
+  }
+  .bm-offer__prices {
+    grid-area: prices;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.1rem;
+  }
+  .bm-offer__price {
+    font-weight: 900;
+    font-size: 1.35rem;
+    color: var(--bm-green-dark);
     line-height: 1;
   }
+  .bm-offer__price span { font-size: 0.72rem; font-weight: 700; }
+  .bm-offer__compare {
+    font-size: 0.78rem;
+    color: var(--bm-muted);
+    text-decoration: line-through;
+  }
+  .bm-offer__blurb {
+    grid-area: blurb;
+    font-size: 0.82rem;
+    color: var(--bm-muted);
+    line-height: 1.5;
+    padding-top: 0.35rem;
+    border-top: 1px dashed var(--bm-border);
+    margin-top: 0.2rem;
+  }
+  .bm-offer__badge {
+    position: absolute;
+    top: -10px;
+    right: 12px;
+    background: var(--bm-green-dark);
+    color: #fff;
+    padding: 0.22rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    z-index: 2;
+    box-shadow: 0 4px 10px rgba(30,74,43,0.25);
+  }
+  .bm-offer__badge--gold {
+    background: var(--bm-gold);
+  }
+  .bm-offer--featured .bm-offer__card {
+    border-color: var(--bm-green);
+  }
 
-  @media screen and (min-width: 750px) {
-    .lp-story__hero {
-      grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.95fr);
-      gap: 3rem;
-      padding-top: 2rem;
+  /* Form */
+  .bm-form {
+    background: #fff;
+    border-radius: var(--bm-radius-lg);
+    padding: 1.5rem 1.15rem;
+    box-shadow: var(--bm-shadow-lg);
+    border: 1px solid var(--bm-border);
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+  .bm-form__head {
+    text-align: right;
+    margin-bottom: 0.3rem;
+  }
+  .bm-form__title {
+    font-size: 1.35rem;
+    font-weight: 900;
+    color: var(--bm-text);
+    margin: 0 0 0.35rem;
+  }
+  .bm-form__sub {
+    font-size: 0.85rem;
+    color: var(--bm-muted);
+    line-height: 1.55;
+  }
+  .bm-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+  .bm-field label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--bm-text);
+  }
+  .bm-req { color: #c8442b; margin-inline-start: 3px; }
+  .bm-field input {
+    width: 100%;
+    min-height: 52px;
+    padding: 0.75rem 1rem;
+    border: 1.5px solid var(--bm-border);
+    border-radius: var(--bm-radius-sm);
+    background: #fbfaf7;
+    font-size: 1rem;
+    font-family: inherit;
+    color: var(--bm-text);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    text-align: right;
+    direction: rtl;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .bm-field input::placeholder {
+    color: rgba(31,43,33,0.35);
+  }
+  .bm-field input:focus {
+    outline: none;
+    border-color: var(--bm-green);
+    box-shadow: 0 0 0 3px var(--bm-green-soft);
+    background: #fff;
+  }
+  .bm-field__phone {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    background: #fbfaf7;
+    border: 1.5px solid var(--bm-border);
+    border-radius: var(--bm-radius-sm);
+    overflow: hidden;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  .bm-field__phone:focus-within {
+    border-color: var(--bm-green);
+    box-shadow: 0 0 0 3px var(--bm-green-soft);
+  }
+  .bm-field__phone input {
+    border: none;
+    background: transparent;
+    box-shadow: none;
+    flex: 1;
+    min-height: 50px;
+    padding: 0.75rem 0.9rem;
+    text-align: left;
+    direction: ltr;
+  }
+  .bm-field__phone input:focus { box-shadow: none; }
+  .bm-field__cc {
+    background: var(--bm-green-soft);
+    color: var(--bm-green-dark);
+    padding: 0 1rem;
+    display: flex;
+    align-items: center;
+    font-weight: 800;
+    font-size: 0.95rem;
+    border-inline-start: 1.5px solid var(--bm-border);
+    direction: ltr;
+  }
+
+  .bm-notice {
+    background: rgba(30,74,43,0.06);
+    border: 1px dashed rgba(30,74,43,0.2);
+    color: var(--bm-green-dark);
+    padding: 0.7rem 0.9rem;
+    border-radius: var(--bm-radius-sm);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .bm-form__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    background: linear-gradient(180deg, #3a8250 0%, var(--bm-green-dark) 100%);
+    color: #fff;
+    border: none;
+    padding: 1rem 1.25rem;
+    border-radius: 999px;
+    font-weight: 900;
+    font-size: 1.05rem;
+    cursor: pointer;
+    box-shadow: 0 12px 28px rgba(30, 74, 43, 0.28);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+    min-height: 58px;
+    font-family: inherit;
+  }
+  .bm-form__cta:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 32px rgba(30, 74, 43, 0.35);
+  }
+  .bm-form__cta:disabled { opacity: 0.65; cursor: wait; }
+  .bm-form__cta-icon { font-size: 1.1rem; }
+
+  .bm-form__trust {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem 1rem;
+    font-size: 0.82rem;
+    color: var(--bm-muted);
+    font-weight: 600;
+    margin-top: 0.2rem;
+  }
+
+  /* EasySell mode: benefits list replaces the old inline input fields */
+  .bm-form__benefits {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    margin: 0.25rem 0 0.5rem;
+    padding: 0;
+    list-style: none;
+  }
+  .bm-form__benefits li {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.75rem 0.9rem;
+    background: rgba(217, 232, 221, 0.35);
+    border: 1px solid rgba(30, 74, 43, 0.09);
+    border-radius: var(--bm-radius-sm);
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--bm-green-dark);
+  }
+  .bm-form__benefits li span {
+    display: inline-flex;
+    width: 32px;
+    height: 32px;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border-radius: 50%;
+    font-size: 1rem;
+    box-shadow: 0 2px 6px rgba(30, 74, 43, 0.12);
+    flex: none;
+  }
+  .bm-form__cta-arrow {
+    font-size: 1.15rem;
+    line-height: 1;
+    transform: translateY(-1px);
+  }
+
+  /* ============ PROBLEM ============ */
+  .bm-problem__grid {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.15rem;
+    align-items: center;
+  }
+  .bm-problem__figure {
+    margin: 0;
+    position: relative;
+    border-radius: var(--bm-radius);
+    overflow: hidden;
+    box-shadow: var(--bm-shadow);
+    aspect-ratio: 4 / 5;
+    max-width: 340px;
+    margin-inline: auto;
+    background: #d9d1c2;
+  }
+  .bm-problem__figure img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .bm-problem__figure figcaption {
+    position: absolute;
+    top: 0.75rem;
+    inset-inline-start: 0.75rem;
+    background: rgba(30, 43, 33, 0.78);
+    color: #fff;
+    padding: 0.28rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    backdrop-filter: blur(2px);
+  }
+  .bm-problem__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .bm-problem__list li {
+    background: #fff;
+    padding: 0.9rem 1rem;
+    border-radius: var(--bm-radius-sm);
+    border: 1px solid var(--bm-border);
+    display: flex;
+    gap: 0.6rem;
+    align-items: flex-start;
+    font-size: 0.95rem;
+    color: var(--bm-text);
+    box-shadow: 0 2px 6px rgba(20,40,25,0.04);
+  }
+  .bm-x {
+    display: inline-flex;
+    width: 24px;
+    height: 24px;
+    align-items: center;
+    justify-content: center;
+    background: rgba(200,68,43,0.1);
+    color: #c8442b;
+    border-radius: 50%;
+    font-weight: 800;
+    font-size: 0.8rem;
+    flex: none;
+    margin-top: 2px;
+  }
+  .bm-problem__solution {
+    max-width: 640px;
+    margin: 1.5rem auto 0;
+    background: var(--bm-green-soft);
+    color: var(--bm-green-dark);
+    padding: 1.1rem 1.15rem;
+    border-radius: var(--bm-radius);
+    line-height: 1.7;
+    font-size: 0.98rem;
+    border-right: 4px solid var(--bm-green);
+  }
+  .bm-problem__solution strong { color: var(--bm-green-dark); display: block; margin-bottom: 0.3rem; font-size: 1.05rem; }
+
+  /* ============ STEPS ============ */
+  .bm-steps__list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.85rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .bm-step {
+    background: #fff;
+    padding: 1.25rem 1rem 1.1rem;
+    border-radius: var(--bm-radius);
+    text-align: center;
+    box-shadow: var(--bm-shadow);
+    border: 1px solid var(--bm-border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.55rem;
+    position: relative;
+  }
+  .bm-step__num {
+    display: inline-flex;
+    width: 42px;
+    height: 42px;
+    align-items: center;
+    justify-content: center;
+    background: var(--bm-green-dark);
+    color: #fff;
+    border-radius: 50%;
+    font-weight: 900;
+    font-size: 1.05rem;
+    box-shadow: 0 4px 12px rgba(30,74,43,0.25);
+  }
+  .bm-step h3 { font-size: 1rem; font-weight: 800; color: var(--bm-text); }
+  .bm-step p { font-size: 0.85rem; color: var(--bm-muted); line-height: 1.55; }
+
+  /* ============ INGREDIENTS ============ */
+  .bm-ingredients {
+    background: var(--bm-green-dark);
+    color: #fff;
+    max-width: none;
+    padding: 2.5rem 1rem;
+    margin: 2rem 0 0;
+    border-radius: 0;
+  }
+  .bm-ingredients .bm-section__head { max-width: 640px; margin-left: auto; margin-right: auto; }
+  .bm-ingredients__chips {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.55rem;
+    max-width: 720px;
+    margin: 1.25rem auto 0;
+  }
+  .bm-ingredients__chips li {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.16);
+    padding: 0.55rem 1rem;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  /* ============ REVIEWS ============ */
+  .bm-reviews__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.9rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .bm-review {
+    background: #fff;
+    padding: 1.15rem 1.15rem 1rem;
+    border-radius: var(--bm-radius);
+    box-shadow: var(--bm-shadow);
+    border: 1px solid var(--bm-border);
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .bm-review__stars { color: #f5b400; letter-spacing: 2px; font-size: 0.95rem; }
+  .bm-review p { font-size: 0.95rem; color: var(--bm-text); line-height: 1.7; }
+  .bm-review footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--bm-border);
+  }
+  .bm-review__avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--bm-green-soft);
+    flex: none;
+    box-shadow: 0 3px 8px rgba(20,40,25,0.08);
+  }
+  .bm-review__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    flex: 1;
+    min-width: 0;
+  }
+  .bm-review footer strong { font-weight: 800; font-size: 0.92rem; color: var(--bm-text); }
+  .bm-review footer span { font-size: 0.76rem; color: var(--bm-muted); }
+  .bm-review__verified {
+    width: 24px;
+    height: 24px;
+    background: var(--bm-green);
+    color: #fff;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 900;
+    flex: none;
+  }
+
+  /* ============ FAQ ============ */
+  .bm-faq__list {
+    max-width: 720px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .bm-faq__item {
+    background: #fff;
+    border-radius: var(--bm-radius-sm);
+    border: 1px solid var(--bm-border);
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(20,40,25,0.04);
+  }
+  .bm-faq__item summary {
+    padding: 1rem 1.1rem;
+    font-weight: 800;
+    font-size: 0.98rem;
+    color: var(--bm-text);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    list-style: none;
+    min-height: 56px;
+  }
+  .bm-faq__item summary::-webkit-details-marker { display: none; }
+  .bm-faq__item summary::after {
+    content: '+';
+    color: var(--bm-green);
+    font-weight: 800;
+    font-size: 1.3rem;
+    line-height: 1;
+    transition: transform 0.2s ease;
+  }
+  .bm-faq__item[open] summary::after {
+    transform: rotate(45deg);
+  }
+  .bm-faq__item p {
+    padding: 0 1.1rem 1rem;
+    font-size: 0.9rem;
+    color: var(--bm-muted);
+    line-height: 1.7;
+  }
+
+  /* ============ FINAL CTA ============ */
+  .bm-final {
+    text-align: center;
+    padding: 2.5rem 1rem 3rem;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .bm-final h2 {
+    font-size: clamp(1.5rem, 5vw, 2.15rem);
+    font-weight: 900;
+    color: var(--bm-text);
+    margin-bottom: 0.5rem;
+  }
+  .bm-final p {
+    color: var(--bm-muted);
+    font-size: 0.98rem;
+    margin-bottom: 1.2rem;
+  }
+  .bm-final__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg, #3a8250 0%, var(--bm-green-dark) 100%);
+    color: #fff;
+    padding: 1rem 1.75rem;
+    border-radius: 999px;
+    font-weight: 900;
+    font-size: 1.02rem;
+    box-shadow: 0 12px 28px rgba(30, 74, 43, 0.28);
+    transition: transform 0.15s ease;
+    min-height: 56px;
+  }
+  .bm-final__cta:hover { transform: translateY(-2px); }
+
+  /* ============ FLOATING WHATSAPP ============ */
+  .bm-wa {
+    position: fixed;
+    bottom: calc(1rem + env(safe-area-inset-bottom));
+    left: 1rem;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #25d366;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 12px 24px rgba(37, 211, 102, 0.35);
+    z-index: 50;
+    transition: transform 0.15s ease;
+  }
+  .bm-wa:hover { transform: scale(1.06); }
+
+  /* ============ DESKTOP ============ */
+  @media (min-width: 750px) {
+    .bm-header__nav { display: inline-flex; }
+    .bm-header__burger { display: none !important; }
+    .bm-header__drawer { display: none !important; }
+
+    .bm-hero { padding: 3rem 1rem 3.5rem; }
+    .bm-hero__inner { max-width: 900px; }
+    .bm-hero__media { width: min(420px, 65%); }
+
+    .bm-ugc {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      overflow: visible;
+      padding: 0.5rem 0 1rem;
+      margin: 0;
+      gap: 1.1rem;
+    }
+    .bm-ugc__card { flex: 1; max-width: none; }
+
+    .bm-order__layout {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 1.5rem;
+      max-width: 980px;
     }
 
-    .lp-story__problem-grid,
-    .lp-story__feature-grid,
-    .lp-story__reviews,
-    .lp-story__offer-boxes {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+    .bm-problem__grid {
+      grid-template-columns: minmax(0, 320px) minmax(0, 1fr);
+      gap: 2rem;
     }
+    .bm-problem__figure { max-width: none; }
 
-    .lp-story__steps {
+    .bm-steps__list {
       grid-template-columns: repeat(4, minmax(0, 1fr));
     }
-
-    .lp-story__section--offer {
-      grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
-      gap: 1.2rem;
+    .bm-reviews__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
+    .bm-section { padding: 3rem 1rem; }
+  }
 
-    .lp-story__sticky-cta {
-      left: auto;
-      width: min(420px, calc(100vw - 2rem));
+  /* Mobile only: show burger, hide inline CTA in header on very tight widths */
+  @media (max-width: 749px) {
+    .bm-header__burger { display: inline-flex; }
+    .bm-header__cta {
+      padding: 0.55rem 0.95rem;
+      font-size: 0.82rem;
+    }
+  }
+  @media (max-width: 380px) {
+    .bm-header__cta { display: none; }
+  }
+
+  /* Perf: defer painting of below-fold blocks on capable browsers */
+  @supports (content-visibility: auto) {
+    .bm-ingredients,
+    .bm-reviews,
+    .bm-faq,
+    .bm-final {
+      content-visibility: auto;
+      contain-intrinsic-size: 1px 600px;
     }
   }
 
-  @media screen and (max-width: 749px) {
-    .lp-story__hero {
-      padding-top: 0.75rem;
+  /* Respect users who prefer reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .bm-announce__track { animation: none; }
+    #bayel-moss-lp *,
+    #bayel-moss-lp *::before,
+    #bayel-moss-lp *::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
     }
+  }
 
-    .lp-story__hero-media {
-      order: -1;
-      min-height: 360px;
-      padding-top: 2.5rem;
-    }
-
-    .lp-story__discount-badge {
-      top: 0;
-      left: 0.5rem;
-    }
-
-    .lp-story__price-card {
-      right: 0.2rem;
-      bottom: 0;
-    }
+  @media (min-width: 990px) {
+    .bm-hero__inner { max-width: 1000px; }
+    .bm-hero__title { font-size: 3.4rem; }
   }
 {% endstylesheet %}
 
+{% javascript %}
+  (function () {
+    const root = document.getElementById('bayel-moss-lp');
+    if (!root) return;
+
+    /* -------- OFFERS -> quantity + line properties -------- */
+    const offerInputs = root.querySelectorAll('input[name="bm-offer"]');
+    const qtyInput = root.querySelector('[data-bm-quantity]');
+    const offerProp = root.querySelector('[data-bm-offer-prop]');
+    const ctaLabel = root.querySelector('[data-bm-cta-label]');
+    const heroCta = root.querySelector('.bm-hero__cta');
+    const price1 = Number(root.dataset.price1) || 189;
+
+    function applyOffer(input) {
+      if (!input) return;
+      const qty = Number(input.dataset.qty) || 1;
+      const price = Number(input.dataset.price) || price1;
+      if (qtyInput) qtyInput.value = qty;
+      if (offerProp) offerProp.value = qty + ' units';
+      if (ctaLabel) ctaLabel.textContent = 'اطلب الآن · ' + price + ' درهم';
+    }
+
+    offerInputs.forEach((inp) => {
+      inp.addEventListener('change', () => applyOffer(inp));
+    });
+    const checked = root.querySelector('input[name="bm-offer"]:checked');
+    if (checked) applyOffer(checked);
+
+    /* -------- UGC: click to play/pause -------- */
+    const cards = root.querySelectorAll('.bm-ugc__card');
+    cards.forEach((card) => {
+      const video = card.querySelector('[data-ugc-video]');
+      const play = card.querySelector('[data-ugc-play]');
+      if (!video || !play) return;
+      const start = () => {
+        cards.forEach((c) => {
+          if (c !== card) {
+            const v = c.querySelector('video');
+            if (v) { v.pause(); }
+            c.classList.remove('is-playing');
+          }
+        });
+        video.muted = false;
+        video.play().then(() => card.classList.add('is-playing')).catch(() => {
+          video.muted = true;
+          video.play();
+          card.classList.add('is-playing');
+        });
+      };
+      play.addEventListener('click', start);
+      video.addEventListener('play', () => card.classList.add('is-playing'));
+      video.addEventListener('pause', () => card.classList.remove('is-playing'));
+      video.addEventListener('ended', () => card.classList.remove('is-playing'));
+    });
+
+    /* -------- Country prop always AE for this store -------- */
+    const countryProp = root.querySelector('[data-bm-country-prop]');
+    if (countryProp) countryProp.value = root.dataset.defaultCountry || 'AE';
+
+    /* -------- Hero CTA -> smooth scroll -------- */
+    if (heroCta) {
+      heroCta.addEventListener('click', (e) => {
+        const href = heroCta.getAttribute('href');
+        if (href && href.startsWith('#')) {
+          const el = document.querySelector(href);
+          if (el) {
+            e.preventDefault();
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }
+      });
+    }
+
+    /* -------- Smooth-scroll for ALL internal anchor links -------- */
+    root.addEventListener('click', (e) => {
+      const a = e.target.closest('a[href^="#"]');
+      if (!a || a === heroCta) return;
+      const href = a.getAttribute('href');
+      if (!href || href === '#') return;
+      const target = root.querySelector(href) || document.querySelector(href);
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Close drawer if open
+        const drawer = root.querySelector('[data-bm-drawer]');
+        const header = root.querySelector('.bm-header');
+        if (drawer && !drawer.hasAttribute('hidden')) {
+          drawer.setAttribute('hidden', '');
+          header && header.classList.remove('is-open');
+        }
+      }
+    });
+
+    /* -------- Burger toggle -------- */
+    const burger = root.querySelector('[data-bm-burger]');
+    const drawer = root.querySelector('[data-bm-drawer]');
+    const header = root.querySelector('.bm-header');
+    if (burger && drawer && header) {
+      burger.addEventListener('click', () => {
+        const isOpen = !drawer.hasAttribute('hidden');
+        if (isOpen) {
+          drawer.setAttribute('hidden', '');
+          header.classList.remove('is-open');
+        } else {
+          drawer.removeAttribute('hidden');
+          header.classList.add('is-open');
+        }
+      });
+    }
+  })();
+{% endjavascript %}
+
 {% schema %}
 {
-  "name": "Product landing story",
+  "name": "Bayel Moss LP",
   "tag": "section",
-  "class": "section-wrapper",
-  "settings": [],
-  "presets": [
+  "class": "bm-lp-wrapper",
+  "settings": [
     {
-      "name": "Product landing story",
-      "category": "Products"
+      "type": "header",
+      "content": "Offer prices (AED)"
+    },
+    { "type": "number", "id": "price_1", "label": "Price · 1 unit", "default": 189 },
+    { "type": "number", "id": "price_2", "label": "Price · 2 units", "default": 225 },
+    { "type": "number", "id": "price_3", "label": "Price · 3 units", "default": 299 },
+    { "type": "number", "id": "compare_1", "label": "Compare-at · 1 unit", "default": 249 },
+    { "type": "number", "id": "compare_2", "label": "Compare-at · 2 units", "default": 299 },
+    { "type": "number", "id": "compare_3", "label": "Compare-at · 3 units", "default": 349 },
+    {
+      "type": "header",
+      "content": "Contact"
+    },
+    { "type": "text", "id": "whatsapp_number", "label": "WhatsApp number (no +)", "default": "971542585701" },
+    {
+      "type": "header",
+      "content": "Lead export"
+    },
+    { "type": "checkbox", "id": "enable_lead_export", "label": "Enable lead export on form submit", "default": true },
+    { "type": "text", "id": "lead_backend_url", "label": "Backend URL (Amsel-compatible)" },
+    { "type": "text", "id": "lead_sheet_webhook_url", "label": "Google Sheet webhook URL" },
+    {
+      "type": "select",
+      "id": "default_country",
+      "label": "Default country code",
+      "default": "AE",
+      "options": [
+        { "value": "AE", "label": "AE" },
+        { "value": "SA", "label": "SA" },
+        { "value": "KW", "label": "KW" },
+        { "value": "QA", "label": "QA" },
+        { "value": "OM", "label": "OM" },
+        { "value": "BH", "label": "BH" }
+      ]
     }
+  ],
+  "presets": [
+    { "name": "Bayel Moss LP", "category": "Products" }
   ]
 }
 {% endschema %}
