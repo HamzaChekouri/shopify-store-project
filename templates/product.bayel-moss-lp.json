@@ -6,69 +6,22 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
- */
-{
+ */{
   "sections": {
     "landing_story": {
       "type": "product-landing-story",
       "settings": {
-        "price_1": 189,
-        "price_2": 225,
-        "price_3": 299,
-        "compare_1": 249,
-        "compare_2": 299,
-        "compare_3": 349,
-        "whatsapp_number": "971542585701",
-        "enable_lead_export": true,
-        "lead_backend_url": "",
-        "lead_sheet_webhook_url": "",
-        "default_country": "AE"
-      }
-    },
-    "1787855315b8bb7350": {
-      "type": "_blocks",
-      "settings": {
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "flex-start",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 12,
-        "section_width": "page-width",
-        "section_height": "",
-        "section_height_custom": 50,
-        "background_media": "none",
-        "background_color": "",
-        "video_position": "cover",
-        "background_image_position": "cover",
-        "toggle_overlay": false,
-        "overlay_color": "#00000026",
-        "overlay_style": "solid",
-        "gradient_direction": "to top",
-        "border": "none",
-        "border_width": 1,
-        "border_opacity": 100,
-        "border_color": "",
-        "border_radius": 0,
-        "padding-block-start": 0,
-        "padding-block-end": 0
+        "default_country": "AE",
+        "enable_lead_export": true
       }
     },
     "landing_footer": {
       "type": "product-landing-footer",
-      "settings": {
-        "brand_name": "بابل موس",
-        "brand_latin": "BAYEL MOSS",
-        "whatsapp_number": "971542585701",
-        "email": ""
-      }
+      "settings": {}
     }
   },
   "order": [
     "landing_story",
-    "1787855315b8bb7350",
     "landing_footer"
   ]
 }
