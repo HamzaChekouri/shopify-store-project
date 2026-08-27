@@ -90,10 +90,6 @@
 
       <div class="bm-hero__media">
         <div class="bm-hero__orb" aria-hidden="true"></div>
-        <div class="bm-hero__badge">
-          <span class="bm-hero__badge-num">-٦٠</span>
-          <span class="bm-hero__badge-label">درهم اليوم</span>
-        </div>
         <img
           src="{{ hero_image | asset_url }}"
           alt="{{ product.title | escape }}"
@@ -821,27 +817,6 @@
     object-fit: contain;
     filter: drop-shadow(0 25px 30px rgba(30, 74, 43, 0.28));
   }
-  .bm-hero__badge {
-    position: absolute;
-    top: 4%;
-    right: 2%;
-    background: var(--bm-green-dark);
-    color: #fff;
-    width: 74px;
-    height: 74px;
-    border-radius: 50%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-weight: 900;
-    box-shadow: 0 8px 20px rgba(30, 74, 43, 0.35);
-    transform: rotate(-8deg);
-    border: 3px solid #fff;
-    z-index: 2;
-  }
-  .bm-hero__badge-num { font-size: 1.15rem; line-height: 1; }
-  .bm-hero__badge-label { font-size: 0.65rem; margin-top: 2px; opacity: 0.9; }
 
   .bm-hero__trust {
     display: inline-flex;
