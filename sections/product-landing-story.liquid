@@ -1,0 +1,687 @@
+{% liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign price = current_variant.price
+  assign compare_at_price = current_variant.compare_at_price | default: current_variant.price
+  assign savings = compare_at_price | minus: price
+%}
+
+<section class="lp-story" id="top" dir="rtl">
+  <div class="lp-story__hero">
+    <div class="lp-story__hero-copy">
+      <p class="lp-story__eyebrow">{{ product.vendor | default: shop.name }} . صفحة مخصّصة لمنتج واحد</p>
+      <div class="lp-story__rating-row" aria-label="مؤشرات الثقة">
+        <span class="lp-story__stars">★★★★★</span>
+        <span class="lp-story__rating-copy">تجربة مركّزة لعرض المنتج بشكل واضح وسريع</span>
+      </div>
+      <h1 class="lp-story__title">{{ product.title }}</h1>
+      <p class="lp-story__lead">
+        {{ product.description | strip_html | truncatewords: 30 }}
+      </p>
+      <div class="lp-story__hero-points">
+        <span>مظهر مرتب وواضح للعرض</span>
+        <span>رسالة بيع مباشرة</span>
+        <span>انتقال سريع إلى الطلب</span>
+      </div>
+      <div class="lp-story__actions">
+        <a class="lp-story__button lp-story__button--primary" href="#lp-offer">اطلب الآن</a>
+        <a class="lp-story__button lp-story__button--secondary" href="#lp-how">طريقة الاستخدام</a>
+      </div>
+      <ul class="lp-story__trust-list" aria-label="مزايا الشراء">
+        <li>شحن سريع</li>
+        <li>دفع عند الاستلام</li>
+        <li>ضمان على الطلب</li>
+      </ul>
+    </div>
+
+    <div class="lp-story__hero-media">
+      <div class="lp-story__discount-badge">
+        {% if compare_at_price > price %}
+          وفر {{ savings | money }}
+        {% else %}
+          عرض اليوم
+        {% endif %}
+      </div>
+      <div class="lp-story__orb"></div>
+      {% if product.featured_image %}
+        {{
+          product.featured_image
+          | image_url: width: 1200
+          | image_tag:
+            widths: '480, 720, 960, 1200',
+            sizes: '(min-width: 990px) 42vw, 86vw',
+            alt: product.title,
+            class: 'lp-story__hero-image'
+        }}
+      {% endif %}
+      <div class="lp-story__price-card">
+        <span class="lp-story__price-label">السعر الحالي</span>
+        <div class="lp-story__price-row">
+          <strong>{{ price | money }}</strong>
+          {% if compare_at_price > price %}
+            <s>{{ compare_at_price | money }}</s>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="lp-story__marquee" aria-label="شريط المزايا">
+    <span>توصيل سريع 1-3 أيام</span>
+    <span>دفع عند الاستلام</span>
+    <span>نتيجة أوضح في صفحة واحدة</span>
+    <span>عرض مركز على منتج واحد</span>
+  </div>
+
+  <section class="lp-story__section lp-story__section--problem">
+    <div class="lp-story__section-head">
+      <span class="lp-story__section-kicker">المشكلة</span>
+      <h2>ليش صفحة المنتج الواحدة ترفع التحويل؟</h2>
+      <p>
+        لما تكون الرسالة مشتتة، العميل يضيع بين القوائم والخيارات. صفحة الهبوط المركّزة تختصر القرار:
+        منتج واضح، فوائد مباشرة، إثبات اجتماعي، ثم انتقال نظيف إلى الطلب.
+      </p>
+    </div>
+    <div class="lp-story__problem-grid">
+      <article class="lp-story__card">
+        <h3>رسالة موحّدة</h3>
+        <p>كل شيء في الصفحة يقود لنفس الهدف: شرح قيمة المنتج وإزالة التردد قبل الشراء.</p>
+      </article>
+      <article class="lp-story__card lp-story__card--accent">
+        <h3>عرض بصري أقوى</h3>
+        <p>صورة بطول الصفحة، سعر بارز، ونقاط ثقة سريعة تعطي الصفحة إحساسًا إعلانياً مقصوداً.</p>
+      </article>
+      <article class="lp-story__card">
+        <h3>قرار أسرع</h3>
+        <p>بدلاً من التنقل في المتجر، العميل يشوف التسلسل كاملاً ثم ينزل مباشرة إلى الطلب.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="lp-story__section" id="lp-how">
+    <div class="lp-story__section-head">
+      <span class="lp-story__section-kicker">الطريقة</span>
+      <h2>4 خطوات تخلي الصفحة مقنعة وسهلة</h2>
+      <p>رتبنا الصفحة كمسار بيع بسيط: جذب، شرح، ثقة، ثم طلب.</p>
+    </div>
+    <div class="lp-story__steps">
+      <article class="lp-story__step">
+        <span>1</span>
+        <h3>لفت الانتباه</h3>
+        <p>عنوان كبير، صورة قوية، وسعر ظاهر من أول شاشة.</p>
+      </article>
+      <article class="lp-story__step">
+        <span>2</span>
+        <h3>شرح الفائدة</h3>
+        <p>نوضح ما الذي يقدمه المنتج ولماذا هو مناسب للعميل بسرعة.</p>
+      </article>
+      <article class="lp-story__step">
+        <span>3</span>
+        <h3>بناء الثقة</h3>
+        <p>نضيف شهادات وتجهيزات الخدمة والأسئلة الشائعة لتخفيف الاعتراضات.</p>
+      </article>
+      <article class="lp-story__step">
+        <span>4</span>
+        <h3>الدفع إلى الطلب</h3>
+        <p>زر ثابت وروابط قصيرة تنقل العميل مباشرة إلى نموذج الشراء.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="lp-story__section lp-story__section--features">
+    <div class="lp-story__section-head">
+      <span class="lp-story__section-kicker">ليش يقتنع العميل</span>
+      <h2>تفاصيل البيع الأساسية جاهزة داخل الصفحة</h2>
+    </div>
+    <div class="lp-story__feature-grid">
+      <article class="lp-story__feature-card">
+        <h3>هوية لونية دافئة</h3>
+        <p>خلفية كريمية، أخضر واضح، ولمسات ذهبية تعطي نفس الإحساس التجاري المرجعي لكن بشكل أصلي.</p>
+      </article>
+      <article class="lp-story__feature-card">
+        <h3>قسم تقييمات ظاهر</h3>
+        <p>الشهادات توضع في مكان واضح بعد الشرح حتى تدعم القرار قبل الوصول للسعر والنموذج.</p>
+      </article>
+      <article class="lp-story__feature-card">
+        <h3>CTA ثابت بالموبايل</h3>
+        <p>يوصل العميل للطلب من أي مكان في الصفحة بدون الرجوع للأعلى.</p>
+      </article>
+      <article class="lp-story__feature-card">
+        <h3>FAQ مرتب</h3>
+        <p>الأسئلة المعتادة موجودة في نفس الصفحة حتى تقل الحاجة للدردشة قبل الشراء.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="lp-story__section" id="lp-reviews">
+    <div class="lp-story__section-head">
+      <span class="lp-story__section-kicker">آراء العملاء</span>
+      <h2>بناء ثقة سريع قبل الطلب</h2>
+    </div>
+    <div class="lp-story__reviews">
+      <article class="lp-story__review">
+        <p>"الصفحة صارت أقوى بكثير في الموبايل. المنتج واضح من أول ثانية وزر الطلب دائمًا قدام العميل."</p>
+        <strong>عميل موثّق</strong>
+        <span>الرياض</span>
+      </article>
+      <article class="lp-story__review">
+        <p>"الرسالة أوضح من صفحة المنتج العادية. الشرح والسعر والتقييمات كلها في نفس المسار."</p>
+        <strong>عميل موثّق</strong>
+        <span>دبي</span>
+      </article>
+      <article class="lp-story__review">
+        <p>"أفضل شيء هو إن الصفحة تبدو كحملة إعلانية متكاملة، لكن ما زالت مرتبطة بمنتج المتجر نفسه."</p>
+        <strong>عميل موثّق</strong>
+        <span>جدة</span>
+      </article>
+    </div>
+  </section>
+
+  <section class="lp-story__section lp-story__section--faq" id="lp-faq">
+    <div class="lp-story__section-head">
+      <span class="lp-story__section-kicker">قبل الطلب</span>
+      <h2>أسئلة تساعد العميل يحسم القرار</h2>
+    </div>
+    <div class="lp-story__faq-list">
+      <details open>
+        <summary>هل أقدر أطلب مباشرة من هذه الصفحة؟</summary>
+        <p>نعم. هذه الصفحة تقود العميل لنفس نموذج المنتج في الأسفل مع كل خياراته الحالية داخل المتجر.</p>
+      </details>
+      <details>
+        <summary>هل السعر في الأعلى هو نفس سعر المنتج؟</summary>
+        <p>السعر معروض ديناميكياً من أول متغير متاح للمنتج، لذلك يبقى متطابقاً مع بيانات المتجر.</p>
+      </details>
+      <details>
+        <summary>هل تشتغل الصفحة كويس على الجوال؟</summary>
+        <p>نعم. التخطيط مبني على الموبايل أولاً مع زر طلب ثابت وشريط تنقل بصري أخف.</p>
+      </details>
+      <details>
+        <summary>هل أقدر أخصص النصوص لاحقاً؟</summary>
+        <p>نعم. البنية موجودة الآن، وبعدها يمكننا استبدال أي نصوص أو تفاصيل لتناسب منتجك الفعلي.</p>
+      </details>
+    </div>
+  </section>
+
+  <section class="lp-story__section lp-story__section--offer" id="lp-offer">
+    <div class="lp-story__offer-copy">
+      <span class="lp-story__section-kicker">العرض</span>
+      <h2>جاهز للطلب؟ اختر من تفاصيل المنتج بالأسفل</h2>
+      <p>
+        هذا الجزء يتكامل مع نموذج المنتج الحالي في Shopify، لذلك تظل الصور، المتغيرات، وزر الإضافة إلى السلة
+        مربوطة ببيانات متجرك مباشرة.
+      </p>
+    </div>
+    <div class="lp-story__offer-boxes" aria-label="مزايا الطلب">
+      <article>
+        <strong>{{ price | money }}</strong>
+        <span>السعر الحالي</span>
+      </article>
+      <article>
+        <strong>سريع</strong>
+        <span>وصول واضح إلى الطلب</span>
+      </article>
+      <article>
+        <strong>مرن</strong>
+        <span>المتغيرات والخيارات تبقى من نفس المنتج</span>
+      </article>
+    </div>
+  </section>
+
+  <a class="lp-story__sticky-cta" href="#lp-offer" aria-label="الانتقال إلى الطلب">
+    <span class="lp-story__sticky-copy">
+      <strong>اطلب الآن</strong>
+      <small>{{ price | money }}</small>
+    </span>
+    <span class="lp-story__sticky-arrow">←</span>
+  </a>
+</section>
+
+{% stylesheet %}
+  body.template-product-landing {
+    --lp-cream: #f5efe3;
+    --lp-cream-strong: #efe5d3;
+    --lp-green: #2f9346;
+    --lp-green-dark: #163024;
+    --lp-gold: #caa04a;
+    --lp-border: rgba(22, 48, 36, 0.12);
+    --lp-shadow: 0 24px 60px rgba(22, 48, 36, 0.14);
+  }
+
+  .lp-story {
+    color: var(--lp-green-dark);
+    padding: 0 0 7rem;
+    font-family: 'DIN Next LT Arabic', 'SF Pro Arabic', 'Geeza Pro', Tahoma, var(--font-body--family), sans-serif;
+  }
+
+  .lp-story__hero,
+  .lp-story__section,
+  .lp-story__marquee {
+    width: min(1180px, calc(100% - 2rem));
+    margin: 0 auto;
+  }
+
+  .lp-story__hero {
+    display: grid;
+    gap: 2rem;
+    align-items: center;
+    padding: 1.5rem 0 2rem;
+  }
+
+  .lp-story__hero-copy {
+    display: grid;
+    gap: 1.1rem;
+  }
+
+  .lp-story__eyebrow,
+  .lp-story__section-kicker {
+    margin: 0;
+    color: var(--lp-green);
+    font-size: 0.85rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .lp-story__rating-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+    font-size: 0.95rem;
+  }
+
+  .lp-story__stars {
+    color: var(--lp-gold);
+    letter-spacing: 0.18em;
+  }
+
+  .lp-story__title {
+    margin: 0;
+    font-family: 'DIN Next LT Arabic', 'SF Pro Arabic', 'Geeza Pro', Tahoma, var(--font-heading--family), sans-serif;
+    font-size: clamp(2.9rem, 8vw, 6.4rem);
+    line-height: 0.92;
+    max-width: 10ch;
+    text-wrap: balance;
+  }
+
+  .lp-story__lead,
+  .lp-story__section-head p,
+  .lp-story__card p,
+  .lp-story__step p,
+  .lp-story__feature-card p,
+  .lp-story__review p,
+  .lp-story__faq-list p,
+  .lp-story__offer-copy p {
+    margin: 0;
+    font-size: 1.02rem;
+    line-height: 1.9;
+    color: rgba(22, 48, 36, 0.82);
+  }
+
+  .lp-story__hero-points,
+  .lp-story__trust-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .lp-story__hero-points span,
+  .lp-story__trust-list li,
+  .lp-story__marquee span {
+    border: 1px solid var(--lp-border);
+    background: rgba(255, 255, 255, 0.72);
+    border-radius: 999px;
+    padding: 0.7rem 1rem;
+    font-size: 0.92rem;
+  }
+
+  .lp-story__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+  }
+
+  .lp-story__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 178px;
+    padding: 1rem 1.35rem;
+    border-radius: 999px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: transform var(--animation-speed) var(--animation-easing), box-shadow var(--animation-speed) var(--animation-easing);
+  }
+
+  .lp-story__button:hover {
+    transform: translateY(-2px);
+  }
+
+  .lp-story__button--primary {
+    color: #fff;
+    background: linear-gradient(135deg, #2f9346, #237237);
+    box-shadow: 0 18px 38px rgba(47, 147, 70, 0.24);
+  }
+
+  .lp-story__button--secondary {
+    color: var(--lp-green-dark);
+    border: 1px solid var(--lp-border);
+    background: rgba(255, 255, 255, 0.65);
+  }
+
+  .lp-story__hero-media {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-height: 430px;
+    padding: 3rem 0 2rem;
+  }
+
+  .lp-story__orb {
+    position: absolute;
+    width: min(82vw, 560px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, rgba(182, 236, 169, 0.92), rgba(154, 215, 144, 0.55) 58%, rgba(154, 215, 144, 0.12) 100%);
+    filter: blur(0.2px);
+  }
+
+  .lp-story__hero-image {
+    position: relative;
+    z-index: 1;
+    width: min(100%, 460px);
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 32px 50px rgba(22, 48, 36, 0.24));
+  }
+
+  .lp-story__discount-badge,
+  .lp-story__price-card {
+    position: absolute;
+    z-index: 2;
+    border-radius: 26px;
+    box-shadow: var(--lp-shadow);
+  }
+
+  .lp-story__discount-badge {
+    top: 1rem;
+    left: max(0rem, 3vw);
+    padding: 1rem 1.2rem;
+    background: var(--lp-gold);
+    color: var(--lp-green-dark);
+    font-weight: 800;
+    transform: rotate(-10deg);
+  }
+
+  .lp-story__price-card {
+    right: 0;
+    bottom: 1rem;
+    min-width: 185px;
+    padding: 1rem 1.15rem;
+    background: rgba(255, 255, 255, 0.94);
+    border: 1px solid rgba(255, 255, 255, 0.72);
+  }
+
+  .lp-story__price-label {
+    display: block;
+    margin-bottom: 0.4rem;
+    color: rgba(22, 48, 36, 0.65);
+    font-size: 0.82rem;
+  }
+
+  .lp-story__price-row {
+    display: flex;
+    gap: 0.8rem;
+    align-items: baseline;
+  }
+
+  .lp-story__price-row strong {
+    font-size: 1.7rem;
+  }
+
+  .lp-story__price-row s {
+    color: rgba(22, 48, 36, 0.46);
+  }
+
+  .lp-story__marquee {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    justify-content: center;
+    padding: 0 0 1rem;
+  }
+
+  .lp-story__section {
+    display: grid;
+    gap: 1.5rem;
+    padding: 2.4rem 0;
+  }
+
+  .lp-story__section-head {
+    display: grid;
+    gap: 0.8rem;
+    max-width: 760px;
+  }
+
+  .lp-story__section-head h2 {
+    margin: 0;
+    font-family: 'DIN Next LT Arabic', 'SF Pro Arabic', 'Geeza Pro', Tahoma, var(--font-heading--family), sans-serif;
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    line-height: 1.02;
+  }
+
+  .lp-story__problem-grid,
+  .lp-story__feature-grid,
+  .lp-story__reviews,
+  .lp-story__offer-boxes {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .lp-story__card,
+  .lp-story__feature-card,
+  .lp-story__review,
+  .lp-story__offer-boxes article {
+    padding: 1.4rem;
+    border-radius: 28px;
+    border: 1px solid var(--lp-border);
+    background: rgba(255, 255, 255, 0.72);
+    box-shadow: 0 14px 30px rgba(22, 48, 36, 0.05);
+  }
+
+  .lp-story__card--accent {
+    background: linear-gradient(145deg, rgba(47, 147, 70, 0.12), rgba(202, 160, 74, 0.18));
+  }
+
+  .lp-story__card h3,
+  .lp-story__step h3,
+  .lp-story__feature-card h3,
+  .lp-story__offer-boxes strong {
+    margin: 0 0 0.55rem;
+    font-size: 1.2rem;
+  }
+
+  .lp-story__steps {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .lp-story__step {
+    padding: 1.4rem;
+    border-radius: 30px;
+    background: rgba(239, 229, 211, 0.72);
+    border: 1px solid rgba(22, 48, 36, 0.08);
+  }
+
+  .lp-story__step span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-bottom: 1rem;
+    border-radius: 50%;
+    color: #fff;
+    background: var(--lp-green);
+    font-weight: 700;
+  }
+
+  .lp-story__review strong,
+  .lp-story__review span {
+    display: block;
+  }
+
+  .lp-story__review strong {
+    margin-top: 1rem;
+  }
+
+  .lp-story__review span {
+    color: rgba(22, 48, 36, 0.62);
+    font-size: 0.92rem;
+  }
+
+  .lp-story__faq-list {
+    display: grid;
+    gap: 0.85rem;
+  }
+
+  .lp-story__faq-list details {
+    padding: 1.2rem 1.25rem;
+    border-radius: 24px;
+    border: 1px solid var(--lp-border);
+    background: rgba(255, 255, 255, 0.7);
+  }
+
+  .lp-story__faq-list summary {
+    cursor: pointer;
+    font-weight: 700;
+    list-style: none;
+  }
+
+  .lp-story__faq-list summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .lp-story__faq-list p {
+    margin-top: 0.85rem;
+  }
+
+  .lp-story__section--offer {
+    align-items: start;
+    padding-bottom: 1rem;
+  }
+
+  .lp-story__offer-copy {
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .lp-story__offer-boxes article {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .lp-story__offer-boxes span {
+    color: rgba(22, 48, 36, 0.68);
+  }
+
+  .lp-story__sticky-cta {
+    position: fixed;
+    right: 1rem;
+    left: 1rem;
+    bottom: 1rem;
+    z-index: calc(var(--layer-menu-drawer) - 1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1.15rem;
+    border-radius: 999px;
+    color: #fff;
+    background: linear-gradient(135deg, #2f9346, #226b34);
+    box-shadow: 0 22px 50px rgba(34, 107, 52, 0.34);
+    text-decoration: none;
+  }
+
+  .lp-story__sticky-copy {
+    display: grid;
+  }
+
+  .lp-story__sticky-copy strong,
+  .lp-story__sticky-copy small,
+  .lp-story__sticky-arrow {
+    color: inherit;
+  }
+
+  .lp-story__sticky-arrow {
+    font-size: 1.4rem;
+    line-height: 1;
+  }
+
+  @media screen and (min-width: 750px) {
+    .lp-story__hero {
+      grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.95fr);
+      gap: 3rem;
+      padding-top: 2rem;
+    }
+
+    .lp-story__problem-grid,
+    .lp-story__feature-grid,
+    .lp-story__reviews,
+    .lp-story__offer-boxes {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .lp-story__steps {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .lp-story__section--offer {
+      grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+      gap: 1.2rem;
+    }
+
+    .lp-story__sticky-cta {
+      left: auto;
+      width: min(420px, calc(100vw - 2rem));
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .lp-story__hero {
+      padding-top: 0.75rem;
+    }
+
+    .lp-story__hero-media {
+      order: -1;
+      min-height: 360px;
+      padding-top: 2.5rem;
+    }
+
+    .lp-story__discount-badge {
+      top: 0;
+      left: 0.5rem;
+    }
+
+    .lp-story__price-card {
+      right: 0.2rem;
+      bottom: 0;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Product landing story",
+  "tag": "section",
+  "class": "section-wrapper",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Product landing story",
+      "category": "Products"
+    }
+  ]
+}
+{% endschema %}

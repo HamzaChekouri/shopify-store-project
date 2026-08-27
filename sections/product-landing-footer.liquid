@@ -1,0 +1,118 @@
+<section class="lp-footer-section" dir="rtl">
+  <div class="lp-footer-section__inner">
+    <div class="lp-footer-section__brand">
+      <p class="lp-footer-section__eyebrow">{{ shop.name }}</p>
+      <h2>صفحة بيع مخصّصة لمنتج واحد</h2>
+      <p>
+        بنية هبوط مركّزة تشبه الحملات الإعلانية الحديثة: بطل بصري قوي، ثقة، شرح، أسئلة شائعة، ثم طلب واضح.
+      </p>
+    </div>
+
+    <div class="lp-footer-section__column">
+      <h3>المتجر</h3>
+      <a href="#lp-offer">اطلب الآن</a>
+      <a href="#lp-how">طريقة العرض</a>
+      <a href="#lp-reviews">التقييمات</a>
+    </div>
+
+    <div class="lp-footer-section__column">
+      <h3>المساعدة</h3>
+      <a href="#lp-faq">الأسئلة الشائعة</a>
+      <a href="{{ routes.root_url }}">الرئيسية</a>
+      <a href="{{ routes.cart_url }}">السلة</a>
+    </div>
+
+    <div class="lp-footer-section__column">
+      <h3>تواصل</h3>
+      {% if shop.email != blank %}
+        <a href="mailto:{{ shop.email }}">{{ shop.email }}</a>
+      {% endif %}
+      <span>© {{ 'now' | date: '%Y' }} {{ shop.name }}</span>
+      <span>تصميم هبوط مخصص داخل Shopify</span>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .lp-footer-section {
+    margin-top: 2rem;
+    background: #163024;
+    color: rgba(255, 249, 240, 0.9);
+    font-family: 'DIN Next LT Arabic', 'SF Pro Arabic', 'Geeza Pro', Tahoma, var(--font-body--family), sans-serif;
+  }
+
+  .lp-footer-section__inner {
+    width: min(1180px, calc(100% - 2rem));
+    margin: 0 auto;
+    display: grid;
+    gap: 1.5rem;
+    padding: 2.5rem 0 3rem;
+  }
+
+  .lp-footer-section__eyebrow {
+    margin: 0 0 0.6rem;
+    color: #caa04a;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-size: 0.82rem;
+  }
+
+  .lp-footer-section h2,
+  .lp-footer-section h3,
+  .lp-footer-section p {
+    margin: 0;
+  }
+
+  .lp-footer-section h2 {
+    font-family: 'DIN Next LT Arabic', 'SF Pro Arabic', 'Geeza Pro', Tahoma, var(--font-heading--family), sans-serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    line-height: 1.05;
+  }
+
+  .lp-footer-section h3 {
+    font-family: 'DIN Next LT Arabic', 'SF Pro Arabic', 'Geeza Pro', Tahoma, var(--font-heading--family), sans-serif;
+  }
+
+  .lp-footer-section p,
+  .lp-footer-section span,
+  .lp-footer-section a {
+    color: rgba(255, 249, 240, 0.8);
+    line-height: 1.9;
+  }
+
+  .lp-footer-section__column {
+    display: grid;
+    gap: 0.45rem;
+    align-content: start;
+  }
+
+  .lp-footer-section__column a {
+    text-decoration: none;
+  }
+
+  .lp-footer-section__column a:hover {
+    color: #fff;
+  }
+
+  @media screen and (min-width: 750px) {
+    .lp-footer-section__inner {
+      grid-template-columns: minmax(0, 1.3fr) repeat(3, minmax(0, 0.6fr));
+      align-items: start;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Product landing footer",
+  "tag": "section",
+  "class": "section-wrapper",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Product landing footer",
+      "category": "Footer"
+    }
+  ]
+}
+{% endschema %}
