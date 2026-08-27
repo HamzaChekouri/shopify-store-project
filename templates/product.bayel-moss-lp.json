@@ -27,17 +27,6 @@
     },
     "1787855315b8bb7350": {
       "type": "_blocks",
-      "blocks": {
-        "easysell_cod_form_app_block_3Ba3Ux": {
-          "type": "shopify://apps/easysell-cod-form/blocks/app-block/7bfd0a95-6839-4f02-b2ee-896832dbe67e",
-          "settings": {
-            "product": "بابل-موس"
-          }
-        }
-      },
-      "block_order": [
-        "easysell_cod_form_app_block_3Ba3Ux"
-      ],
       "settings": {
         "content_direction": "column",
         "vertical_on_mobile": true,
