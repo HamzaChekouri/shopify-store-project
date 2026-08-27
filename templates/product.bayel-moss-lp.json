@@ -17,7 +17,9 @@
     },
     "landing_footer": {
       "type": "product-landing-footer",
-      "settings": {}
+      "settings": {
+        "email": "contact@dr-sami.com"
+      }
     }
   },
   "order": [
