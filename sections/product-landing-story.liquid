@@ -81,18 +81,18 @@
     <div class="bm-hero__inner">
       <p class="bm-hero__eyebrow">بابل موس · العناية بشعر الرجل</p>
       <h1 class="bm-hero__title">
-        غطِّ الشيب بدقيقة<br>
-        <span class="bm-hero__title-em">وارجع لشكلك الأصغر</span>
+        غطِّ الشيب من أول استخدام<br>
+        <span class="bm-hero__title-em">ورجّع شكلك الأصغر بسنين</span>
       </h1>
       <p class="bm-hero__lead">
-        موس رغوي عشبي يغطّي الشيب بلون طبيعي غامق من أول استخدام. بدون أمونيا، بدون فوضى، وبدون ما أحد يحس إنه مصبوغ — تسوّيه بنفسك في البيت بدقائق.
+        موس رغوي عشبي يغطّي الشيب بلون طبيعي غامق من أول مرة. بدون أمونيا، بدون فوضى، وبدون ما أحد يحسّ إنه مصبوغ — تسوّيه بنفسك في البيت بـ ٥ دقائق.
       </p>
 
       <div class="bm-hero__media">
         <div class="bm-hero__orb" aria-hidden="true"></div>
         <div class="bm-hero__badge">
-          <span class="bm-hero__badge-num">60٪</span>
-          <span class="bm-hero__badge-label">خصم اليوم</span>
+          <span class="bm-hero__badge-num">-٦٠</span>
+          <span class="bm-hero__badge-label">درهم اليوم</span>
         </div>
         <img
           src="{{ hero_image | asset_url }}"
@@ -165,53 +165,6 @@
     </div>
   </section>
 
-  {%- comment -%} ============ ORDER SECTION (EasySell renders its own form + offers) ============ {%- endcomment -%}
-  <section class="bm-section bm-order" id="lp-order">
-    <div class="bm-section__head">
-      <span class="bm-kicker">اطلب الآن</span>
-      <h2 class="bm-section__title">اختر باقتك وسجّل بياناتك بالأسفل</h2>
-      <p class="bm-section__sub">كل الباقات شحن مجاني + الدفع عند الاستلام داخل الإمارات. الأسعار بـدرهم إماراتي.</p>
-    </div>
-
-    <div class="bm-order__intro">
-      <ul class="bm-order__benefits" aria-label="مزايا الطلب">
-        <li><span class="bm-order__benefit-ic" aria-hidden="true">💵</span><div><strong>ادفع كاش عند الاستلام</strong><span>ما تدفع أي شي الحين — تدفع لما يوصلك الطلب.</span></div></li>
-        <li><span class="bm-order__benefit-ic" aria-hidden="true">🚚</span><div><strong>توصيل مجاني داخل الإمارات</strong><span>يوصلك خلال ١-٣ أيام عمل مع رسالة تتبّع.</span></div></li>
-        <li><span class="bm-order__benefit-ic" aria-hidden="true">🔒</span><div><strong>ضمان استرجاع ٣٠ يوم</strong><span>ما عجبتك النتيجة؟ نرجّع لك مبلغك كامل.</span></div></li>
-      </ul>
-      <div class="bm-order__pointer" aria-hidden="true">
-        <span>اختر الباقة واملأ بياناتك بالأسفل</span>
-        <span class="bm-order__pointer-arrow">↓</span>
-      </div>
-    </div>
-
-    {%- comment -%}
-      Hidden form: EasySell COD app renders its OWN visible form (offers + name/phone/city
-      + CTA "اطلب الحين !") right below via native_placement="after". We keep this hidden
-      form as the anchor EasySell hooks onto to detect the product and inject its widget.
-      EasySell's injected CSS already hides [name="add"] / [action$="/cart/add"] button,
-      so we don't render our own visible CTA anymore.
-    {%- endcomment -%}
-    <form
-      method="post"
-      action="{{ routes.cart_add_url }}"
-      class="bm-form bm-form--anchor"
-      id="bm-order-form"
-      accept-charset="UTF-8"
-      enctype="multipart/form-data"
-      data-product-form
-      data-easysell-form
-      aria-hidden="true"
-    >
-      <input type="hidden" name="form_type" value="product">
-      <input type="hidden" name="utf8" value="✓">
-      <input type="hidden" name="id" value="{{ variant_id }}">
-      <input type="hidden" name="quantity" value="1">
-      <input type="hidden" name="properties[Country]" value="AE">
-      <button type="submit" name="add" hidden aria-hidden="true" tabindex="-1">اطلب</button>
-    </form>
-  </section>
-
   {%- comment -%} ============ PROBLEM ============ {%- endcomment -%}
   <section class="bm-section bm-problem">
     <div class="bm-section__head">
@@ -243,6 +196,33 @@
       <strong>بابل موس يحلّها من جذرها:</strong>
       رغوة عشبية تغطّي الشيب بلون طبيعي غامق، تطبّقها بنفسك في البيت خلال دقائق — والنتيجة تبان طبيعية ما تنكشف.
     </div>
+  </section>
+
+  {%- comment -%} ============ RESULTS TIMELINE ============ {%- endcomment -%}
+  <section class="bm-section bm-timeline">
+    <div class="bm-section__head">
+      <span class="bm-kicker">النتائج</span>
+      <h2 class="bm-section__title">وش تتوقّع من أوّل يوم؟</h2>
+      <p class="bm-section__sub">جدول واضح مبني على تجارب أكثر من +١٢،٠٠٠ عميل.</p>
+    </div>
+
+    <ol class="bm-timeline__list">
+      <li class="bm-timeline__item">
+        <span class="bm-timeline__badge">اليوم ١</span>
+        <h3>تغطية فورية</h3>
+        <p>الشيب يختفي من أول تطبيق، بلون طبيعي غامق ما يبيّن إنه مصبوغ.</p>
+      </li>
+      <li class="bm-timeline__item">
+        <span class="bm-timeline__badge">الأسبوع الأوّل</span>
+        <h3>لون متجانس وثابت</h3>
+        <p>التركيبة تتثبّت واللون يصير متجانس مع لون شعرك الأصلي. مرتين في الأسبوع تكفي.</p>
+      </li>
+      <li class="bm-timeline__item">
+        <span class="bm-timeline__badge">الشهر الأوّل</span>
+        <h3>شعر أقوى وأصحّ</h3>
+        <p>المكوّنات العشبية تحفّز الفروة، الشعر يصير أكثر كثافة وحيوية، والشيب يبطّئ ظهوره.</p>
+      </li>
+    </ol>
   </section>
 
   {%- comment -%} ============ HOW TO USE ============ {%- endcomment -%}
@@ -286,15 +266,78 @@
     </div>
 
     <ul class="bm-ingredients__chips">
-      <li>🍵 مستخلص الشاي الأخضر</li>
-      <li>🫐 خلاصة التوت الأسود</li>
-      <li>🫚 الجينسنغ</li>
-      <li>💧 زيت الأرغان</li>
-      <li>🧪 البانثينول B5</li>
-      <li>🌵 الصبار</li>
-      <li>🌿 عرق السوس</li>
-      <li>🌾 بروتين القمح</li>
+      <li><span class="bm-ing__ic" aria-hidden="true">🍵</span><strong>مستخلص الشاي الأخضر</strong><em>مضاد أكسدة يحمي بصيلات الشعر</em></li>
+      <li><span class="bm-ing__ic" aria-hidden="true">🫐</span><strong>خلاصة التوت الأسود</strong><em>يعمّق اللون بشكل طبيعي</em></li>
+      <li><span class="bm-ing__ic" aria-hidden="true">🧬</span><strong>الجينسنغ</strong><em>ينشّط فروة الرأس ويبطّئ الشيب</em></li>
+      <li><span class="bm-ing__ic" aria-hidden="true">💧</span><strong>زيت الأرغان</strong><em>يرطّب ويعطي لمعان طبيعي</em></li>
+      <li><span class="bm-ing__ic" aria-hidden="true">🧪</span><strong>البانثينول B5</strong><em>يقوّي الشعر ويمنع التقصّف</em></li>
+      <li><span class="bm-ing__ic" aria-hidden="true">🌵</span><strong>الصبار</strong><em>يهدّئ الفروة ويرطّبها</em></li>
+      <li><span class="bm-ing__ic" aria-hidden="true">🌿</span><strong>عرق السوس</strong><em>يحافظ على صحّة الشعر</em></li>
+      <li><span class="bm-ing__ic" aria-hidden="true">🌾</span><strong>بروتين القمح</strong><em>يمنح كثافة وقوّة</em></li>
     </ul>
+  </section>
+
+  {%- comment -%} ============ COMPARISON TABLE ============ {%- endcomment -%}
+  <section class="bm-section bm-compare">
+    <div class="bm-section__head">
+      <span class="bm-kicker">ليش بابل موس؟</span>
+      <h2 class="bm-section__title">الفرق واضح من أوّل نظرة</h2>
+      <p class="bm-section__sub">قارن بنفسك: بابل موس ضدّ الصبغة العادية والكوافير.</p>
+    </div>
+
+    <div class="bm-compare__wrap">
+      <table class="bm-compare__table" role="table">
+        <thead>
+          <tr>
+            <th scope="col" class="bm-compare__row-head"></th>
+            <th scope="col" class="bm-compare__col bm-compare__col--us">
+              <span class="bm-compare__logo">◆</span>
+              بابل موس
+            </th>
+            <th scope="col" class="bm-compare__col">الصبغة العادية</th>
+            <th scope="col" class="bm-compare__col">الكوافير</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">التركيبة</th>
+            <td class="bm-compare__cell--us"><span class="bm-tick">✓</span> عشبية طبيعية</td>
+            <td><span class="bm-x">✕</span> أمونيا وبيروكسيد</td>
+            <td><span class="bm-tick">✓</span> منتجات محترفة</td>
+          </tr>
+          <tr>
+            <th scope="row">مظهر اللون</th>
+            <td class="bm-compare__cell--us"><span class="bm-tick">✓</span> طبيعي ما ينكشف</td>
+            <td><span class="bm-x">✕</span> صناعي واضح</td>
+            <td><span class="bm-tick">✓</span> طبيعي</td>
+          </tr>
+          <tr>
+            <th scope="row">وقت التطبيق</th>
+            <td class="bm-compare__cell--us"><span class="bm-tick">✓</span> ٥-١٠ دقائق في البيت</td>
+            <td><span class="bm-x">✕</span> ٣٠-٤٥ دقيقة + فوضى</td>
+            <td><span class="bm-x">✕</span> ساعة حجز + مواعيد</td>
+          </tr>
+          <tr>
+            <th scope="row">التكلفة الشهرية</th>
+            <td class="bm-compare__cell--us"><span class="bm-tick">✓</span> من {{ price_1 }} درهم</td>
+            <td><span class="bm-x">✕</span> ~٤٠ درهم + ضرر</td>
+            <td><span class="bm-x">✕</span> ١٠٠+ درهم للجلسة</td>
+          </tr>
+          <tr>
+            <th scope="row">الفوضى</th>
+            <td class="bm-compare__cell--us"><span class="bm-tick">✓</span> بدون فرشاة أو قفّاز</td>
+            <td><span class="bm-x">✕</span> بقع ورائحة</td>
+            <td><span class="bm-tick">✓</span> ما فيه منك فوضى</td>
+          </tr>
+          <tr>
+            <th scope="row">خصوصية</th>
+            <td class="bm-compare__cell--us"><span class="bm-tick">✓</span> تسوّيه لوحدك</td>
+            <td><span class="bm-tick">✓</span> في البيت</td>
+            <td><span class="bm-x">✕</span> قدّام الناس</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </section>
 
   {%- comment -%} ============ REVIEWS ============ {%- endcomment -%}
@@ -345,6 +388,51 @@
     </div>
   </section>
 
+  {%- comment -%} ============ ORDER SECTION (EasySell renders its own form + offers) ============ {%- endcomment -%}
+  <section class="bm-section bm-order" id="lp-order">
+    <div class="bm-section__head">
+      <span class="bm-kicker">اطلب الآن</span>
+      <h2 class="bm-section__title">اختر باقتك وسجّل بياناتك بالأسفل</h2>
+      <p class="bm-section__sub">كل الباقات شحن مجاني + الدفع عند الاستلام داخل الإمارات. الأسعار بـدرهم إماراتي.</p>
+    </div>
+
+    <div class="bm-order__intro">
+      <ul class="bm-order__benefits" aria-label="مزايا الطلب">
+        <li><span class="bm-order__benefit-ic" aria-hidden="true">💵</span><div><strong>ادفع كاش عند الاستلام</strong><span>ما تدفع أي شي الحين — تدفع لما يوصلك الطلب.</span></div></li>
+        <li><span class="bm-order__benefit-ic" aria-hidden="true">🚚</span><div><strong>توصيل مجاني داخل الإمارات</strong><span>يوصلك خلال ١-٣ أيام عمل مع رسالة تتبّع.</span></div></li>
+        <li><span class="bm-order__benefit-ic" aria-hidden="true">🔒</span><div><strong>ضمان استرجاع ٣٠ يوم</strong><span>ما عجبتك النتيجة؟ نرجّع لك مبلغك كامل.</span></div></li>
+      </ul>
+      <div class="bm-order__pointer" aria-hidden="true">
+        <span>اختر الباقة واملأ بياناتك بالأسفل</span>
+        <span class="bm-order__pointer-arrow">↓</span>
+      </div>
+    </div>
+
+    {%- comment -%}
+      Hidden form: EasySell COD app renders its OWN visible form (offers + name/phone/city
+      + CTA "اطلب الحين !") right below via native_placement="after". We keep this hidden
+      form as the anchor EasySell hooks onto to detect the product and inject its widget.
+    {%- endcomment -%}
+    <form
+      method="post"
+      action="{{ routes.cart_add_url }}"
+      class="bm-form bm-form--anchor"
+      id="bm-order-form"
+      accept-charset="UTF-8"
+      enctype="multipart/form-data"
+      data-product-form
+      data-easysell-form
+      aria-hidden="true"
+    >
+      <input type="hidden" name="form_type" value="product">
+      <input type="hidden" name="utf8" value="✓">
+      <input type="hidden" name="id" value="{{ variant_id }}">
+      <input type="hidden" name="quantity" value="1">
+      <input type="hidden" name="properties[Country]" value="AE">
+      <button type="submit" name="add" hidden aria-hidden="true" tabindex="-1">اطلب</button>
+    </form>
+  </section>
+
   {%- comment -%} ============ FAQ ============ {%- endcomment -%}
   <section class="bm-section bm-faq" id="lp-faq">
     <div class="bm-section__head">
@@ -386,6 +474,13 @@
     <p>اطلب الحين وادفع كاش عند الاستلام. جرّب بابل موس بضمان ٣٠ يوم.</p>
     <a href="#lp-order" class="bm-final__cta">اطلب الآن — ابدأ من {{ price_1 }} درهم</a>
   </section>
+
+  {%- comment -%} ============ STICKY MOBILE CTA ============ {%- endcomment -%}
+  <a href="#lp-order" class="bm-sticky-cta" data-bm-sticky-cta aria-label="اطلب الآن">
+    <span class="bm-sticky-cta__label">اطلب الآن — دفع عند الاستلام</span>
+    <span class="bm-sticky-cta__price">من {{ price_1 }} درهم</span>
+    <span class="bm-sticky-cta__arrow" aria-hidden="true">←</span>
+  </a>
 
   {%- comment -%} ============ FLOATING WHATSAPP ============ {%- endcomment -%}
   <a
@@ -1157,21 +1252,190 @@
   }
   .bm-ingredients .bm-section__head { max-width: 640px; margin-left: auto; margin-right: auto; }
   .bm-ingredients__chips {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.55rem;
-    max-width: 720px;
-    margin: 1.25rem auto 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 0.75rem;
+    max-width: 880px;
+    margin: 1.4rem auto 0;
+    list-style: none;
   }
   .bm-ingredients__chips li {
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.16);
-    padding: 0.55rem 1rem;
-    border-radius: 999px;
-    font-size: 0.9rem;
-    font-weight: 600;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.14);
+    padding: 0.85rem 1rem;
+    border-radius: 14px;
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    grid-template-rows: auto auto;
+    column-gap: 0.75rem;
+    row-gap: 0.15rem;
+    align-items: start;
+    text-align: right;
   }
+  .bm-ing__ic {
+    grid-row: 1 / span 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: rgba(255,255,255,0.10);
+    border-radius: 10px;
+    font-size: 1.15rem;
+  }
+  .bm-ingredients__chips strong {
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.3;
+  }
+  .bm-ingredients__chips em {
+    font-style: normal;
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.72);
+    line-height: 1.45;
+  }
+
+  /* ============ TIMELINE ============ */
+  .bm-timeline__list {
+    list-style: none;
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.9rem;
+    padding: 0;
+    counter-reset: bmtl;
+  }
+  .bm-timeline__item {
+    background: #fff;
+    padding: 1.15rem 1.15rem 1rem;
+    border-radius: var(--bm-radius);
+    box-shadow: var(--bm-shadow);
+    border: 1px solid var(--bm-border);
+    position: relative;
+    padding-inline-start: 1.15rem;
+  }
+  .bm-timeline__badge {
+    display: inline-block;
+    background: linear-gradient(90deg, var(--bm-green-dark), var(--bm-green));
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.82rem;
+    padding: 0.3rem 0.75rem;
+    border-radius: 999px;
+    margin-bottom: 0.6rem;
+    letter-spacing: 0.02em;
+  }
+  .bm-timeline__item h3 {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--bm-green-dark);
+    margin-bottom: 0.4rem;
+    line-height: 1.35;
+  }
+  .bm-timeline__item p {
+    font-size: 0.95rem;
+    color: var(--bm-muted);
+    line-height: 1.65;
+  }
+
+  /* ============ COMPARISON TABLE ============ */
+  .bm-compare__wrap {
+    max-width: 960px;
+    margin: 0 auto;
+    overflow-x: auto;
+    border-radius: var(--bm-radius);
+    box-shadow: var(--bm-shadow);
+    background: #fff;
+    border: 1px solid var(--bm-border);
+  }
+  .bm-compare__table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    min-width: 520px;
+  }
+  .bm-compare__table th,
+  .bm-compare__table td {
+    padding: 0.85rem 0.7rem;
+    text-align: center;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--bm-border);
+  }
+  .bm-compare__table thead th {
+    background: #faf6ee;
+    font-weight: 800;
+    color: var(--bm-green-dark);
+    font-size: 0.88rem;
+    border-bottom: 2px solid var(--bm-border);
+  }
+  .bm-compare__col--us {
+    background: linear-gradient(180deg, var(--bm-green-dark), var(--bm-green)) !important;
+    color: #fff !important;
+    position: relative;
+  }
+  .bm-compare__logo {
+    display: inline-block;
+    color: var(--bm-gold);
+    margin-inline-end: 0.3rem;
+    font-size: 1rem;
+  }
+  .bm-compare__table tbody th {
+    text-align: right;
+    background: #faf6ee;
+    font-weight: 700;
+    color: var(--bm-text);
+    font-size: 0.88rem;
+    white-space: nowrap;
+  }
+  .bm-compare__cell--us {
+    background: rgba(47, 107, 63, 0.06);
+    font-weight: 600;
+    color: var(--bm-green-dark);
+  }
+  .bm-compare__table tbody tr:last-child th,
+  .bm-compare__table tbody tr:last-child td { border-bottom: none; }
+  .bm-tick {
+    display: inline-block;
+    color: var(--bm-green);
+    font-weight: 900;
+    margin-inline-end: 0.2rem;
+  }
+  .bm-compare__cell--us .bm-tick { color: #b6e3a4; }
+
+  /* ============ STICKY MOBILE CTA ============ */
+  .bm-sticky-cta {
+    position: fixed;
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 0.5rem);
+    inset-inline: 0.6rem;
+    z-index: 60;
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem;
+    background: linear-gradient(90deg, var(--bm-green-dark), var(--bm-green));
+    color: #fff !important;
+    padding: 0.85rem 1.1rem;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 0.98rem;
+    box-shadow: 0 12px 32px rgba(20,40,25,0.28), 0 0 0 2px rgba(180, 138, 58, 0.35);
+    text-shadow: 0 1px 2px rgba(15, 30, 20, 0.28);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .bm-sticky-cta:active { transform: translateY(1px) scale(0.99); }
+  .bm-sticky-cta__label { flex: 1; text-align: right; line-height: 1.2; }
+  .bm-sticky-cta__price {
+    background: rgba(255,255,255,0.16);
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .bm-sticky-cta__arrow { font-size: 1.15rem; }
 
   /* ============ REVIEWS ============ */
   .bm-reviews__grid {
@@ -1333,6 +1597,14 @@
   }
   .bm-wa:hover { transform: scale(1.06); }
 
+  /* Show sticky CTA on mobile only, and lift WhatsApp so it doesn't overlap */
+  @media (max-width: 749px) {
+    .bm-sticky-cta { display: flex; }
+    .bm-wa { bottom: calc(env(safe-area-inset-bottom, 0px) + 4.5rem); }
+    /* Hide sticky CTA when EasySell form area is on-screen (avoid double-CTA) */
+    body.bm-order-in-view .bm-sticky-cta { display: none; }
+  }
+
   /* ============ DESKTOP ============ */
   @media (min-width: 750px) {
     .bm-header__nav { display: inline-flex; }
@@ -1363,6 +1635,9 @@
       grid-template-columns: repeat(4, minmax(0, 1fr));
     }
     .bm-reviews__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .bm-timeline__list {
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
     .bm-section { padding: 3rem 1rem; }
@@ -1520,6 +1795,16 @@
           header.classList.add('is-open');
         }
       });
+    }
+
+    /* -------- Sticky mobile CTA: hide when Order section is on-screen -------- */
+    if (orderForm && 'IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          document.body.classList.toggle('bm-order-in-view', entry.isIntersecting);
+        });
+      }, { threshold: 0.15 });
+      io.observe(orderForm);
     }
   })();
 {% endjavascript %}
