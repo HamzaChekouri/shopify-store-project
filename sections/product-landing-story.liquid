@@ -18,505 +18,6 @@
   assign compare_3 = section.settings.compare_3 | default: 349
 -%}
 
-<div
-  id="bayel-moss-lp"
-  class="bm-lp"
-  dir="rtl"
-  lang="ar"
-  data-section-id="{{ section.id }}"
-  data-product-id="{{ product.id }}"
-  data-product-handle="{{ product.handle | escape }}"
-  data-product-title="{{ product.title | escape }}"
-  data-variant-id="{{ variant_id }}"
-  data-shop-currency="{{ cart.currency.iso_code | default: shop.currency | escape }}"
-  data-default-country="{{ default_country }}"
-  data-price-1="{{ price_1 }}"
-  data-price-2="{{ price_2 }}"
-  data-price-3="{{ price_3 }}"
->
-
-  {%- comment -%} ============ LOCAL HEADER ============ {%- endcomment -%}
-  <header class="bm-header">
-    <div class="bm-header__inner">
-      <a href="#top" class="bm-header__brand" aria-label="بابل موس">
-        <span class="bm-header__brand-mark" aria-hidden="true">◆</span>
-        <span class="bm-header__brand-name">بابل موس</span>
-      </a>
-      <nav class="bm-header__nav" aria-label="روابط الصفحة">
-        <a href="#top">الرئيسية</a>
-        <a href="#lp-how">طريقة الاستخدام</a>
-        <a href="#lp-reviews">التقييمات</a>
-        <a href="#lp-faq">الأسئلة</a>
-      </nav>
-      <a href="#lp-order" class="bm-header__cta">اطلب الآن</a>
-      <button type="button" class="bm-header__burger" aria-label="القائمة" data-bm-burger>
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-    <div class="bm-header__drawer" data-bm-drawer hidden>
-      <a href="#top">الرئيسية</a>
-      <a href="#lp-how">طريقة الاستخدام</a>
-      <a href="#lp-reviews">التقييمات</a>
-      <a href="#lp-faq">الأسئلة</a>
-      <a href="#lp-order" class="bm-header__drawer-cta">اطلب الآن</a>
-    </div>
-  </header>
-
-  {%- comment -%} ============ ANNOUNCEMENT BAR ============ {%- endcomment -%}
-  <div class="bm-announce">
-    <div class="bm-announce__track">
-      <span>✦ توصيل ١-٣ أيام لكل الإمارات</span>
-      <span>✦ الدفع عند الاستلام</span>
-      <span>✦ ضمان استرجاع ٣٠ يوم</span>
-      <span>✦ مكونات عشبية ١٠٠٪</span>
-      <span>✦ توصيل ١-٣ أيام لكل الإمارات</span>
-      <span>✦ الدفع عند الاستلام</span>
-      <span>✦ ضمان استرجاع ٣٠ يوم</span>
-      <span>✦ مكونات عشبية ١٠٠٪</span>
-    </div>
-  </div>
-
-  {%- comment -%} ============ HERO ============ {%- endcomment -%}
-  <section class="bm-hero" id="top">
-    <div class="bm-hero__inner">
-      <p class="bm-hero__eyebrow">بابل موس · العناية بشعر الرجل</p>
-      <h1 class="bm-hero__title">
-        غطِّ الشيب من أول استخدام<br>
-        <span class="bm-hero__title-em">ورجّع شكلك الأصغر بسنين</span>
-      </h1>
-
-      <div class="bm-hero__media">
-        <div class="bm-hero__orb" aria-hidden="true"></div>
-        <picture>
-          <source
-            media="(max-width: 749px)"
-            srcset="{{ 'lp-bottle-mobile.avif' | asset_url }}"
-            type="image/avif"
-          >
-          <img
-            src="{{ hero_image | asset_url }}"
-            alt="{{ product.title | escape }}"
-            class="bm-hero__image"
-            width="520"
-            height="520"
-            loading="eager"
-            fetchpriority="high"
-            decoding="sync"
-          >
-        </picture>
-      </div>
-
-      <p class="bm-hero__lead">
-        موس رغوي عشبي يغطّي الشيب بلون طبيعي غامق من أول مرة. بدون أمونيا، بدون فوضى، وبدون ما أحد يحسّ إنه مصبوغ — تسوّيه بنفسك في البيت بـ ٥ دقائق.
-      </p>
-
-      <div class="bm-hero__trust">
-        <span class="bm-hero__stars" aria-hidden="true">★★★★★</span>
-        <span class="bm-hero__trust-text">٤٫٩ / ٥ · ثقة أكثر من +١٢,٠٠٠ رجّال في الخليج</span>
-      </div>
-
-      <a href="#lp-order" class="bm-hero__cta">
-        اطلب الآن — {{ price_1 }} درهم
-        <span class="bm-hero__cta-arrow" aria-hidden="true">←</span>
-      </a>
-
-      <ul class="bm-hero__mini-trust" aria-label="مزايا الطلب">
-        <li>✓ الدفع عند الاستلام</li>
-        <li>✓ توصيل مجاني للإمارات</li>
-        <li>✓ ضمان ٣٠ يوم</li>
-      </ul>
-    </div>
-  </section>
-
-  {%- comment -%} ============ UGC / SOCIAL PROOF ============ {%- endcomment -%}
-  <section class="bm-section bm-proof" id="lp-reviews-video">
-    <div class="bm-section__head">
-      <span class="bm-kicker">ردّات فعل حقيقية ✨</span>
-      <h2 class="bm-section__title">رجّال جرّبوا بابل موس وشافوا الفرق</h2>
-      <p class="bm-section__sub">فيديوهات حقيقية من عملائنا في الإمارات والخليج — شوف الفرق بعينك.</p>
-    </div>
-
-    <div class="bm-ugc" role="region" aria-label="تجارب حقيقية بالفيديو">
-      {%- assign videos = 'review-1.mp4,review-2.mp4,review-3-storytelling.mp4,review-4.mp4' | split: ',' -%}
-      {%- assign captions = 'صار شكلي أصغر بسنين 🔥,اللون طبيعي وما أحد حس,سويته بالبيت بدقائق,غطّى الشيب من أول مرة 👌' | split: ',' -%}
-      {%- for v in videos -%}
-        {%- assign idx = forloop.index0 -%}
-        <article class="bm-ugc__card" data-ugc-index="{{ forloop.index }}">
-          <div class="bm-ugc__media">
-            {%- assign poster_num = forloop.index -%}
-            {%- capture poster_file -%}lp-review-{{ poster_num }}-poster.jpg{%- endcapture -%}
-            {%- capture poster_webp -%}lp-review-{{ poster_num }}-poster.webp{%- endcapture -%}
-            <video
-              class="bm-ugc__video"
-              playsinline
-              muted
-              loop
-              preload="none"
-              controls
-              poster="{{ poster_webp | asset_url }}"
-              data-ugc-video
-            >
-              <source src="{{ v | asset_url }}" type="video/mp4">
-            </video>
-            <button type="button" class="bm-ugc__play" data-ugc-play aria-label="تشغيل الفيديو">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-            </button>
-          </div>
-          <div class="bm-ugc__caption">
-            <strong>{{ captions[idx] }}</strong>
-            <span>عميل موثّق</span>
-          </div>
-        </article>
-      {%- endfor -%}
-    </div>
-  </section>
-
-  {%- comment -%} ============ PROBLEM ============ {%- endcomment -%}
-  <section class="bm-section bm-problem">
-    <div class="bm-section__head">
-      <span class="bm-kicker">المشكلة</span>
-      <h2 class="bm-section__title">الشيب يكبّرك بسنين… وانت ما تستاهل</h2>
-    </div>
-
-    <div class="bm-problem__grid">
-      <figure class="bm-problem__figure">
-        <picture>
-          <source
-            srcset="{{ 'lp-problem-before-400.webp' | asset_url }}"
-            type="image/webp"
-          >
-          <img
-            src="{{ 'lp-problem-before.jpg' | asset_url }}"
-            alt="رجل يعاني من الشيب قبل استخدام بابل موس"
-            width="400"
-            height="568"
-            loading="lazy"
-            decoding="async"
-          >
-        </picture>
-        <figcaption>قبل</figcaption>
-      </figure>
-      <ul class="bm-problem__list">
-        <li><span class="bm-x">✕</span> الشيب يطلع وانت في عز شبابك ويعطيك شكل أكبر من عمرك الحقيقي.</li>
-        <li><span class="bm-x">✕</span> الصبغات الكيميائية تضرّ شعرك وتعطي لون صناعي يبيّن من بعيد.</li>
-        <li><span class="bm-x">✕</span> الكوافير غالي ومتعب، وتضطر تعيده كل أسبوعين.</li>
-        <li><span class="bm-x">✕</span> دايم خايف اللون يبيّن "مصبوغ" قدام أهلك وربعك.</li>
-      </ul>
-    </div>
-
-    <div class="bm-problem__solution">
-      <strong>بابل موس يحلّها من جذرها:</strong>
-      رغوة عشبية تغطّي الشيب بلون طبيعي غامق، تطبّقها بنفسك في البيت خلال دقائق — والنتيجة تبان طبيعية ما تنكشف.
-    </div>
-  </section>
-
-  {%- comment -%} ============ RESULTS TIMELINE ============ {%- endcomment -%}
-  <section class="bm-section bm-timeline">
-    <div class="bm-section__head">
-      <span class="bm-kicker">النتائج</span>
-      <h2 class="bm-section__title">وش تتوقّع من أوّل يوم؟</h2>
-      <p class="bm-section__sub">جدول واضح مبني على تجارب أكثر من +١٢،٠٠٠ عميل.</p>
-    </div>
-
-    <ol class="bm-timeline__list">
-      <li class="bm-timeline__item">
-        <span class="bm-timeline__badge">اليوم ١</span>
-        <h3>تغطية فورية</h3>
-        <p>الشيب يختفي من أول تطبيق، بلون طبيعي غامق ما يبيّن إنه مصبوغ.</p>
-      </li>
-      <li class="bm-timeline__item">
-        <span class="bm-timeline__badge">الأسبوع الأوّل</span>
-        <h3>لون متجانس وثابت</h3>
-        <p>التركيبة تتثبّت واللون يصير متجانس مع لون شعرك الأصلي. مرتين في الأسبوع تكفي.</p>
-      </li>
-      <li class="bm-timeline__item">
-        <span class="bm-timeline__badge">الشهر الأوّل</span>
-        <h3>شعر أقوى وأصحّ</h3>
-        <p>المكوّنات العشبية تحفّز الفروة، الشعر يصير أكثر كثافة وحيوية، والشيب يبطّئ ظهوره.</p>
-      </li>
-    </ol>
-  </section>
-
-  {%- comment -%} ============ HOW TO USE ============ {%- endcomment -%}
-  <section class="bm-section bm-steps" id="lp-how">
-    <div class="bm-section__head">
-      <span class="bm-kicker">سهل وسريع</span>
-      <h2 class="bm-section__title">٤ خطوات وبس</h2>
-      <p class="bm-section__sub">بدون فُرَش، بدون قفّازات، وبدون فوضى — تسوّيه بنفسك في البيت.</p>
-    </div>
-
-    <ol class="bm-steps__list">
-      <li class="bm-step">
-        <span class="bm-step__num">١</span>
-        <h3>وزّع الرغوة</h3>
-        <p>اضغط كمية الرغوة على راحة يدك أو على الشعر مباشرة.</p>
-      </li>
-      <li class="bm-step">
-        <span class="bm-step__num">٢</span>
-        <h3>دلّك الشعر</h3>
-        <p>افرد الرغوة من الجذور للأطراف على كل المناطق المشيّبة.</p>
-      </li>
-      <li class="bm-step">
-        <span class="bm-step__num">٣</span>
-        <h3>اتركها ٥-١٠ دقائق</h3>
-        <p>خلّ التركيبة العشبية تشتغل وتغطّي الشيب بالكامل.</p>
-      </li>
-      <li class="bm-step">
-        <span class="bm-step__num">٤</span>
-        <h3>اشطفها</h3>
-        <p>لون طبيعي غامق فوري — نظيف وبدون أي فوضى.</p>
-      </li>
-    </ol>
-  </section>
-
-  {%- comment -%} ============ INGREDIENTS ============ {%- endcomment -%}
-  <section class="bm-section bm-ingredients">
-    <div class="bm-section__head bm-section__head--light">
-      <span class="bm-kicker bm-kicker--light">من الطبيعة</span>
-      <h2 class="bm-section__title">تركيبة عشبية بمكونات فعّالة</h2>
-      <p class="bm-section__sub bm-section__sub--light">مكونات طبيعية مختارة بعناية تغطّي الشيب وتعتني بشعرك من غير ما تضرّه.</p>
-    </div>
-
-    <ul class="bm-ingredients__chips">
-      <li><span class="bm-ing__ic" aria-hidden="true">🍵</span><strong>مستخلص الشاي الأخضر</strong><em>مضاد أكسدة يحمي بصيلات الشعر</em></li>
-      <li><span class="bm-ing__ic" aria-hidden="true">🫐</span><strong>خلاصة التوت الأسود</strong><em>يعمّق اللون بشكل طبيعي</em></li>
-      <li><span class="bm-ing__ic" aria-hidden="true">🧬</span><strong>الجينسنغ</strong><em>ينشّط فروة الرأس ويبطّئ الشيب</em></li>
-      <li><span class="bm-ing__ic" aria-hidden="true">💧</span><strong>زيت الأرغان</strong><em>يرطّب ويعطي لمعان طبيعي</em></li>
-      <li><span class="bm-ing__ic" aria-hidden="true">🧪</span><strong>البانثينول B5</strong><em>يقوّي الشعر ويمنع التقصّف</em></li>
-      <li><span class="bm-ing__ic" aria-hidden="true">🌵</span><strong>الصبار</strong><em>يهدّئ الفروة ويرطّبها</em></li>
-      <li><span class="bm-ing__ic" aria-hidden="true">🌿</span><strong>عرق السوس</strong><em>يحافظ على صحّة الشعر</em></li>
-      <li><span class="bm-ing__ic" aria-hidden="true">🌾</span><strong>بروتين القمح</strong><em>يمنح كثافة وقوّة</em></li>
-    </ul>
-  </section>
-
-  {%- comment -%} ============ COMPARISON TABLE ============ {%- endcomment -%}
-  <section class="bm-section bm-compare">
-    <div class="bm-section__head">
-      <span class="bm-kicker">ليش بابل موس؟</span>
-      <h2 class="bm-section__title">الفرق واضح من أوّل نظرة</h2>
-      <p class="bm-section__sub">قارن بنفسك: بابل موس ضدّ الصبغة العادية والكوافير.</p>
-    </div>
-
-    <div class="bm-compare__wrap">
-      <table class="bm-compare__table" role="table">
-        <thead>
-          <tr>
-            <th scope="col" class="bm-compare__row-head"></th>
-            <th scope="col" class="bm-compare__col bm-compare__col--us">
-              <span class="bm-compare__logo">◆</span>
-              بابل موس
-            </th>
-            <th scope="col" class="bm-compare__col">الصبغة العادية</th>
-            <th scope="col" class="bm-compare__col">الكوافير</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">التركيبة</th>
-            <td class="bm-compare__cell--us"><span class="bm-tick">✓</span> عشبية طبيعية</td>
-            <td><span class="bm-x">✕</span> أمونيا وبيروكسيد</td>
-            <td><span class="bm-tick">✓</span> منتجات محترفة</td>
-          </tr>
-          <tr>
-            <th scope="row">مظهر اللون</th>
-            <td class="bm-compare__cell--us"><span class="bm-tick">✓</span> طبيعي ما ينكشف</td>
-            <td><span class="bm-x">✕</span> صناعي واضح</td>
-            <td><span class="bm-tick">✓</span> طبيعي</td>
-          </tr>
-          <tr>
-            <th scope="row">وقت التطبيق</th>
-            <td class="bm-compare__cell--us"><span class="bm-tick">✓</span> ٥-١٠ دقائق في البيت</td>
-            <td><span class="bm-x">✕</span> ٣٠-٤٥ دقيقة + فوضى</td>
-            <td><span class="bm-x">✕</span> ساعة حجز + مواعيد</td>
-          </tr>
-          <tr>
-            <th scope="row">التكلفة الشهرية</th>
-            <td class="bm-compare__cell--us"><span class="bm-tick">✓</span> من {{ price_1 }} درهم</td>
-            <td><span class="bm-x">✕</span> ~٤٠ درهم + ضرر</td>
-            <td><span class="bm-x">✕</span> ١٠٠+ درهم للجلسة</td>
-          </tr>
-          <tr>
-            <th scope="row">الفوضى</th>
-            <td class="bm-compare__cell--us"><span class="bm-tick">✓</span> بدون فرشاة أو قفّاز</td>
-            <td><span class="bm-x">✕</span> بقع ورائحة</td>
-            <td><span class="bm-tick">✓</span> ما فيه منك فوضى</td>
-          </tr>
-          <tr>
-            <th scope="row">خصوصية</th>
-            <td class="bm-compare__cell--us"><span class="bm-tick">✓</span> تسوّيه لوحدك</td>
-            <td><span class="bm-tick">✓</span> في البيت</td>
-            <td><span class="bm-x">✕</span> قدّام الناس</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  {%- comment -%} ============ REVIEWS ============ {%- endcomment -%}
-  <section class="bm-section bm-reviews" id="lp-reviews">
-    <div class="bm-section__head">
-      <span class="bm-kicker">آراء عملائنا</span>
-      <h2 class="bm-section__title">ثقة آلاف الرجال في الخليج</h2>
-      <p class="bm-section__sub">تجارب حقيقية من عملاء استخدموا بابل موس.</p>
-    </div>
-
-    <div class="bm-reviews__grid">
-      <article class="bm-review">
-        <div class="bm-review__stars">★★★★★</div>
-        <p>"صار لي سنة أعاني من الشيب وأنا بعدني شاب. جربت بابل موس وصراحة اللون طلع طبيعي وايد، ولا أحد حس إني مغطّي الشيب. خفيف وسهل."</p>
-        <footer>
-          <img src="{{ 'lp-avatar-1.jpg' | asset_url }}" alt="" width="48" height="48" loading="lazy" decoding="async" class="bm-review__avatar">
-          <div class="bm-review__meta">
-            <strong>خالد العتيبي</strong>
-            <span>الرياض، السعودية · عميل موثّق</span>
-          </div>
-          <span class="bm-review__verified" aria-label="عميل موثّق">✓</span>
-        </footer>
-      </article>
-      <article class="bm-review">
-        <div class="bm-review__stars">★★★★★</div>
-        <p>"أحسن شي إنه ما فيه فوضى مثل الصبغات. أستخدمه بالبيت بدقائق والنتيجة من أول مرة. الطلب وصلني خلال يومين ودفعت كاش عند الاستلام."</p>
-        <footer>
-          <img src="{{ 'lp-avatar-2.jpg' | asset_url }}" alt="" width="48" height="48" loading="lazy" decoding="async" class="bm-review__avatar">
-          <div class="bm-review__meta">
-            <strong>عبدالله المنصوري</strong>
-            <span>دبي، الإمارات · عميل موثّق</span>
-          </div>
-          <span class="bm-review__verified" aria-label="عميل موثّق">✓</span>
-        </footer>
-      </article>
-      <article class="bm-review">
-        <div class="bm-review__stars">★★★★★</div>
-        <p>"كنت متردد بالبداية بس الدفع عند الاستلام طمّني. المنتج ممتاز واللون ثابت وما يطلع بسرعة. رجعت طلبت باقة ٣ قطع."</p>
-        <footer>
-          <img src="{{ 'lp-avatar-3.jpg' | asset_url }}" alt="" width="48" height="48" loading="lazy" decoding="async" class="bm-review__avatar">
-          <div class="bm-review__meta">
-            <strong>فيصل الشمري</strong>
-            <span>الدمام، السعودية · عميل موثّق</span>
-          </div>
-          <span class="bm-review__verified" aria-label="عميل موثّق">✓</span>
-        </footer>
-      </article>
-    </div>
-  </section>
-
-  {%- comment -%} ============ ORDER SECTION (EasySell renders its own form + offers) ============ {%- endcomment -%}
-  <section class="bm-section bm-order" id="lp-order">
-    <div class="bm-section__head">
-      <span class="bm-kicker">اطلب الآن</span>
-      <h2 class="bm-section__title">اختر باقتك وسجّل بياناتك بالأسفل</h2>
-      <p class="bm-section__sub">كل الباقات شحن مجاني + الدفع عند الاستلام داخل الإمارات. الأسعار بـدرهم إماراتي.</p>
-    </div>
-
-    <div class="bm-order__intro">
-      <ul class="bm-order__benefits" aria-label="مزايا الطلب">
-        <li><span class="bm-order__benefit-ic" aria-hidden="true">💵</span><div><strong>ادفع كاش عند الاستلام</strong><span>ما تدفع أي شي الحين — تدفع لما يوصلك الطلب.</span></div></li>
-        <li><span class="bm-order__benefit-ic" aria-hidden="true">🚚</span><div><strong>توصيل مجاني داخل الإمارات</strong><span>يوصلك خلال ١-٣ أيام عمل مع رسالة تتبّع.</span></div></li>
-        <li><span class="bm-order__benefit-ic" aria-hidden="true">🔒</span><div><strong>ضمان استرجاع ٣٠ يوم</strong><span>ما عجبتك النتيجة؟ نرجّع لك مبلغك كامل.</span></div></li>
-      </ul>
-      <div class="bm-order__pointer" aria-hidden="true">
-        <span>اختر الباقة واملأ بياناتك بالأسفل</span>
-        <span class="bm-order__pointer-arrow">↓</span>
-      </div>
-    </div>
-
-    {%- comment -%}
-      Hidden form: EasySell COD app renders its OWN visible form (offers + name/phone/city
-      + CTA "اطلب الحين !") right below via native_placement="after". We keep this hidden
-      form as the anchor EasySell hooks onto to detect the product and inject its widget.
-    {%- endcomment -%}
-    <form
-      method="post"
-      action="{{ routes.cart_add_url }}"
-      class="bm-form bm-form--anchor"
-      id="bm-order-form"
-      accept-charset="UTF-8"
-      enctype="multipart/form-data"
-      data-product-form
-      data-easysell-form
-      aria-hidden="true"
-    >
-      <input type="hidden" name="form_type" value="product">
-      <input type="hidden" name="utf8" value="✓">
-      <input type="hidden" name="id" value="{{ variant_id }}">
-      <input type="hidden" name="quantity" value="1">
-      <input type="hidden" name="properties[Country]" value="AE">
-      <button type="submit" name="add" hidden aria-hidden="true" tabindex="-1">اطلب</button>
-    </form>
-  </section>
-
-  {%- comment -%} ============ FAQ ============ {%- endcomment -%}
-  <section class="bm-section bm-faq" id="lp-faq">
-    <div class="bm-section__head">
-      <span class="bm-kicker">أسئلة قبل الطلب</span>
-      <h2 class="bm-section__title">كل اللي تبي تعرفه</h2>
-    </div>
-
-    <div class="bm-faq__list">
-      <details class="bm-faq__item">
-        <summary>وش يميّز بابل موس عن الصبغات العادية؟</summary>
-        <p>بابل موس تركيبة رغوية عشبية بدون أمونيا أو بيروكسيد، تغطّي الشيب بلون طبيعي غامق بدون ما تضرّ شعرك، وبدون الفوضى اللي تجي مع الصبغات العادية.</p>
-      </details>
-      <details class="bm-faq__item">
-        <summary>هل اللون يبان طبيعي ولا يكشف إنه مصبوغ؟</summary>
-        <p>اللون يطلع طبيعي ومتجانس مع لون شعرك، وما يبيّن إنه مصبوغ. أغلب عملائنا يقولون إن أحد ما يلاحظ الفرق.</p>
-      </details>
-      <details class="bm-faq__item">
-        <summary>الدفع عند الاستلام متوفر في الإمارات؟</summary>
-        <p>نعم، الدفع عند الاستلام متوفر لكل الإمارات. تدفع كاش عند وصول الطلب لباب بيتك.</p>
-      </details>
-      <details class="bm-faq__item">
-        <summary>كم ياخذ التوصيل؟</summary>
-        <p>من ١ إلى ٣ أيام عمل داخل الإمارات، مع رسالة تتبّع بعد تأكيد طلبك.</p>
-      </details>
-      <details class="bm-faq__item">
-        <summary>فيه ضمان لو ما عجبتني النتيجة؟</summary>
-        <p>أكيد. عندك ضمان استرجاع ٣٠ يوم كامل — لو ما عجبتك النتيجة تواصل معنا ونرجّع لك المبلغ.</p>
-      </details>
-      <details class="bm-faq__item">
-        <summary>كم مرة أستخدمه في الأسبوع؟</summary>
-        <p>حسب سرعة ظهور الشيب عندك، بس بشكل عام مرة إلى مرتين في الأسبوع تكفي للمحافظة على اللون.</p>
-      </details>
-    </div>
-  </section>
-
-  {%- comment -%} ============ FINAL CTA ============ {%- endcomment -%}
-  <section class="bm-section bm-final">
-    <h2>جاهز تودّع الشيب؟</h2>
-    <p>اطلب الحين وادفع كاش عند الاستلام. جرّب بابل موس بضمان ٣٠ يوم.</p>
-    <a href="#lp-order" class="bm-final__cta">اطلب الآن — ابدأ من {{ price_1 }} درهم</a>
-  </section>
-
-  {%- comment -%} ============ STICKY MOBILE CTA ============ {%- endcomment -%}
-  <a href="#lp-order" class="bm-sticky-cta" data-bm-sticky-cta aria-label="اطلب الآن">
-    <span class="bm-sticky-cta__label">اطلب الآن — دفع عند الاستلام</span>
-    <span class="bm-sticky-cta__price">من {{ price_1 }} درهم</span>
-    <span class="bm-sticky-cta__arrow" aria-hidden="true">←</span>
-  </a>
-
-  {%- comment -%} ============ FLOATING WHATSAPP ============ {%- endcomment -%}
-  <a
-    class="bm-wa"
-    href="https://wa.me/{{ wa_number }}?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D8%8C%20%D8%B9%D9%86%D8%AF%D9%8A%20%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%A8%D8%AE%D8%B5%D9%88%D8%B5%20Bayel%20Moss"
-    target="_blank"
-    rel="noopener"
-    aria-label="تواصل عبر واتساب"
-  >
-    <svg viewBox="0 0 32 32" width="26" height="26" aria-hidden="true" fill="currentColor">
-      <path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.386.702 4.609 1.905 6.478L4 29l7.702-1.865A11.94 11.94 0 0 0 16 27c6.628 0 12-5.373 12-12S22.628 3 16.001 3zm0 21.6a9.55 9.55 0 0 1-4.878-1.335l-.35-.208-4.573 1.108 1.135-4.455-.228-.365A9.542 9.542 0 0 1 6.4 15c0-5.293 4.307-9.6 9.6-9.6 5.293 0 9.6 4.307 9.6 9.6s-4.307 9.6-9.6 9.6zm5.446-7.083c-.298-.15-1.763-.87-2.037-.97-.273-.1-.472-.15-.671.15s-.77.97-.944 1.169c-.174.199-.348.223-.646.075-.298-.15-1.257-.463-2.394-1.478-.884-.79-1.481-1.763-1.655-2.061-.174-.298-.019-.459.13-.607.133-.132.298-.348.447-.522.15-.174.199-.298.298-.497.1-.199.05-.372-.025-.522-.075-.15-.671-1.618-.919-2.213-.242-.583-.487-.504-.671-.513l-.572-.01c-.199 0-.522.075-.795.372-.273.298-1.043 1.019-1.043 2.487s1.067 2.887 1.216 3.086c.15.199 2.099 3.203 5.083 4.494.71.306 1.263.489 1.695.626.712.226 1.36.194 1.872.118.571-.086 1.763-.72 2.012-1.416.248-.696.248-1.291.174-1.416-.074-.124-.273-.199-.571-.348z"/>
-    </svg>
-  </a>
-</div>
-
-{%- comment -%}
-  Lead export removed — EasySell COD Form & Upsells now handles the checkout flow.
-  EasySell auto-detects form[action="/cart/add"] with a [name="add"] submit button
-  and opens its own popup to collect Customer name/phone/city/address, then creates
-  a real Shopify order that is pushed to CodNetwork by EasySell's native integration.
-  If you want to restore the custom backend/Sheet pipeline, restore the block below
-  and re-add the customer fields to the form.
-{%- endcomment -%}
-
 {%- comment -%}
   {% style %} inlines CSS in <head> — does NOT go into compiled_assets/styles.css.
   This is the primary LCP fix: LP CSS renders immediately from HTML, eliminating
@@ -1680,6 +1181,507 @@
     .bm-hero__title { font-size: 3.4rem; }
   }
 {% endstyle %}
+
+
+<div
+  id="bayel-moss-lp"
+  class="bm-lp"
+  dir="rtl"
+  lang="ar"
+  data-section-id="{{ section.id }}"
+  data-product-id="{{ product.id }}"
+  data-product-handle="{{ product.handle | escape }}"
+  data-product-title="{{ product.title | escape }}"
+  data-variant-id="{{ variant_id }}"
+  data-shop-currency="{{ cart.currency.iso_code | default: shop.currency | escape }}"
+  data-default-country="{{ default_country }}"
+  data-price-1="{{ price_1 }}"
+  data-price-2="{{ price_2 }}"
+  data-price-3="{{ price_3 }}"
+>
+
+  {%- comment -%} ============ LOCAL HEADER ============ {%- endcomment -%}
+  <header class="bm-header">
+    <div class="bm-header__inner">
+      <a href="#top" class="bm-header__brand" aria-label="بابل موس">
+        <span class="bm-header__brand-mark" aria-hidden="true">◆</span>
+        <span class="bm-header__brand-name">بابل موس</span>
+      </a>
+      <nav class="bm-header__nav" aria-label="روابط الصفحة">
+        <a href="#top">الرئيسية</a>
+        <a href="#lp-how">طريقة الاستخدام</a>
+        <a href="#lp-reviews">التقييمات</a>
+        <a href="#lp-faq">الأسئلة</a>
+      </nav>
+      <a href="#lp-order" class="bm-header__cta">اطلب الآن</a>
+      <button type="button" class="bm-header__burger" aria-label="القائمة" data-bm-burger>
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="bm-header__drawer" data-bm-drawer hidden>
+      <a href="#top">الرئيسية</a>
+      <a href="#lp-how">طريقة الاستخدام</a>
+      <a href="#lp-reviews">التقييمات</a>
+      <a href="#lp-faq">الأسئلة</a>
+      <a href="#lp-order" class="bm-header__drawer-cta">اطلب الآن</a>
+    </div>
+  </header>
+
+  {%- comment -%} ============ ANNOUNCEMENT BAR ============ {%- endcomment -%}
+  <div class="bm-announce">
+    <div class="bm-announce__track">
+      <span>✦ توصيل ١-٣ أيام لكل الإمارات</span>
+      <span>✦ الدفع عند الاستلام</span>
+      <span>✦ ضمان استرجاع ٣٠ يوم</span>
+      <span>✦ مكونات عشبية ١٠٠٪</span>
+      <span>✦ توصيل ١-٣ أيام لكل الإمارات</span>
+      <span>✦ الدفع عند الاستلام</span>
+      <span>✦ ضمان استرجاع ٣٠ يوم</span>
+      <span>✦ مكونات عشبية ١٠٠٪</span>
+    </div>
+  </div>
+
+  {%- comment -%} ============ HERO ============ {%- endcomment -%}
+  <section class="bm-hero" id="top">
+    <div class="bm-hero__inner">
+      <p class="bm-hero__eyebrow">بابل موس · العناية بشعر الرجل</p>
+      <h1 class="bm-hero__title">
+        غطِّ الشيب من أول استخدام<br>
+        <span class="bm-hero__title-em">ورجّع شكلك الأصغر بسنين</span>
+      </h1>
+
+      <div class="bm-hero__media">
+        <div class="bm-hero__orb" aria-hidden="true"></div>
+        <picture>
+          <source
+            media="(max-width: 749px)"
+            srcset="{{ 'lp-bottle-mobile.avif' | asset_url }}"
+            type="image/avif"
+          >
+          <img
+            src="{{ hero_image | asset_url }}"
+            alt="{{ product.title | escape }}"
+            class="bm-hero__image"
+            width="520"
+            height="520"
+            loading="eager"
+            fetchpriority="high"
+            decoding="sync"
+          >
+        </picture>
+      </div>
+
+      <p class="bm-hero__lead">
+        موس رغوي عشبي يغطّي الشيب بلون طبيعي غامق من أول مرة. بدون أمونيا، بدون فوضى، وبدون ما أحد يحسّ إنه مصبوغ — تسوّيه بنفسك في البيت بـ ٥ دقائق.
+      </p>
+
+      <div class="bm-hero__trust">
+        <span class="bm-hero__stars" aria-hidden="true">★★★★★</span>
+        <span class="bm-hero__trust-text">٤٫٩ / ٥ · ثقة أكثر من +١٢,٠٠٠ رجّال في الخليج</span>
+      </div>
+
+      <a href="#lp-order" class="bm-hero__cta">
+        اطلب الآن — {{ price_1 }} درهم
+        <span class="bm-hero__cta-arrow" aria-hidden="true">←</span>
+      </a>
+
+      <ul class="bm-hero__mini-trust" aria-label="مزايا الطلب">
+        <li>✓ الدفع عند الاستلام</li>
+        <li>✓ توصيل مجاني للإمارات</li>
+        <li>✓ ضمان ٣٠ يوم</li>
+      </ul>
+    </div>
+  </section>
+
+  {%- comment -%} ============ UGC / SOCIAL PROOF ============ {%- endcomment -%}
+  <section class="bm-section bm-proof" id="lp-reviews-video">
+    <div class="bm-section__head">
+      <span class="bm-kicker">ردّات فعل حقيقية ✨</span>
+      <h2 class="bm-section__title">رجّال جرّبوا بابل موس وشافوا الفرق</h2>
+      <p class="bm-section__sub">فيديوهات حقيقية من عملائنا في الإمارات والخليج — شوف الفرق بعينك.</p>
+    </div>
+
+    <div class="bm-ugc" role="region" aria-label="تجارب حقيقية بالفيديو">
+      {%- assign videos = 'review-1.mp4,review-2.mp4,review-3-storytelling.mp4,review-4.mp4' | split: ',' -%}
+      {%- assign captions = 'صار شكلي أصغر بسنين 🔥,اللون طبيعي وما أحد حس,سويته بالبيت بدقائق,غطّى الشيب من أول مرة 👌' | split: ',' -%}
+      {%- for v in videos -%}
+        {%- assign idx = forloop.index0 -%}
+        <article class="bm-ugc__card" data-ugc-index="{{ forloop.index }}">
+          <div class="bm-ugc__media">
+            {%- assign poster_num = forloop.index -%}
+            {%- capture poster_file -%}lp-review-{{ poster_num }}-poster.jpg{%- endcapture -%}
+            {%- capture poster_webp -%}lp-review-{{ poster_num }}-poster.webp{%- endcapture -%}
+            <video
+              class="bm-ugc__video"
+              playsinline
+              muted
+              loop
+              preload="none"
+              controls
+              poster="{{ poster_webp | asset_url }}"
+              data-ugc-video
+            >
+              <source src="{{ v | asset_url }}" type="video/mp4">
+            </video>
+            <button type="button" class="bm-ugc__play" data-ugc-play aria-label="تشغيل الفيديو">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+          </div>
+          <div class="bm-ugc__caption">
+            <strong>{{ captions[idx] }}</strong>
+            <span>عميل موثّق</span>
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+  </section>
+
+  {%- comment -%} ============ PROBLEM ============ {%- endcomment -%}
+  <section class="bm-section bm-problem">
+    <div class="bm-section__head">
+      <span class="bm-kicker">المشكلة</span>
+      <h2 class="bm-section__title">الشيب يكبّرك بسنين… وانت ما تستاهل</h2>
+    </div>
+
+    <div class="bm-problem__grid">
+      <figure class="bm-problem__figure">
+        <picture>
+          <source
+            srcset="{{ 'lp-problem-before-400.webp' | asset_url }}"
+            type="image/webp"
+          >
+          <img
+            src="{{ 'lp-problem-before.jpg' | asset_url }}"
+            alt="رجل يعاني من الشيب قبل استخدام بابل موس"
+            width="400"
+            height="568"
+            loading="lazy"
+            decoding="async"
+          >
+        </picture>
+        <figcaption>قبل</figcaption>
+      </figure>
+      <ul class="bm-problem__list">
+        <li><span class="bm-x">✕</span> الشيب يطلع وانت في عز شبابك ويعطيك شكل أكبر من عمرك الحقيقي.</li>
+        <li><span class="bm-x">✕</span> الصبغات الكيميائية تضرّ شعرك وتعطي لون صناعي يبيّن من بعيد.</li>
+        <li><span class="bm-x">✕</span> الكوافير غالي ومتعب، وتضطر تعيده كل أسبوعين.</li>
+        <li><span class="bm-x">✕</span> دايم خايف اللون يبيّن "مصبوغ" قدام أهلك وربعك.</li>
+      </ul>
+    </div>
+
+    <div class="bm-problem__solution">
+      <strong>بابل موس يحلّها من جذرها:</strong>
+      رغوة عشبية تغطّي الشيب بلون طبيعي غامق، تطبّقها بنفسك في البيت خلال دقائق — والنتيجة تبان طبيعية ما تنكشف.
+    </div>
+  </section>
+
+  {%- comment -%} ============ RESULTS TIMELINE ============ {%- endcomment -%}
+  <section class="bm-section bm-timeline">
+    <div class="bm-section__head">
+      <span class="bm-kicker">النتائج</span>
+      <h2 class="bm-section__title">وش تتوقّع من أوّل يوم؟</h2>
+      <p class="bm-section__sub">جدول واضح مبني على تجارب أكثر من +١٢،٠٠٠ عميل.</p>
+    </div>
+
+    <ol class="bm-timeline__list">
+      <li class="bm-timeline__item">
+        <span class="bm-timeline__badge">اليوم ١</span>
+        <h3>تغطية فورية</h3>
+        <p>الشيب يختفي من أول تطبيق، بلون طبيعي غامق ما يبيّن إنه مصبوغ.</p>
+      </li>
+      <li class="bm-timeline__item">
+        <span class="bm-timeline__badge">الأسبوع الأوّل</span>
+        <h3>لون متجانس وثابت</h3>
+        <p>التركيبة تتثبّت واللون يصير متجانس مع لون شعرك الأصلي. مرتين في الأسبوع تكفي.</p>
+      </li>
+      <li class="bm-timeline__item">
+        <span class="bm-timeline__badge">الشهر الأوّل</span>
+        <h3>شعر أقوى وأصحّ</h3>
+        <p>المكوّنات العشبية تحفّز الفروة، الشعر يصير أكثر كثافة وحيوية، والشيب يبطّئ ظهوره.</p>
+      </li>
+    </ol>
+  </section>
+
+  {%- comment -%} ============ HOW TO USE ============ {%- endcomment -%}
+  <section class="bm-section bm-steps" id="lp-how">
+    <div class="bm-section__head">
+      <span class="bm-kicker">سهل وسريع</span>
+      <h2 class="bm-section__title">٤ خطوات وبس</h2>
+      <p class="bm-section__sub">بدون فُرَش، بدون قفّازات، وبدون فوضى — تسوّيه بنفسك في البيت.</p>
+    </div>
+
+    <ol class="bm-steps__list">
+      <li class="bm-step">
+        <span class="bm-step__num">١</span>
+        <h3>وزّع الرغوة</h3>
+        <p>اضغط كمية الرغوة على راحة يدك أو على الشعر مباشرة.</p>
+      </li>
+      <li class="bm-step">
+        <span class="bm-step__num">٢</span>
+        <h3>دلّك الشعر</h3>
+        <p>افرد الرغوة من الجذور للأطراف على كل المناطق المشيّبة.</p>
+      </li>
+      <li class="bm-step">
+        <span class="bm-step__num">٣</span>
+        <h3>اتركها ٥-١٠ دقائق</h3>
+        <p>خلّ التركيبة العشبية تشتغل وتغطّي الشيب بالكامل.</p>
+      </li>
+      <li class="bm-step">
+        <span class="bm-step__num">٤</span>
+        <h3>اشطفها</h3>
+        <p>لون طبيعي غامق فوري — نظيف وبدون أي فوضى.</p>
+      </li>
+    </ol>
+  </section>
+
+  {%- comment -%} ============ INGREDIENTS ============ {%- endcomment -%}
+  <section class="bm-section bm-ingredients">
+    <div class="bm-section__head bm-section__head--light">
+      <span class="bm-kicker bm-kicker--light">من الطبيعة</span>
+      <h2 class="bm-section__title">تركيبة عشبية بمكونات فعّالة</h2>
+      <p class="bm-section__sub bm-section__sub--light">مكونات طبيعية مختارة بعناية تغطّي الشيب وتعتني بشعرك من غير ما تضرّه.</p>
+    </div>
+
+    <ul class="bm-ingredients__chips">
+      <li><span class="bm-ing__ic" aria-hidden="true">🍵</span><strong>مستخلص الشاي الأخضر</strong><em>مضاد أكسدة يحمي بصيلات الشعر</em></li>
+      <li><span class="bm-ing__ic" aria-hidden="true">🫐</span><strong>خلاصة التوت الأسود</strong><em>يعمّق اللون بشكل طبيعي</em></li>
+      <li><span class="bm-ing__ic" aria-hidden="true">🧬</span><strong>الجينسنغ</strong><em>ينشّط فروة الرأس ويبطّئ الشيب</em></li>
+      <li><span class="bm-ing__ic" aria-hidden="true">💧</span><strong>زيت الأرغان</strong><em>يرطّب ويعطي لمعان طبيعي</em></li>
+      <li><span class="bm-ing__ic" aria-hidden="true">🧪</span><strong>البانثينول B5</strong><em>يقوّي الشعر ويمنع التقصّف</em></li>
+      <li><span class="bm-ing__ic" aria-hidden="true">🌵</span><strong>الصبار</strong><em>يهدّئ الفروة ويرطّبها</em></li>
+      <li><span class="bm-ing__ic" aria-hidden="true">🌿</span><strong>عرق السوس</strong><em>يحافظ على صحّة الشعر</em></li>
+      <li><span class="bm-ing__ic" aria-hidden="true">🌾</span><strong>بروتين القمح</strong><em>يمنح كثافة وقوّة</em></li>
+    </ul>
+  </section>
+
+  {%- comment -%} ============ COMPARISON TABLE ============ {%- endcomment -%}
+  <section class="bm-section bm-compare">
+    <div class="bm-section__head">
+      <span class="bm-kicker">ليش بابل موس؟</span>
+      <h2 class="bm-section__title">الفرق واضح من أوّل نظرة</h2>
+      <p class="bm-section__sub">قارن بنفسك: بابل موس ضدّ الصبغة العادية والكوافير.</p>
+    </div>
+
+    <div class="bm-compare__wrap">
+      <table class="bm-compare__table" role="table">
+        <thead>
+          <tr>
+            <th scope="col" class="bm-compare__row-head"></th>
+            <th scope="col" class="bm-compare__col bm-compare__col--us">
+              <span class="bm-compare__logo">◆</span>
+              بابل موس
+            </th>
+            <th scope="col" class="bm-compare__col">الصبغة العادية</th>
+            <th scope="col" class="bm-compare__col">الكوافير</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">التركيبة</th>
+            <td class="bm-compare__cell--us"><span class="bm-tick">✓</span> عشبية طبيعية</td>
+            <td><span class="bm-x">✕</span> أمونيا وبيروكسيد</td>
+            <td><span class="bm-tick">✓</span> منتجات محترفة</td>
+          </tr>
+          <tr>
+            <th scope="row">مظهر اللون</th>
+            <td class="bm-compare__cell--us"><span class="bm-tick">✓</span> طبيعي ما ينكشف</td>
+            <td><span class="bm-x">✕</span> صناعي واضح</td>
+            <td><span class="bm-tick">✓</span> طبيعي</td>
+          </tr>
+          <tr>
+            <th scope="row">وقت التطبيق</th>
+            <td class="bm-compare__cell--us"><span class="bm-tick">✓</span> ٥-١٠ دقائق في البيت</td>
+            <td><span class="bm-x">✕</span> ٣٠-٤٥ دقيقة + فوضى</td>
+            <td><span class="bm-x">✕</span> ساعة حجز + مواعيد</td>
+          </tr>
+          <tr>
+            <th scope="row">التكلفة الشهرية</th>
+            <td class="bm-compare__cell--us"><span class="bm-tick">✓</span> من {{ price_1 }} درهم</td>
+            <td><span class="bm-x">✕</span> ~٤٠ درهم + ضرر</td>
+            <td><span class="bm-x">✕</span> ١٠٠+ درهم للجلسة</td>
+          </tr>
+          <tr>
+            <th scope="row">الفوضى</th>
+            <td class="bm-compare__cell--us"><span class="bm-tick">✓</span> بدون فرشاة أو قفّاز</td>
+            <td><span class="bm-x">✕</span> بقع ورائحة</td>
+            <td><span class="bm-tick">✓</span> ما فيه منك فوضى</td>
+          </tr>
+          <tr>
+            <th scope="row">خصوصية</th>
+            <td class="bm-compare__cell--us"><span class="bm-tick">✓</span> تسوّيه لوحدك</td>
+            <td><span class="bm-tick">✓</span> في البيت</td>
+            <td><span class="bm-x">✕</span> قدّام الناس</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  {%- comment -%} ============ REVIEWS ============ {%- endcomment -%}
+  <section class="bm-section bm-reviews" id="lp-reviews">
+    <div class="bm-section__head">
+      <span class="bm-kicker">آراء عملائنا</span>
+      <h2 class="bm-section__title">ثقة آلاف الرجال في الخليج</h2>
+      <p class="bm-section__sub">تجارب حقيقية من عملاء استخدموا بابل موس.</p>
+    </div>
+
+    <div class="bm-reviews__grid">
+      <article class="bm-review">
+        <div class="bm-review__stars">★★★★★</div>
+        <p>"صار لي سنة أعاني من الشيب وأنا بعدني شاب. جربت بابل موس وصراحة اللون طلع طبيعي وايد، ولا أحد حس إني مغطّي الشيب. خفيف وسهل."</p>
+        <footer>
+          <img src="{{ 'lp-avatar-1.jpg' | asset_url }}" alt="" width="48" height="48" loading="lazy" decoding="async" class="bm-review__avatar">
+          <div class="bm-review__meta">
+            <strong>خالد العتيبي</strong>
+            <span>الرياض، السعودية · عميل موثّق</span>
+          </div>
+          <span class="bm-review__verified" aria-label="عميل موثّق">✓</span>
+        </footer>
+      </article>
+      <article class="bm-review">
+        <div class="bm-review__stars">★★★★★</div>
+        <p>"أحسن شي إنه ما فيه فوضى مثل الصبغات. أستخدمه بالبيت بدقائق والنتيجة من أول مرة. الطلب وصلني خلال يومين ودفعت كاش عند الاستلام."</p>
+        <footer>
+          <img src="{{ 'lp-avatar-2.jpg' | asset_url }}" alt="" width="48" height="48" loading="lazy" decoding="async" class="bm-review__avatar">
+          <div class="bm-review__meta">
+            <strong>عبدالله المنصوري</strong>
+            <span>دبي، الإمارات · عميل موثّق</span>
+          </div>
+          <span class="bm-review__verified" aria-label="عميل موثّق">✓</span>
+        </footer>
+      </article>
+      <article class="bm-review">
+        <div class="bm-review__stars">★★★★★</div>
+        <p>"كنت متردد بالبداية بس الدفع عند الاستلام طمّني. المنتج ممتاز واللون ثابت وما يطلع بسرعة. رجعت طلبت باقة ٣ قطع."</p>
+        <footer>
+          <img src="{{ 'lp-avatar-3.jpg' | asset_url }}" alt="" width="48" height="48" loading="lazy" decoding="async" class="bm-review__avatar">
+          <div class="bm-review__meta">
+            <strong>فيصل الشمري</strong>
+            <span>الدمام، السعودية · عميل موثّق</span>
+          </div>
+          <span class="bm-review__verified" aria-label="عميل موثّق">✓</span>
+        </footer>
+      </article>
+    </div>
+  </section>
+
+  {%- comment -%} ============ ORDER SECTION (EasySell renders its own form + offers) ============ {%- endcomment -%}
+  <section class="bm-section bm-order" id="lp-order">
+    <div class="bm-section__head">
+      <span class="bm-kicker">اطلب الآن</span>
+      <h2 class="bm-section__title">اختر باقتك وسجّل بياناتك بالأسفل</h2>
+      <p class="bm-section__sub">كل الباقات شحن مجاني + الدفع عند الاستلام داخل الإمارات. الأسعار بـدرهم إماراتي.</p>
+    </div>
+
+    <div class="bm-order__intro">
+      <ul class="bm-order__benefits" aria-label="مزايا الطلب">
+        <li><span class="bm-order__benefit-ic" aria-hidden="true">💵</span><div><strong>ادفع كاش عند الاستلام</strong><span>ما تدفع أي شي الحين — تدفع لما يوصلك الطلب.</span></div></li>
+        <li><span class="bm-order__benefit-ic" aria-hidden="true">🚚</span><div><strong>توصيل مجاني داخل الإمارات</strong><span>يوصلك خلال ١-٣ أيام عمل مع رسالة تتبّع.</span></div></li>
+        <li><span class="bm-order__benefit-ic" aria-hidden="true">🔒</span><div><strong>ضمان استرجاع ٣٠ يوم</strong><span>ما عجبتك النتيجة؟ نرجّع لك مبلغك كامل.</span></div></li>
+      </ul>
+      <div class="bm-order__pointer" aria-hidden="true">
+        <span>اختر الباقة واملأ بياناتك بالأسفل</span>
+        <span class="bm-order__pointer-arrow">↓</span>
+      </div>
+    </div>
+
+    {%- comment -%}
+      Hidden form: EasySell COD app renders its OWN visible form (offers + name/phone/city
+      + CTA "اطلب الحين !") right below via native_placement="after". We keep this hidden
+      form as the anchor EasySell hooks onto to detect the product and inject its widget.
+    {%- endcomment -%}
+    <form
+      method="post"
+      action="{{ routes.cart_add_url }}"
+      class="bm-form bm-form--anchor"
+      id="bm-order-form"
+      accept-charset="UTF-8"
+      enctype="multipart/form-data"
+      data-product-form
+      data-easysell-form
+      aria-hidden="true"
+    >
+      <input type="hidden" name="form_type" value="product">
+      <input type="hidden" name="utf8" value="✓">
+      <input type="hidden" name="id" value="{{ variant_id }}">
+      <input type="hidden" name="quantity" value="1">
+      <input type="hidden" name="properties[Country]" value="AE">
+      <button type="submit" name="add" hidden aria-hidden="true" tabindex="-1">اطلب</button>
+    </form>
+  </section>
+
+  {%- comment -%} ============ FAQ ============ {%- endcomment -%}
+  <section class="bm-section bm-faq" id="lp-faq">
+    <div class="bm-section__head">
+      <span class="bm-kicker">أسئلة قبل الطلب</span>
+      <h2 class="bm-section__title">كل اللي تبي تعرفه</h2>
+    </div>
+
+    <div class="bm-faq__list">
+      <details class="bm-faq__item">
+        <summary>وش يميّز بابل موس عن الصبغات العادية؟</summary>
+        <p>بابل موس تركيبة رغوية عشبية بدون أمونيا أو بيروكسيد، تغطّي الشيب بلون طبيعي غامق بدون ما تضرّ شعرك، وبدون الفوضى اللي تجي مع الصبغات العادية.</p>
+      </details>
+      <details class="bm-faq__item">
+        <summary>هل اللون يبان طبيعي ولا يكشف إنه مصبوغ؟</summary>
+        <p>اللون يطلع طبيعي ومتجانس مع لون شعرك، وما يبيّن إنه مصبوغ. أغلب عملائنا يقولون إن أحد ما يلاحظ الفرق.</p>
+      </details>
+      <details class="bm-faq__item">
+        <summary>الدفع عند الاستلام متوفر في الإمارات؟</summary>
+        <p>نعم، الدفع عند الاستلام متوفر لكل الإمارات. تدفع كاش عند وصول الطلب لباب بيتك.</p>
+      </details>
+      <details class="bm-faq__item">
+        <summary>كم ياخذ التوصيل؟</summary>
+        <p>من ١ إلى ٣ أيام عمل داخل الإمارات، مع رسالة تتبّع بعد تأكيد طلبك.</p>
+      </details>
+      <details class="bm-faq__item">
+        <summary>فيه ضمان لو ما عجبتني النتيجة؟</summary>
+        <p>أكيد. عندك ضمان استرجاع ٣٠ يوم كامل — لو ما عجبتك النتيجة تواصل معنا ونرجّع لك المبلغ.</p>
+      </details>
+      <details class="bm-faq__item">
+        <summary>كم مرة أستخدمه في الأسبوع؟</summary>
+        <p>حسب سرعة ظهور الشيب عندك، بس بشكل عام مرة إلى مرتين في الأسبوع تكفي للمحافظة على اللون.</p>
+      </details>
+    </div>
+  </section>
+
+  {%- comment -%} ============ FINAL CTA ============ {%- endcomment -%}
+  <section class="bm-section bm-final">
+    <h2>جاهز تودّع الشيب؟</h2>
+    <p>اطلب الحين وادفع كاش عند الاستلام. جرّب بابل موس بضمان ٣٠ يوم.</p>
+    <a href="#lp-order" class="bm-final__cta">اطلب الآن — ابدأ من {{ price_1 }} درهم</a>
+  </section>
+
+  {%- comment -%} ============ STICKY MOBILE CTA ============ {%- endcomment -%}
+  <a href="#lp-order" class="bm-sticky-cta" data-bm-sticky-cta aria-label="اطلب الآن">
+    <span class="bm-sticky-cta__label">اطلب الآن — دفع عند الاستلام</span>
+    <span class="bm-sticky-cta__price">من {{ price_1 }} درهم</span>
+    <span class="bm-sticky-cta__arrow" aria-hidden="true">←</span>
+  </a>
+
+  {%- comment -%} ============ FLOATING WHATSAPP ============ {%- endcomment -%}
+  <a
+    class="bm-wa"
+    href="https://wa.me/{{ wa_number }}?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D8%8C%20%D8%B9%D9%86%D8%AF%D9%8A%20%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%A8%D8%AE%D8%B5%D9%88%D8%B5%20Bayel%20Moss"
+    target="_blank"
+    rel="noopener"
+    aria-label="تواصل عبر واتساب"
+  >
+    <svg viewBox="0 0 32 32" width="26" height="26" aria-hidden="true" fill="currentColor">
+      <path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.386.702 4.609 1.905 6.478L4 29l7.702-1.865A11.94 11.94 0 0 0 16 27c6.628 0 12-5.373 12-12S22.628 3 16.001 3zm0 21.6a9.55 9.55 0 0 1-4.878-1.335l-.35-.208-4.573 1.108 1.135-4.455-.228-.365A9.542 9.542 0 0 1 6.4 15c0-5.293 4.307-9.6 9.6-9.6 5.293 0 9.6 4.307 9.6 9.6s-4.307 9.6-9.6 9.6zm5.446-7.083c-.298-.15-1.763-.87-2.037-.97-.273-.1-.472-.15-.671.15s-.77.97-.944 1.169c-.174.199-.348.223-.646.075-.298-.15-1.257-.463-2.394-1.478-.884-.79-1.481-1.763-1.655-2.061-.174-.298-.019-.459.13-.607.133-.132.298-.348.447-.522.15-.174.199-.298.298-.497.1-.199.05-.372-.025-.522-.075-.15-.671-1.618-.919-2.213-.242-.583-.487-.504-.671-.513l-.572-.01c-.199 0-.522.075-.795.372-.273.298-1.043 1.019-1.043 2.487s1.067 2.887 1.216 3.086c.15.199 2.099 3.203 5.083 4.494.71.306 1.263.489 1.695.626.712.226 1.36.194 1.872.118.571-.086 1.763-.72 2.012-1.416.248-.696.248-1.291.174-1.416-.074-.124-.273-.199-.571-.348z"/>
+    </svg>
+  </a>
+</div>
+
+{%- comment -%}
+  Lead export removed — EasySell COD Form & Upsells now handles the checkout flow.
+  EasySell auto-detects form[action="/cart/add"] with a [name="add"] submit button
+  and opens its own popup to collect Customer name/phone/city/address, then creates
+  a real Shopify order that is pushed to CodNetwork by EasySell's native integration.
+  If you want to restore the custom backend/Sheet pipeline, restore the block below
+  and re-add the customer fields to the form.
+{%- endcomment -%}
+
 
 {% javascript %}
   (function () {

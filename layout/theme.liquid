@@ -12,14 +12,6 @@
         assign is_product_landing_template = true
       endif
     endif
-
-    comment
-      Ensure page_description is set for LP templates so meta-tags.liquid renders the tag.
-      Uses the product's SEO description if set, otherwise injects a default Arabic description.
-    endcomment
-    if is_product_landing_template and page_description == blank
-      assign page_description = 'بابل موس — موس رغوي عشبي يغطّي الشيب بلون طبيعي غامق من أول استخدام. بدون أمونيا، بدون فوضى. ادفع عند الاستلام، توصيل مجاني داخل الإمارات.'
-    endif
   -%}
   <head>
     {%- if settings.favicon != blank -%}
@@ -54,6 +46,15 @@
 
     {%- render 'meta-tags' -%}
 
+    {%- comment -%}
+      LP meta description: page_description is a Shopify global read-only object (not assignable).
+      We inject the tag directly here to ensure it appears for LP templates regardless
+      of whether the product has an SEO description set in Shopify admin.
+    {%- endcomment -%}
+    {%- if is_product_landing_template and page_description == blank -%}
+      <meta name="description" content="بابل موس — موس رغوي عشبي يغطّي الشيب بلون طبيعي من أول استخدام. بدون أمونيا. الدفع عند الاستلام، توصيل مجاني للإمارات.">
+    {%- endif -%}
+
     {%- comment -%} Preload LP hero image to reduce LCP resource-load delay {%- endcomment -%}
     {%- if is_product_landing_template -%}
       <link rel="preload" as="image" href="{{ 'lp-bottle-mobile.avif' | asset_url }}" type="image/avif" media="(max-width: 749px)">
@@ -76,6 +77,42 @@
     {% if request.design_mode %}
       {%- render 'theme-editor' -%}
     {% endif %}
+
+    {%- if is_product_landing_template -%}
+      {%- comment -%}
+        On LP templates, compiled_assets/styles.css is render-blocking but contains only
+        ~3% CSS actually used by the LP (the rest is theme-wide CSS for other pages).
+        We intercept the link element injected by content_for_header via MutationObserver
+        and immediately flip it to non-blocking (media="print" + onload swap).
+        This runs synchronously before the browser registers the stylesheet as blocking.
+        Does NOT affect other templates or the theme editor.
+      {%- endcomment -%}
+      <script>
+        (function() {
+          var observer = new MutationObserver(function(mutations) {
+            for (var i = 0; i < mutations.length; i++) {
+              var nodes = mutations[i].addedNodes;
+              for (var j = 0; j < nodes.length; j++) {
+                var node = nodes[j];
+                if (
+                  node.tagName === 'LINK' &&
+                  node.rel === 'stylesheet' &&
+                  node.href &&
+                  node.href.indexOf('compiled_assets/styles.css') !== -1 &&
+                  node.media !== 'print'
+                ) {
+                  node.media = 'print';
+                  node.addEventListener('load', function() { this.media = 'all'; });
+                }
+              }
+            }
+          });
+          observer.observe(document.head || document.documentElement, { childList: true });
+          // Disconnect after head is done — body start is sufficient signal
+          document.addEventListener('DOMContentLoaded', function() { observer.disconnect(); }, { once: true });
+        })();
+      </script>
+    {%- endif -%}
 
     {{ content_for_header }}
   </head>
