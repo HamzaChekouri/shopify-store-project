@@ -57,12 +57,24 @@
   defer
 ></script>
 
+{%- comment -%}
+  LP templates never use view transitions (standalone design, no product transition).
+  Prevent blocking="render" on LP templates regardless of global settings.
+{%- endcomment -%}
+{%- liquid
+  assign _is_lp = false
+  if template.suffix == 'bayel-moss-lp' or template.suffix == 'landing'
+    assign _is_lp = true
+  endif
+-%}
 <script
   src="{{ 'view-transitions.js' | asset_url }}"
   async
-  {% if settings.page_transition_enabled or settings.transition_to_main_product %}
-    blocking="render"
-  {% endif %}
+  {% unless _is_lp %}
+    {% if settings.page_transition_enabled or settings.transition_to_main_product %}
+      blocking="render"
+    {% endif %}
+  {% endunless %}
 ></script>
 
 <link

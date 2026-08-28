@@ -12,6 +12,14 @@
         assign is_product_landing_template = true
       endif
     endif
+
+    comment
+      Ensure page_description is set for LP templates so meta-tags.liquid renders the tag.
+      Uses the product's SEO description if set, otherwise injects a default Arabic description.
+    endcomment
+    if is_product_landing_template and page_description == blank
+      assign page_description = 'بابل موس — موس رغوي عشبي يغطّي الشيب بلون طبيعي غامق من أول استخدام. بدون أمونيا، بدون فوضى. ادفع عند الاستلام، توصيل مجاني داخل الإمارات.'
+    endif
   -%}
   <head>
     {%- if settings.favicon != blank -%}
@@ -26,8 +34,9 @@
       Opt into cross-document (MPA) view transitions and hold first paint until #MainContent
       parses, so the transition runs consistently.
       Both are gated on the same settings as the view-transitions.js opt-out switch (see snippets/scripts.liquid).
+      LP templates never use view transitions — skip both to avoid render-blocking on LCP.
     {% endcomment %}
-    {% if settings.transition_to_main_product or settings.page_transition_enabled %}
+    {% if (settings.transition_to_main_product or settings.page_transition_enabled) and is_product_landing_template == false %}
       {% style %}
         @media (prefers-reduced-motion: no-preference) {
           @view-transition {
@@ -44,11 +53,19 @@
     {% endif %}
 
     {%- render 'meta-tags' -%}
-    {%- render 'stylesheets' -%}
+
     {%- comment -%} Preload LP hero image to reduce LCP resource-load delay {%- endcomment -%}
     {%- if is_product_landing_template -%}
       <link rel="preload" as="image" href="{{ 'lp-bottle-mobile.avif' | asset_url }}" type="image/avif" media="(max-width: 749px)">
       <link rel="preload" as="image" href="{{ 'lp-bottle.avif' | asset_url }}" type="image/avif" media="(min-width: 750px)">
+      {%- comment -%}
+        LP template: load base.css non-blocking (LP has its own complete CSS inline).
+        overflow-list.css is unused on LP — skip entirely.
+      {%- endcomment -%}
+      {{ 'base.css' | asset_url | stylesheet_tag: media: 'print', onload: "this.media='all'" }}
+      <noscript>{{ 'base.css' | asset_url | stylesheet_tag }}</noscript>
+    {%- else -%}
+      {%- render 'stylesheets' -%}
     {%- endif -%}
     {%- render 'card-hover-effect-styles' -%}
     {%- render 'fonts' -%}
@@ -78,13 +95,23 @@
 
     {% render 'skip-to-content-link', href: '#MainContent', text: 'accessibility.skip_to_text' %}
 
-    {% render 'chat-drawer' %}
+    {%- unless is_product_landing_template -%}
+      {% render 'chat-drawer' %}
+    {%- endunless -%}
 
     <div class="page-wrapper">
+      {%- unless is_product_landing_template -%}
       <div id="header-group">
         {% sections 'header-group' %}
       </div>
+      {%- endunless -%}
 
+      {%- comment -%}
+        Skip all header measurement / menu-style scripts on LP templates.
+        The LP does not use the theme header — running these scripts forces layout
+        and adds ~40ms of synchronous JS work for nothing.
+      {%- endcomment -%}
+      {%- unless is_product_landing_template -%}
       <script>
         /**
          * Sets `--header-height` and `--header-group-height` to measured values before first paint.
@@ -191,6 +218,7 @@
           }
         })();
       </script>
+      {%- endunless -%}
 
       <main
         id="MainContent"
@@ -213,13 +241,13 @@
       {% endunless %}
     </div>
 
-    {% render 'cart-drawer', render_wrapper: true %}
-    {% render 'theme-drawer' %}
-
-    {% render 'search-modal' %}
-
-    {% if settings.quick_add or settings.mobile_quick_add %}
-      {% render 'quick-add-modal' %}
-    {% endif %}
+    {%- unless is_product_landing_template -%}
+      {% render 'cart-drawer', render_wrapper: true %}
+      {% render 'theme-drawer' %}
+      {% render 'search-modal' %}
+      {% if settings.quick_add or settings.mobile_quick_add %}
+        {% render 'quick-add-modal' %}
+      {% endif %}
+    {%- endunless -%}
   </body>
 </html>

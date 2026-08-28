@@ -517,7 +517,12 @@
   and re-add the customer fields to the form.
 {%- endcomment -%}
 
-{% stylesheet %}
+{%- comment -%}
+  {% style %} inlines CSS in <head> — does NOT go into compiled_assets/styles.css.
+  This is the primary LCP fix: LP CSS renders immediately from HTML, eliminating
+  the render-blocking external stylesheet delay (~2s on slow 4G mobile).
+{%- endcomment -%}
+{% style %}
   /* ==========================================================================
      BAYEL MOSS LP — Isolated styles
      All rules scoped under #bayel-moss-lp to prevent global bleed.
@@ -1674,7 +1679,7 @@
     .bm-hero__inner { max-width: 1000px; }
     .bm-hero__title { font-size: 3.4rem; }
   }
-{% endstylesheet %}
+{% endstyle %}
 
 {% javascript %}
   (function () {
