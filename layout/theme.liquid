@@ -45,6 +45,11 @@
 
     {%- render 'meta-tags' -%}
     {%- render 'stylesheets' -%}
+    {%- comment -%} Preload LP hero image to reduce LCP resource-load delay {%- endcomment -%}
+    {%- if is_product_landing_template -%}
+      <link rel="preload" as="image" href="{{ 'lp-bottle-mobile.avif' | asset_url }}" type="image/avif" media="(max-width: 749px)">
+      <link rel="preload" as="image" href="{{ 'lp-bottle.avif' | asset_url }}" type="image/avif" media="(min-width: 750px)">
+    {%- endif -%}
     {%- render 'card-hover-effect-styles' -%}
     {%- render 'fonts' -%}
     {%- render 'scripts' -%}

@@ -87,20 +87,23 @@
 
       <div class="bm-hero__media">
         <div class="bm-hero__orb" aria-hidden="true"></div>
-        <img
-          src="{{ hero_image | asset_url }}"
-          srcset="{{ hero_image | asset_url: width: 290 }} 290w,
-                  {{ hero_image | asset_url: width: 520 }} 520w,
-                  {{ hero_image | asset_url: width: 640 }} 640w,
-                  {{ hero_image | asset_url: width: 800 }} 800w"
-          sizes="(max-width: 749px) 98vw, (max-width: 990px) 420px, 520px"
-          alt="{{ product.title | escape }}"
-          class="bm-hero__image"
-          width="520"
-          height="760"
-          loading="eager"
-          fetchpriority="high"
-        >
+        <picture>
+          <source
+            media="(max-width: 749px)"
+            srcset="{{ 'lp-bottle-mobile.avif' | asset_url }}"
+            type="image/avif"
+          >
+          <img
+            src="{{ hero_image | asset_url }}"
+            alt="{{ product.title | escape }}"
+            class="bm-hero__image"
+            width="520"
+            height="520"
+            loading="eager"
+            fetchpriority="high"
+            decoding="sync"
+          >
+        </picture>
       </div>
 
       <p class="bm-hero__lead">
@@ -142,7 +145,7 @@
           <div class="bm-ugc__media">
             {%- assign poster_num = forloop.index -%}
             {%- capture poster_file -%}lp-review-{{ poster_num }}-poster.jpg{%- endcapture -%}
-            {%- assign poster_srcset = poster_file | asset_url: width: 290 | append: ' 290w, ' | append: poster_file | asset_url: width: 350 | append: ' 350w' -%}
+            {%- capture poster_webp -%}lp-review-{{ poster_num }}-poster.webp{%- endcapture -%}
             <video
               class="bm-ugc__video"
               playsinline
@@ -150,7 +153,7 @@
               loop
               preload="none"
               controls
-              poster="{{ poster_file | asset_url }}"
+              poster="{{ poster_webp | asset_url }}"
               data-ugc-video
             >
               <source src="{{ v | asset_url }}" type="video/mp4">
@@ -177,18 +180,20 @@
 
     <div class="bm-problem__grid">
       <figure class="bm-problem__figure">
-        <img
-          src="{{ 'lp-problem-before.jpg' | asset_url }}"
-          srcset="{{ 'lp-problem-before.jpg' | asset_url: width: 340 }} 340w,
-                  {{ 'lp-problem-before.jpg' | asset_url: width: 451 }} 451w,
-                  {{ 'lp-problem-before.jpg' | asset_url: width: 640 }} 640w"
-          sizes="(max-width: 749px) 340px, 451px"
-          alt="رجل يعاني من الشيب قبل استخدام بابل موس"
-          width="640"
-          height="908"
-          loading="lazy"
-          decoding="async"
-        >
+        <picture>
+          <source
+            srcset="{{ 'lp-problem-before-400.webp' | asset_url }}"
+            type="image/webp"
+          >
+          <img
+            src="{{ 'lp-problem-before.jpg' | asset_url }}"
+            alt="رجل يعاني من الشيب قبل استخدام بابل موس"
+            width="400"
+            height="568"
+            loading="lazy"
+            decoding="async"
+          >
+        </picture>
         <figcaption>قبل</figcaption>
       </figure>
       <ul class="bm-problem__list">

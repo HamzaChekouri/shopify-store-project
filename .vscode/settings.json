@@ -1,0 +1,8 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "/^ls -lh assets/lp-bottle\\.avif assets/lp-bottle-mobile\\.avif && sips -g pixelWidth -g pixelHeight assets/lp-bottle-mobile\\.avif$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
+    }
+}

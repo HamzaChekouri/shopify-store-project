@@ -1,0 +1,89 @@
+{%- comment -%}
+  Reusable performance-optimized image component.
+  Use for every new LP / product image going forward.
+
+  Parameters:
+    src            {string}  — required. Theme asset filename for desktop (e.g. 'hero.avif')
+    mobile_src     {string}  — optional. Theme asset filename for mobile ≤749px
+    alt            {string}  — required. Alt text (empty string '' for decorative)
+    width          {number}  — required. Natural width of the desktop image (px)
+    height         {number}  — required. Natural height of the desktop image (px)
+    sizes          {string}  — optional. Responsive sizes attribute
+    class          {string}  — optional. CSS class(es) for the <img>
+    loading        {string}  — optional. 'eager' (hero/LCP) or 'lazy' (below fold). Default: 'lazy'
+    fetchpriority  {string}  — optional. 'high' for LCP image only, else omit. Default: 'auto'
+    mobile_width   {number}  — optional. Natural width of mobile image. Defaults to width.
+    mobile_height  {number}  — optional. Natural height of mobile image. Defaults to height.
+
+  Usage examples:
+
+  Hero / LCP image:
+    {%- render 'optimized-image',
+      src: 'lp-bottle.avif',
+      mobile_src: 'lp-bottle-mobile.avif',
+      alt: product.title,
+      width: 520,
+      height: 520,
+      class: 'bm-hero__image',
+      loading: 'eager',
+      fetchpriority: 'high'
+    -%}
+
+  Below-fold image:
+    {%- render 'optimized-image',
+      src: 'lp-problem-before-400.webp',
+      alt: 'رجل يعاني من الشيب',
+      width: 400,
+      height: 568,
+      class: 'bm-problem__img',
+      loading: 'lazy'
+    -%}
+{%- endcomment -%}
+
+{%- liquid
+  assign _loading      = loading      | default: 'lazy'
+  assign _fetchpri     = fetchpriority | default: 'auto'
+  assign _class        = class        | default: ''
+  assign _sizes        = sizes        | default: ''
+  assign _mob_width    = mobile_width  | default: width
+  assign _mob_height   = mobile_height | default: height
+  assign _has_mobile   = false
+  if mobile_src != blank and mobile_src != src
+    assign _has_mobile = true
+  endif
+-%}
+
+{%- if _has_mobile -%}
+  <picture>
+    <source
+      media="(max-width: 749px)"
+      srcset="{{ mobile_src | asset_url }}"
+      width="{{ _mob_width }}"
+      height="{{ _mob_height }}"
+      type="image/{% if mobile_src contains '.avif' %}avif{% elsif mobile_src contains '.webp' %}webp{% else %}jpeg{% endif %}"
+    >
+    <img
+      src="{{ src | asset_url }}"
+      alt="{{ alt | escape }}"
+      width="{{ width }}"
+      height="{{ height }}"
+      loading="{{ _loading }}"
+      fetchpriority="{{ _fetchpri }}"
+      decoding="{% if _loading == 'eager' %}sync{% else %}async{% endif %}"
+      {%- if _class != '' %} class="{{ _class }}"{% endif %}
+      {%- if _sizes != '' %} sizes="{{ _sizes }}"{% endif %}
+    >
+  </picture>
+{%- else -%}
+  <img
+    src="{{ src | asset_url }}"
+    alt="{{ alt | escape }}"
+    width="{{ width }}"
+    height="{{ height }}"
+    loading="{{ _loading }}"
+    fetchpriority="{{ _fetchpri }}"
+    decoding="{% if _loading == 'eager' %}sync{% else %}async{% endif %}"
+    {%- if _class != '' %} class="{{ _class }}"{% endif %}
+    {%- if _sizes != '' %} sizes="{{ _sizes }}"{% endif %}
+  >
+{%- endif -%}
