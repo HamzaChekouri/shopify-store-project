@@ -1293,6 +1293,52 @@
     </div>
   </section>
 
+  {%- comment -%} ============ ORDER SECTION (EasySell renders its own form + offers) ============ {%- endcomment -%}
+  <section class="bm-section bm-order" id="lp-order">
+    <div class="bm-section__head">
+      <span class="bm-kicker">اطلب الآن</span>
+      <h2 class="bm-section__title">اختر باقتك وسجّل بياناتك بالأسفل</h2>
+      <p class="bm-section__sub">كل الباقات شحن مجاني + الدفع عند الاستلام داخل الإمارات. الأسعار بـدرهم إماراتي.</p>
+    </div>
+
+    <div class="bm-order__intro">
+      <ul class="bm-order__benefits" aria-label="مزايا الطلب">
+        <li><span class="bm-order__benefit-ic" aria-hidden="true">💵</span><div><strong>ادفع كاش عند الاستلام</strong><span>ما تدفع أي شي الحين — تدفع لما يوصلك الطلب.</span></div></li>
+        <li><span class="bm-order__benefit-ic" aria-hidden="true">🚚</span><div><strong>توصيل مجاني داخل الإمارات</strong><span>يوصلك خلال ١-٣ أيام عمل مع رسالة تتبّع.</span></div></li>
+        <li><span class="bm-order__benefit-ic" aria-hidden="true">🔒</span><div><strong>ضمان استرجاع ٣٠ يوم</strong><span>ما عجبتك النتيجة؟ نرجّع لك مبلغك كامل.</span></div></li>
+      </ul>
+      <div class="bm-order__pointer" aria-hidden="true">
+        <span>اختر الباقة واملأ بياناتك بالأسفل</span>
+        <span class="bm-order__pointer-arrow">↓</span>
+      </div>
+    </div>
+
+    {%- comment -%}
+      Hidden form: EasySell COD app renders its OWN visible form (offers + name/phone/city
+      + CTA "اطلب الحين !") right below via native_placement="after". We keep this hidden
+      form as the anchor EasySell hooks onto to detect the product and inject its widget.
+    {%- endcomment -%}
+    <form
+      method="post"
+      action="{{ routes.cart_add_url }}"
+      class="bm-form bm-form--anchor"
+      id="bm-order-form"
+      accept-charset="UTF-8"
+      enctype="multipart/form-data"
+      data-product-form
+      data-easysell-form
+      aria-hidden="true"
+    >
+      <input type="hidden" name="form_type" value="product">
+      <input type="hidden" name="utf8" value="✓">
+      <input type="hidden" name="id" value="{{ variant_id }}">
+      <input type="hidden" name="quantity" value="1">
+      <input type="hidden" name="properties[Country]" value="AE">
+      <button type="submit" name="add" hidden aria-hidden="true" tabindex="-1">اطلب</button>
+    </form>
+  </section>
+
+
   {%- comment -%} ============ UGC / SOCIAL PROOF ============ {%- endcomment -%}
   <section class="bm-section bm-proof" id="lp-reviews-video">
     <div class="bm-section__head">
@@ -1563,51 +1609,6 @@
         </footer>
       </article>
     </div>
-  </section>
-
-  {%- comment -%} ============ ORDER SECTION (EasySell renders its own form + offers) ============ {%- endcomment -%}
-  <section class="bm-section bm-order" id="lp-order">
-    <div class="bm-section__head">
-      <span class="bm-kicker">اطلب الآن</span>
-      <h2 class="bm-section__title">اختر باقتك وسجّل بياناتك بالأسفل</h2>
-      <p class="bm-section__sub">كل الباقات شحن مجاني + الدفع عند الاستلام داخل الإمارات. الأسعار بـدرهم إماراتي.</p>
-    </div>
-
-    <div class="bm-order__intro">
-      <ul class="bm-order__benefits" aria-label="مزايا الطلب">
-        <li><span class="bm-order__benefit-ic" aria-hidden="true">💵</span><div><strong>ادفع كاش عند الاستلام</strong><span>ما تدفع أي شي الحين — تدفع لما يوصلك الطلب.</span></div></li>
-        <li><span class="bm-order__benefit-ic" aria-hidden="true">🚚</span><div><strong>توصيل مجاني داخل الإمارات</strong><span>يوصلك خلال ١-٣ أيام عمل مع رسالة تتبّع.</span></div></li>
-        <li><span class="bm-order__benefit-ic" aria-hidden="true">🔒</span><div><strong>ضمان استرجاع ٣٠ يوم</strong><span>ما عجبتك النتيجة؟ نرجّع لك مبلغك كامل.</span></div></li>
-      </ul>
-      <div class="bm-order__pointer" aria-hidden="true">
-        <span>اختر الباقة واملأ بياناتك بالأسفل</span>
-        <span class="bm-order__pointer-arrow">↓</span>
-      </div>
-    </div>
-
-    {%- comment -%}
-      Hidden form: EasySell COD app renders its OWN visible form (offers + name/phone/city
-      + CTA "اطلب الحين !") right below via native_placement="after". We keep this hidden
-      form as the anchor EasySell hooks onto to detect the product and inject its widget.
-    {%- endcomment -%}
-    <form
-      method="post"
-      action="{{ routes.cart_add_url }}"
-      class="bm-form bm-form--anchor"
-      id="bm-order-form"
-      accept-charset="UTF-8"
-      enctype="multipart/form-data"
-      data-product-form
-      data-easysell-form
-      aria-hidden="true"
-    >
-      <input type="hidden" name="form_type" value="product">
-      <input type="hidden" name="utf8" value="✓">
-      <input type="hidden" name="id" value="{{ variant_id }}">
-      <input type="hidden" name="quantity" value="1">
-      <input type="hidden" name="properties[Country]" value="AE">
-      <button type="submit" name="add" hidden aria-hidden="true" tabindex="-1">اطلب</button>
-    </form>
   </section>
 
   {%- comment -%} ============ FAQ ============ {%- endcomment -%}
