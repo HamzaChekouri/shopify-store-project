@@ -627,27 +627,68 @@
     gap: 1.15rem;
     align-items: center;
   }
-  .bm-problem__figure {
-    margin: 0;
+
+  /* ---- Before / After slider ---- */
+  .bm-ba {
     position: relative;
     border-radius: var(--bm-radius);
     overflow: hidden;
     box-shadow: var(--bm-shadow);
     aspect-ratio: 4 / 5;
-    max-width: 340px;
-    margin-inline: auto;
+    max-width: 360px;
+    margin: 0 auto;
     background: #d9d1c2;
+    user-select: none;
+    -webkit-user-select: none;
   }
-  .bm-problem__figure img {
+  .bm-ba__img {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
+    pointer-events: none;
   }
-  .bm-problem__figure figcaption {
+  /* "before" sits on top, clipped to the left portion */
+  .bm-ba__before {
+    z-index: 2;
+    clip-path: inset(0 calc(100% - var(--bm-split, 50%)) 0 0);
+  }
+  .bm-ba__after { z-index: 1; }
+  /* divider line + handle */
+  .bm-ba__divider {
+    position: absolute;
+    top: 0; bottom: 0;
+    left: var(--bm-split, 50%);
+    transform: translateX(-50%);
+    width: 3px;
+    background: #fff;
+    z-index: 3;
+    pointer-events: none;
+    box-shadow: 0 0 6px rgba(0,0,0,0.35);
+  }
+  .bm-ba__handle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.28);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    color: #1e4a2b;
+    font-size: 0.85rem;
+  }
+  /* labels */
+  .bm-ba__label {
     position: absolute;
     top: 0.75rem;
-    inset-inline-start: 0.75rem;
     background: rgba(30, 43, 33, 0.78);
     color: #fff;
     padding: 0.28rem 0.75rem;
@@ -656,6 +697,23 @@
     font-weight: 800;
     letter-spacing: 0.05em;
     backdrop-filter: blur(2px);
+    z-index: 4;
+    pointer-events: none;
+  }
+  .bm-ba__label--before { inset-inline-start: 0.75rem; }
+  .bm-ba__label--after  { inset-inline-end: 0.75rem; }
+  /* range input — invisible but covers the whole slider for dragging */
+  .bm-ba__range {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: ew-resize;
+    z-index: 5;
+    margin: 0;
+    -webkit-appearance: none;
+    appearance: none;
   }
   .bm-problem__list {
     display: flex;
@@ -1124,10 +1182,10 @@
     .bm-ugc__card { flex: 1; max-width: none; }
 
     .bm-problem__grid {
-      grid-template-columns: minmax(0, 320px) minmax(0, 1fr);
+      grid-template-columns: minmax(0, 360px) minmax(0, 1fr);
       gap: 2rem;
     }
-    .bm-problem__figure { max-width: none; }
+    .bm-ba { max-width: none; }
 
     .bm-steps__list {
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1390,23 +1448,43 @@
     </div>
 
     <div class="bm-problem__grid">
-      <figure class="bm-problem__figure">
-        <picture>
-          <source
-            srcset="{{ 'lp-problem-before-400.webp' | asset_url }}"
-            type="image/webp"
-          >
-          <img
-            src="{{ 'lp-problem-before.jpg' | asset_url }}"
-            alt="رجل يعاني من الشيب قبل استخدام بابل موس"
-            width="400"
-            height="568"
-            loading="lazy"
-            decoding="async"
-          >
-        </picture>
-        <figcaption>قبل</figcaption>
-      </figure>
+      <div class="bm-ba" data-bm-ba>
+        {%- comment -%} After image (bottom layer) {%- endcomment -%}
+        <img
+          class="bm-ba__img bm-ba__after"
+          src="{{ 'lp-problem-after.avif' | asset_url }}"
+          alt="رجل بعد استخدام بابل موس — الشيب مغطّى بلون طبيعي"
+          width="532"
+          height="908"
+          loading="lazy"
+          decoding="async"
+        >
+        {%- comment -%} Before image (top layer, clipped) {%- endcomment -%}
+        <img
+          class="bm-ba__img bm-ba__before"
+          src="{{ 'lp-problem-before.jpg' | asset_url }}"
+          alt="رجل قبل استخدام بابل موس — شيب واضح"
+          width="400"
+          height="568"
+          loading="lazy"
+          decoding="async"
+        >
+        {%- comment -%} Divider + handle {%- endcomment -%}
+        <div class="bm-ba__divider" aria-hidden="true">
+          <div class="bm-ba__handle">&#8249;&#8250;</div>
+        </div>
+        {%- comment -%} Labels {%- endcomment -%}
+        <span class="bm-ba__label bm-ba__label--before" aria-hidden="true">قبل</span>
+        <span class="bm-ba__label bm-ba__label--after" aria-hidden="true">بعد</span>
+        {%- comment -%} Drag input {%- endcomment -%}
+        <input
+          type="range"
+          class="bm-ba__range"
+          min="0" max="100" value="50" step="0.1"
+          aria-label="مقارنة قبل وبعد — حرّك للمقارنة"
+          data-bm-ba-range
+        >
+      </div>
       <ul class="bm-problem__list">
         <li><span class="bm-x">✕</span> الشيب يطلع وانت في عز شبابك ويعطيك شكل أكبر من عمرك الحقيقي.</li>
         <li><span class="bm-x">✕</span> الصبغات الكيميائية تضرّ شعرك وتعطي لون صناعي يبيّن من بعيد.</li>
@@ -1688,6 +1766,17 @@
   (function () {
     const root = document.getElementById('bayel-moss-lp');
     if (!root) return;
+
+    /* -------- Before / After slider -------- */
+    root.querySelectorAll('[data-bm-ba]').forEach((el) => {
+      const range = el.querySelector('[data-bm-ba-range]');
+      if (!range) return;
+      const update = () => {
+        el.style.setProperty('--bm-split', range.value + '%');
+      };
+      range.addEventListener('input', update);
+      update();
+    });
 
     /* -------- UGC: click to play/pause -------- */
     const cards = root.querySelectorAll('.bm-ugc__card');
