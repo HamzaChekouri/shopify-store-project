@@ -526,8 +526,10 @@
     width: 100%;
     max-width: 640px;
     height: auto;
+    aspect-ratio: 1024 / 1823;
     margin: 0 auto 1.25rem;
     border-radius: var(--bm-radius);
+    background: rgba(217, 232, 221, 0.25);
   }
   .bm-order__intro {
     max-width: 640px;
@@ -1329,8 +1331,10 @@
       src="{{ 'lp-order-banner.avif' | asset_url }}"
       alt="منتج أصلي 100% — كود تحقق على كل علبة"
       class="bm-order__banner"
-      width="600"
-      loading="eager"
+      width="1024"
+      height="1823"
+      loading="lazy"
+      decoding="async"
     >
 
     <div class="bm-order__intro">
