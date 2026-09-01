@@ -394,6 +394,7 @@
     scroll-margin-top: 80px; /* offset for sticky header when scrolling to anchors */
   }
   #bayel-moss-lp #lp-order { scroll-margin-top: 72px; }
+  #bayel-moss-lp #lp-form { scroll-margin-top: 72px; }
 
   /* Attention flash when user arrives on the order form via a CTA */
   @keyframes bmFormFlash {
@@ -1239,7 +1240,7 @@
         <a href="#lp-reviews">التقييمات</a>
         <a href="#lp-faq">الأسئلة</a>
       </nav>
-      <a href="#lp-order" class="bm-header__cta">اطلب الآن</a>
+      <a href="#lp-form" class="bm-header__cta">اطلب الآن</a>
       <button type="button" class="bm-header__burger" aria-label="القائمة" data-bm-burger>
         <span></span><span></span><span></span>
       </button>
@@ -1249,7 +1250,7 @@
       <a href="#lp-how">طريقة الاستخدام</a>
       <a href="#lp-reviews">التقييمات</a>
       <a href="#lp-faq">الأسئلة</a>
-      <a href="#lp-order" class="bm-header__drawer-cta">اطلب الآن</a>
+      <a href="#lp-form" class="bm-header__drawer-cta">اطلب الآن</a>
     </div>
   </header>
 
@@ -1306,7 +1307,7 @@
         <span class="bm-hero__trust-text">٤٫٩ / ٥ · ثقة أكثر من +١٢,٠٠٠ رجّال في الخليج</span>
       </div>
 
-      <a href="#lp-order" class="bm-hero__cta">
+      <a href="#lp-form" class="bm-hero__cta">
         اطلب الآن — {{ price_1 }} درهم
         <span class="bm-hero__cta-arrow" aria-hidden="true">←</span>
       </a>
@@ -1354,6 +1355,7 @@
       name/phone/city + CTA "اطلب الحين !") directly below this form via
       native_placement="after". DO NOT REMOVE — EasySell auto-detects it.
     {%- endcomment -%}
+    <div id="lp-form" class="bm-order__form-anchor" aria-hidden="true"></div>
     <form
       method="post"
       action="{{ routes.cart_add_url }}"
@@ -1696,11 +1698,11 @@
   <section class="bm-section bm-final">
     <h2>جاهز تودّع الشيب؟</h2>
     <p>اطلب الحين وادفع كاش عند الاستلام. جرّب بابل موس بضمان ٣٠ يوم.</p>
-    <a href="#lp-order" class="bm-final__cta">اطلب الآن — ابدأ من {{ price_1 }} درهم</a>
+    <a href="#lp-form" class="bm-final__cta">اطلب الآن — ابدأ من {{ price_1 }} درهم</a>
   </section>
 
   {%- comment -%} ============ STICKY MOBILE CTA ============ {%- endcomment -%}
-  <a href="#lp-order" class="bm-sticky-cta" data-bm-sticky-cta aria-label="اطلب الآن">
+  <a href="#lp-form" class="bm-sticky-cta" data-bm-sticky-cta aria-label="اطلب الآن">
     <span class="bm-sticky-cta__label">اطلب الآن — دفع عند الاستلام</span>
     <span class="bm-sticky-cta__price">من {{ price_1 }} درهم</span>
     <span class="bm-sticky-cta__arrow" aria-hidden="true">←</span>
@@ -1802,7 +1804,7 @@
         header && header.classList.remove('is-open');
       }
       // Flash the order form if the anchor targets the order section or the form itself
-      if (href === '#lp-order' || (orderForm && target.contains(orderForm)) || target === orderForm) {
+      if (href === '#lp-order' || href === '#lp-form' || (orderForm && target.contains(orderForm)) || target === orderForm) {
         // wait a bit so the flash starts as the form comes into view
         setTimeout(flashOrderForm, 350);
       }
@@ -1820,7 +1822,7 @@
         if (!target) return;
         e.preventDefault();
         smoothScrollTo(target);
-        if (href === '#lp-order' || (orderForm && target.contains(orderForm)) || target === orderForm) {
+        if (href === '#lp-order' || href === '#lp-form' || (orderForm && target.contains(orderForm)) || target === orderForm) {
           setTimeout(flashOrderForm, 350);
         }
       });
