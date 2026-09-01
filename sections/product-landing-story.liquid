@@ -1340,12 +1340,6 @@
 
   {%- comment -%} ============ ORDER SECTION (EasySell renders its own form + offers below the anchor) ============ {%- endcomment -%}
   <section class="bm-section bm-order" id="lp-order">
-    <div class="bm-section__head">
-      <span class="bm-kicker">اطلب الآن</span>
-      <h2 class="bm-section__title">اختر باقتك واملأ بياناتك</h2>
-      <p class="bm-section__sub">كل الباقات شحن مجاني + الدفع عند الاستلام داخل الإمارات. الأسعار بـدرهم إماراتي.</p>
-    </div>
-
     <img
       src="{{ 'lp-order-banner.avif' | asset_url }}"
       alt="منتج أصلي 100% — كود تحقق على كل علبة"
@@ -1355,6 +1349,12 @@
       loading="lazy"
       decoding="async"
     >
+
+    <div class="bm-section__head">
+      <span class="bm-kicker">اطلب الآن</span>
+      <h2 class="bm-section__title">اختر باقتك واملأ بياناتك</h2>
+      <p class="bm-section__sub">كل الباقات شحن مجاني + الدفع عند الاستلام داخل الإمارات. الأسعار بـدرهم إماراتي.</p>
+    </div>
 
     <div class="bm-order__intro">
       <ul class="bm-order__benefits" aria-label="مزايا الطلب">
