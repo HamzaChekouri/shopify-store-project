@@ -521,6 +521,14 @@
     background: linear-gradient(180deg, transparent 0%, rgba(217,232,221,0.4) 100%);
     padding-bottom: 1.5rem;
   }
+  .bm-order__banner {
+    display: block;
+    width: 100%;
+    max-width: 640px;
+    height: auto;
+    margin: 0 auto 1.25rem;
+    border-radius: var(--bm-radius);
+  }
   .bm-order__intro {
     max-width: 640px;
     margin: 0 auto 1.25rem;
@@ -1309,12 +1317,38 @@
     </div>
   </section>
 
-  {%- comment -%} ============ ORDER SECTION (EasySell renders its own form + offers) ============ {%- endcomment -%}
+  {%- comment -%} ============ ORDER SECTION (EasySell renders its own form + offers below the anchor) ============ {%- endcomment -%}
   <section class="bm-section bm-order" id="lp-order">
+    <div class="bm-section__head">
+      <span class="bm-kicker">اطلب الآن</span>
+      <h2 class="bm-section__title">اختر باقتك واملأ بياناتك</h2>
+      <p class="bm-section__sub">كل الباقات شحن مجاني + الدفع عند الاستلام داخل الإمارات. الأسعار بـدرهم إماراتي.</p>
+    </div>
+
+    <img
+      src="{{ 'lp-order-banner.avif' | asset_url }}"
+      alt="منتج أصلي 100% — كود تحقق على كل علبة"
+      class="bm-order__banner"
+      width="600"
+      loading="eager"
+    >
+
+    <div class="bm-order__intro">
+      <ul class="bm-order__benefits" aria-label="مزايا الطلب">
+        <li><span class="bm-order__benefit-ic" aria-hidden="true">💵</span><div><strong>ادفع كاش عند الاستلام</strong><span>ما تدفع أي شي الحين — تدفع لما يوصلك الطلب.</span></div></li>
+        <li><span class="bm-order__benefit-ic" aria-hidden="true">🚚</span><div><strong>توصيل مجاني داخل الإمارات</strong><span>يوصلك خلال ١-٣ أيام عمل مع رسالة تتبّع.</span></div></li>
+        <li><span class="bm-order__benefit-ic" aria-hidden="true">🔒</span><div><strong>ضمان استرجاع ٣٠ يوم</strong><span>ما عجبتك النتيجة؟ نرجّع لك مبلغك كامل.</span></div></li>
+      </ul>
+      <div class="bm-order__pointer" aria-hidden="true">
+        <span>اختر الباقة واملأ بياناتك بالأسفل</span>
+        <span class="bm-order__pointer-arrow">↓</span>
+      </div>
+    </div>
+
     {%- comment -%}
-      Hidden form: EasySell COD app renders its OWN visible form (offers + name/phone/city
-      + CTA "اطلب الحين !") right below via native_placement="after". Placed first so
-      EasySell injects its widget directly after the hero section.
+      Hidden anchor form: EasySell COD app renders its OWN visible form (offers +
+      name/phone/city + CTA "اطلب الحين !") directly below this form via
+      native_placement="after". DO NOT REMOVE — EasySell auto-detects it.
     {%- endcomment -%}
     <form
       method="post"
@@ -1334,24 +1368,6 @@
       <input type="hidden" name="properties[Country]" value="AE">
       <button type="submit" name="add" hidden aria-hidden="true" tabindex="-1">اطلب</button>
     </form>
-
-    <div class="bm-section__head">
-      <span class="bm-kicker">اطلب الآن</span>
-      <h2 class="bm-section__title">اختر باقتك وسجّل بياناتك بالأسفل</h2>
-      <p class="bm-section__sub">كل الباقات شحن مجاني + الدفع عند الاستلام داخل الإمارات. الأسعار بـدرهم إماراتي.</p>
-    </div>
-
-    <div class="bm-order__intro">
-      <ul class="bm-order__benefits" aria-label="مزايا الطلب">
-        <li><span class="bm-order__benefit-ic" aria-hidden="true">💵</span><div><strong>ادفع كاش عند الاستلام</strong><span>ما تدفع أي شي الحين — تدفع لما يوصلك الطلب.</span></div></li>
-        <li><span class="bm-order__benefit-ic" aria-hidden="true">🚚</span><div><strong>توصيل مجاني داخل الإمارات</strong><span>يوصلك خلال ١-٣ أيام عمل مع رسالة تتبّع.</span></div></li>
-        <li><span class="bm-order__benefit-ic" aria-hidden="true">🔒</span><div><strong>ضمان استرجاع ٣٠ يوم</strong><span>ما عجبتك النتيجة؟ نرجّع لك مبلغك كامل.</span></div></li>
-      </ul>
-      <div class="bm-order__pointer" aria-hidden="true">
-        <span>اختر الباقة واملأ بياناتك بالأسفل</span>
-        <span class="bm-order__pointer-arrow">↓</span>
-      </div>
-    </div>
   </section>
 
 
