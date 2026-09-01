@@ -522,6 +522,24 @@
     background: linear-gradient(180deg, transparent 0%, rgba(217,232,221,0.4) 100%);
     padding-bottom: 1.5rem;
   }
+
+  /* ============ HOW-TO-USE IMAGE (replaces the old text steps section) ============ */
+  .bm-how-image {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    text-align: center;
+  }
+  .bm-how-image__img {
+    display: block;
+    width: 100%;
+    max-width: 560px;
+    height: auto;
+    aspect-ratio: 1122 / 1402;
+    margin: 0 auto;
+    border-radius: var(--bm-radius);
+    background: rgba(217, 232, 221, 0.25);
+    box-shadow: 0 22px 44px -28px rgba(15,30,20,0.28);
+  }
   .bm-order__banner {
     display: block;
     width: 100%;
@@ -1376,6 +1394,19 @@
     </form>
   </section>
 
+  {%- comment -%} ============ HOW TO USE (image infographic) ============ {%- endcomment -%}
+  <section class="bm-section bm-how-image" id="lp-how">
+    <img
+      src="{{ 'lp-after-form.avif' | asset_url }}"
+      alt="طريقة الاستخدام — شامبو بابل موس لصبغ الشعر في 4 خطوات"
+      class="bm-how-image__img"
+      width="1122"
+      height="1402"
+      loading="lazy"
+      decoding="async"
+    >
+  </section>
+
 
   {%- comment -%} ============ UGC / SOCIAL PROOF ============ {%- endcomment -%}
   <section class="bm-section bm-proof" id="lp-reviews-video">
@@ -1492,38 +1523,6 @@
         <span class="bm-timeline__badge">الشهر الأوّل</span>
         <h3>شعر أقوى وأصحّ</h3>
         <p>المكوّنات العشبية تحفّز الفروة، الشعر يصير أكثر كثافة وحيوية، والشيب يبطّئ ظهوره.</p>
-      </li>
-    </ol>
-  </section>
-
-  {%- comment -%} ============ HOW TO USE ============ {%- endcomment -%}
-  <section class="bm-section bm-steps" id="lp-how">
-    <div class="bm-section__head">
-      <span class="bm-kicker">سهل وسريع</span>
-      <h2 class="bm-section__title">٤ خطوات وبس</h2>
-      <p class="bm-section__sub">بدون فُرَش، بدون قفّازات، وبدون فوضى — تسوّيه بنفسك في البيت.</p>
-    </div>
-
-    <ol class="bm-steps__list">
-      <li class="bm-step">
-        <span class="bm-step__num">١</span>
-        <h3>وزّع الرغوة</h3>
-        <p>اضغط كمية الرغوة على راحة يدك أو على الشعر مباشرة.</p>
-      </li>
-      <li class="bm-step">
-        <span class="bm-step__num">٢</span>
-        <h3>دلّك الشعر</h3>
-        <p>افرد الرغوة من الجذور للأطراف على كل المناطق المشيّبة.</p>
-      </li>
-      <li class="bm-step">
-        <span class="bm-step__num">٣</span>
-        <h3>اتركها ٥-١٠ دقائق</h3>
-        <p>خلّ التركيبة العشبية تشتغل وتغطّي الشيب بالكامل.</p>
-      </li>
-      <li class="bm-step">
-        <span class="bm-step__num">٤</span>
-        <h3>اشطفها</h3>
-        <p>لون طبيعي غامق فوري — نظيف وبدون أي فوضى.</p>
       </li>
     </ol>
   </section>
