@@ -1,6 +1,4 @@
-
-{% if shop.policies.size > 0 %}
-  <anchored-popover-component
+<anchored-popover-component
     data-hover-triggered="true"
   >
     <button
@@ -29,22 +27,18 @@
           {% if block.settings.font_size != "" %}custom-font-size{% endif %}
         "
       >
-        {%- for policy in shop.policies -%}
-          {%- if policy != blank -%}
-            <li>
-              <a
-                href="{{ policy.url }}"
-                class="footer-utilities__text"
-              >
-                {{- policy.title | escape -}}
-              </a>
-            </li>
-          {%- endif -%}
-        {%- endfor -%}
+        <li>
+          <a href="{{ routes.root_url }}pages/shippingpolicies" class="footer-utilities__text">سياسة الشحن</a>
+        </li>
+        <li>
+          <a href="{{ routes.root_url }}pages/privacy" class="footer-utilities__text">سياسة الخصوصية</a>
+        </li>
+        <li>
+          <a href="{{ routes.root_url }}pages/returnpolities" class="footer-utilities__text">سياسة الاسترجاع</a>
+        </li>
       </ul>
     </div>
   </anchored-popover-component>
-{% endif %}
 
 {% stylesheet %}
   .policy-list-trigger {

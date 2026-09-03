@@ -5,6 +5,8 @@
   @param {boolean} [has_discounts_enabled] - Whether discounts are enabled, used to display alternate tax/duty text.
 {%- enddoc -%}
 
+{%- assign shipping_policy_url = routes.root_url | append: 'pages/shippingpolicies' -%}
+
 <small>
   {%- if cart.duties_included and cart.taxes_included -%}
     {%- if shop.shipping_policy.body == blank -%}
@@ -17,12 +19,12 @@
       {%- if has_discounts_enabled -%}
         {{
           'content.duties_and_taxes_included_shipping_at_checkout_with_policy_without_discounts_html'
-          | t: link: shop.shipping_policy.url
+          | t: link: shipping_policy_url
         }}
       {%- else -%}
         {{
           'content.duties_and_taxes_included_shipping_at_checkout_with_policy_html'
-          | t: link: shop.shipping_policy.url
+          | t: link: shipping_policy_url
         }}
       {%- endif -%}
     {%- endif -%}
@@ -37,10 +39,10 @@
       {%- if has_discounts_enabled -%}
         {{
           'content.duties_and_taxes_included_shipping_at_checkout_with_policy_without_discounts_html'
-          | t: link: shop.shipping_policy.url
+          | t: link: shipping_policy_url
         }}
       {%- else -%}
-        {{ 'content.taxes_included_shipping_at_checkout_with_policy_html' | t: link: shop.shipping_policy.url }}
+        {{ 'content.taxes_included_shipping_at_checkout_with_policy_html' | t: link: shipping_policy_url }}
       {%- endif -%}
     {%- endif -%}
   {%- elsif cart.duties_included and cart.taxes_included == false -%}
@@ -54,12 +56,12 @@
       {%- if has_discounts_enabled -%}
         {{
           'content.duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_html'
-          | t: link: shop.shipping_policy.url
+          | t: link: shipping_policy_url
         }}
       {%- else -%}
         {{
           'content.duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_html'
-          | t: link: shop.shipping_policy.url
+          | t: link: shipping_policy_url
         }}
       {%- endif -%}
     {%- endif -%}
@@ -74,10 +76,10 @@
       {%- if has_discounts_enabled -%}
         {{
           'content.taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_html'
-          | t: link: shop.shipping_policy.url
+          | t: link: shipping_policy_url
         }}
       {%- else -%}
-        {{ 'content.taxes_at_checkout_shipping_at_checkout_with_policy_html' | t: link: shop.shipping_policy.url }}
+        {{ 'content.taxes_at_checkout_shipping_at_checkout_with_policy_html' | t: link: shipping_policy_url }}
       {%- endif -%}
     {%- endif -%}
   {%- endif -%}
