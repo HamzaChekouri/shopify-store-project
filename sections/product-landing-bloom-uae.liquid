@@ -172,6 +172,12 @@
   .bl-order > .bl-wrap { width: min(100% - 12px, 780px); }
   .bl-order__frame { margin-top: 1rem; padding: 1.1rem .9rem; background: var(--bl-panel); border-radius: 26px; box-shadow: var(--bl-shadow-lg); border: 1px solid var(--bl-line); }
   @media (min-width: 750px) { .bl-order__frame { padding: 1.6rem 1.4rem; } }
+
+  /* Hide any leftover EasySell app-embed form on the Bloom LP only */
+  body.template-product-bloom-uae #easysell,
+  body.template-product-bloom-uae #es-form-container,
+  body.template-product-bloom-uae [id^="es-"],
+  body.template-product-bloom-uae [class*="easysell"] { display: none !important; }
   .bl-order__meta { margin: 0 0 .9rem; display: flex; flex-wrap: wrap; gap: .35rem .9rem; justify-content: center; color: var(--bl-muted); font-size: .82rem; font-weight: 800; text-align: center; }
   .bl-order__meta li { display: inline-flex; align-items: center; gap: .3rem; }
   .bl-order__meta b { color: var(--bl-espresso); }
@@ -728,7 +734,11 @@
         if (!address || address.length < 5) { showError('يرجى إدخال العنوان التفصيلي.'); form.address.focus(); return; }
 
         var vid = sel.getAttribute('data-vid');
-        if (!vid || vid === '') vid = fallbackVid;
+        var qty = 1;
+        if (!vid || vid === '') {
+          vid = fallbackVid;
+          qty = parseInt(sel.value, 10) || 1; /* fallback: multiply qty on base variant until dedicated bundle variants exist */
+        }
         var offerLabel = sel.getAttribute('data-label');
         var offerPrice = sel.getAttribute('data-price');
 
@@ -742,7 +752,7 @@
           var addBody = {
             items: [{
               id: parseInt(vid, 10),
-              quantity: 1,
+              quantity: qty,
               properties: {
                 'الاسم الكامل': name,
                 'الهاتف': phone,
