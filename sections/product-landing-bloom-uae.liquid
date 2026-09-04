@@ -1,12 +1,19 @@
 {%- comment -%}
   Bloom UAE — isolated Arabic COD product landing page.
-  Order collection is owned by the existing EasySell app embed. This section
-  provides exactly one hidden native Shopify cart form for EasySell to detect.
+  Order flow is now 100% native Shopify: the inline form below collects buyer
+  details as line-item properties + cart attributes, then redirects straight to
+  /checkout where the customer picks "Cash on Delivery". Orders flow natively
+  to the connected Google Sheet + COD Network via Shopify order webhooks.
+  EasySell is no longer required and can be uninstalled from the app admin.
 {%- endcomment -%}
 
 {%- liquid
   assign current_variant = product.selected_or_first_available_variant
   assign variant_id = current_variant.id
+  assign v1 = section.settings.offer_1_variant_id | default: variant_id
+  assign v2 = section.settings.offer_2_variant_id | default: blank
+  assign v3 = section.settings.offer_3_variant_id | default: blank
+  assign v6 = section.settings.offer_6_variant_id | default: blank
 -%}
 
 {% style %}
@@ -160,23 +167,56 @@
   .bl-poster--tight .bl-poster__wrap { margin: 12px auto; }
   .bl-poster--dark { background: #2b160c; }
 
-  /* Order block (EasySell owns picker) */
+  /* Order block — native inline COD form */
   .bl-order { scroll-margin-top: 16px; }
   .bl-order > .bl-wrap { width: min(100% - 12px, 780px); }
-  .bl-order__frame { margin-top: 1rem; padding: 1rem .5rem; background: var(--bl-panel); border-radius: 26px; box-shadow: var(--bl-shadow-lg); border: 1px solid var(--bl-line); }
-  @media (min-width: 750px) { .bl-order__frame { padding: 1.4rem 1.1rem; } }
-  .bl-order__teaser { position: relative; margin: -.35rem auto .9rem; max-width: 320px; padding: 3px; border-radius: 22px; background: linear-gradient(155deg, #f4d9ab, #dfa864 30%, #b47443 60%, #3a1e11); box-shadow: 0 22px 44px -18px rgba(58, 30, 17, .45); }
-  .bl-order__teaser::after { content:""; position:absolute; inset:3px; border-radius: 19px; border: 1px solid rgba(255, 236, 205, .35); pointer-events:none; }
-  .bl-order__teaser img { display: block; width: 100%; height: auto; border-radius: 19px; background: #1a0d06; }
-  .bl-order__meta { margin-top: .2rem; margin-bottom: .6rem; display: flex; flex-wrap: wrap; gap: .35rem .9rem; justify-content: center; color: var(--bl-muted); font-size: .82rem; font-weight: 800; text-align: center; }
+  .bl-order__frame { margin-top: 1rem; padding: 1.1rem .9rem; background: var(--bl-panel); border-radius: 26px; box-shadow: var(--bl-shadow-lg); border: 1px solid var(--bl-line); }
+  @media (min-width: 750px) { .bl-order__frame { padding: 1.6rem 1.4rem; } }
+  .bl-order__meta { margin: 0 0 .9rem; display: flex; flex-wrap: wrap; gap: .35rem .9rem; justify-content: center; color: var(--bl-muted); font-size: .82rem; font-weight: 800; text-align: center; }
   .bl-order__meta li { display: inline-flex; align-items: center; gap: .3rem; }
   .bl-order__meta b { color: var(--bl-espresso); }
-  .bl-order__note { margin-top: .35rem; text-align: center; color: var(--bl-muted); font-size: .82rem; font-weight: 700; }
+  .bl-order__note { margin-top: .55rem; text-align: center; color: var(--bl-muted); font-size: .82rem; font-weight: 700; }
 
-  .bl-easysell-anchor { position: absolute !important; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
-  #bloom-uae-lp .easysell-form-container,
-  #bloom-uae-lp [class*="easysell-form"],
-  #bloom-uae-lp [id*="easysell-form"] { direction: rtl; width: 100%; max-width: 640px; margin: 1.2rem auto 0; }
+  /* Offer picker */
+  .bl-offers { display: grid; gap: .6rem; margin: 0 0 1rem; }
+  .bl-offer { position: relative; display: block; cursor: pointer; }
+  .bl-offer input { position: absolute; opacity: 0; pointer-events: none; }
+  .bl-offer__card { position: relative; display: grid; grid-template-columns: 26px 1fr auto; align-items: center; gap: .7rem; padding: .85rem .95rem; border-radius: 16px; border: 2px solid var(--bl-line); background: #fff; transition: border-color .15s ease, box-shadow .15s ease, transform .12s ease; }
+  .bl-offer__radio { width: 22px; height: 22px; border-radius: 999px; border: 2px solid var(--bl-copper); position: relative; display: inline-block; }
+  .bl-offer__radio::after { content:""; position:absolute; inset:4px; border-radius:999px; background: var(--bl-copper); transform: scale(0); transition: transform .15s ease; }
+  .bl-offer input:checked + .bl-offer__card { border-color: var(--bl-copper); box-shadow: 0 10px 24px -12px rgba(180,116,67,.45); background: linear-gradient(180deg, #fff, #fff6ea); }
+  .bl-offer input:checked + .bl-offer__card .bl-offer__radio::after { transform: scale(1); }
+  .bl-offer__body { display: flex; flex-direction: column; gap: .1rem; min-width: 0; }
+  .bl-offer__title { color: var(--bl-espresso); font-weight: 900; font-size: 1rem; line-height: 1.25; }
+  .bl-offer__marketing { color: var(--bl-muted); font-weight: 700; font-size: .8rem; }
+  .bl-offer__prices { text-align: end; display: flex; flex-direction: column; gap: .1rem; align-items: flex-end; }
+  .bl-offer__now { color: var(--bl-espresso); font-weight: 900; font-size: 1.05rem; white-space: nowrap; }
+  .bl-offer__was { color: #a08a75; font-weight: 700; font-size: .78rem; text-decoration: line-through; }
+  .bl-offer__save { display: inline-block; margin-top: .15rem; padding: .12rem .55rem; border-radius: 999px; background: rgba(180,116,67,.14); color: var(--bl-copper); font-size: .7rem; font-weight: 900; letter-spacing: .02em; }
+  .bl-offer__badge { position: absolute; inset-block-start: -10px; inset-inline-start: 14px; padding: .18rem .6rem; border-radius: 999px; background: linear-gradient(180deg, var(--bl-copper-2), var(--bl-copper)); color: #fff; font-size: .68rem; font-weight: 900; letter-spacing: .04em; box-shadow: 0 6px 12px rgba(180,116,67,.32); }
+  .bl-offer--best .bl-offer__card { border-color: var(--bl-copper); box-shadow: 0 12px 26px -14px rgba(180,116,67,.4); }
+
+  /* Buyer form */
+  .bl-form { display: grid; gap: .65rem; }
+  .bl-field { display: grid; gap: .28rem; }
+  .bl-field > label { color: var(--bl-espresso); font-size: .84rem; font-weight: 800; }
+  .bl-field > label .req { color: #c0392b; margin-inline-start: .18em; }
+  .bl-field input,
+  .bl-field select,
+  .bl-field textarea { width: 100%; padding: .78rem .85rem; border-radius: 12px; border: 1.5px solid var(--bl-line); background: #fffdf9; color: var(--bl-espresso); font-family: inherit; font-size: 1rem; font-weight: 700; direction: rtl; }
+  .bl-field input:focus,
+  .bl-field select:focus,
+  .bl-field textarea:focus { outline: 3px solid rgba(180,116,67,.28); outline-offset: 0; border-color: var(--bl-copper); }
+  .bl-field input[dir="ltr"] { text-align: right; }
+  .bl-field textarea { min-height: 78px; resize: vertical; }
+  .bl-field--half { display: grid; gap: .65rem; }
+  @media (min-width: 550px) { .bl-field--half { grid-template-columns: 1fr 1fr; } }
+  .bl-form__submit { width: 100%; margin-top: .4rem; padding: 1rem 1.2rem; font-size: 1.05rem; border: 0; cursor: pointer; }
+  .bl-form__submit[disabled] { opacity: .7; cursor: wait; }
+  .bl-form__error { display: none; margin-top: .4rem; padding: .7rem .9rem; border-radius: 12px; background: #fdecea; color: #a03024; font-weight: 800; font-size: .88rem; text-align: center; }
+  .bl-form__error.is-visible { display: block; }
+  .bl-order__summary { margin: .8rem 0 1rem; padding: .8rem 1rem; border-radius: 14px; background: linear-gradient(180deg, #fff, #fbeed7); border: 1px solid var(--bl-line); display: flex; justify-content: space-between; align-items: center; gap: .6rem; color: var(--bl-espresso); font-weight: 900; }
+  .bl-order__summary strong { color: var(--bl-copper); font-size: 1.15rem; }
 
   /* Trust bento */
   .bl-trust { display: grid; grid-template-columns: repeat(2, 1fr); gap: .7rem; margin-top: 1.2rem; }
@@ -337,7 +377,7 @@
       <div class="bl-section__head">
         <span class="bl-eyebrow">اطلب الآن</span>
         <h2 class="bl-heading">اطلب <em>بلوم</em> داخل الإمارات</h2>
-        <p class="bl-copy">اختر عرضك في النموذج بالأسفل — الدفع عند الاستلام.</p>
+        <p class="bl-copy">اختر عرضك ثم املأ بياناتك — الدفع عند الاستلام دون أي دفعة مقدماً.</p>
       </div>
       <div class="bl-order__frame">
         <ul class="bl-order__meta">
@@ -345,16 +385,125 @@
           <li>💵 <span>الدفع عند الاستلام</span></li>
           <li>📞 <span>تأكيد من <b dir="ltr">+971</b></span></li>
         </ul>
-        <div id="bloom-easysell-anchor" aria-hidden="true"></div>
-        <form method="post" action="{{ routes.cart_add_url }}" class="bl-easysell-anchor" id="bloom-order-form" accept-charset="UTF-8" enctype="multipart/form-data" data-product-form data-easysell-form aria-hidden="true">
-          <input type="hidden" name="form_type" value="product">
-          <input type="hidden" name="utf8" value="✓">
-          <input type="hidden" name="id" value="{{ variant_id }}">
-          <input type="hidden" name="quantity" value="1" data-bloom-quantity>
-          <input type="hidden" name="properties[Country]" value="AE">
-          <button type="submit" name="add" hidden aria-hidden="true" tabindex="-1">اطلب</button>
+
+        {%- comment -%} Offer picker — 4 native Shopify variants (bundle-as-variant) {%- endcomment -%}
+        <fieldset class="bl-offers" data-bl-offers>
+          <legend class="visually-hidden" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);">اختر العرض</legend>
+
+          <label class="bl-offer">
+            <input type="radio" name="bl-offer" value="1" data-vid="{{ v1 }}" data-price="179" data-was="" data-label="1 قطعة">
+            <span class="bl-offer__card">
+              <span class="bl-offer__radio" aria-hidden="true"></span>
+              <span class="bl-offer__body">
+                <span class="bl-offer__title">قطعة واحدة</span>
+                <span class="bl-offer__marketing">جرّب بلوم لأول مرة · يكفي حوالي 20 يوم</span>
+              </span>
+              <span class="bl-offer__prices">
+                <span class="bl-offer__now">179 د.إ</span>
+              </span>
+            </span>
+          </label>
+
+          <label class="bl-offer">
+            <input type="radio" name="bl-offer" value="2" data-vid="{{ v2 }}" data-price="239" data-was="358" data-label="2 قطع">
+            <span class="bl-offer__card">
+              <span class="bl-offer__radio" aria-hidden="true"></span>
+              <span class="bl-offer__body">
+                <span class="bl-offer__title">قطعتان</span>
+                <span class="bl-offer__marketing">لك ولأحد أفراد العائلة · 40 يوم من الاستمتاع</span>
+              </span>
+              <span class="bl-offer__prices">
+                <span class="bl-offer__now">239 د.إ</span>
+                <span class="bl-offer__was">358 د.إ</span>
+                <span class="bl-offer__save">وفّر 119 د.إ</span>
+              </span>
+            </span>
+          </label>
+
+          <label class="bl-offer bl-offer--best">
+            <input type="radio" name="bl-offer" value="3" data-vid="{{ v3 }}" data-price="299" data-was="537" data-label="3 قطع" checked>
+            <span class="bl-offer__card">
+              <span class="bl-offer__badge">الأكثر طلباً · توفير 44%</span>
+              <span class="bl-offer__radio" aria-hidden="true"></span>
+              <span class="bl-offer__body">
+                <span class="bl-offer__title">3 قطع — برنامج شهرين</span>
+                <span class="bl-offer__marketing">المدّة الموصى بها للحصول على نتائج حقيقية في الوزن والبشرة</span>
+              </span>
+              <span class="bl-offer__prices">
+                <span class="bl-offer__now">299 د.إ</span>
+                <span class="bl-offer__was">537 د.إ</span>
+                <span class="bl-offer__save">وفّر 238 د.إ</span>
+              </span>
+            </span>
+          </label>
+
+          <label class="bl-offer">
+            <input type="radio" name="bl-offer" value="6" data-vid="{{ v6 }}" data-price="499" data-was="1074" data-label="6 قطع">
+            <span class="bl-offer__card">
+              <span class="bl-offer__badge">أفضل قيمة · توفير 54%</span>
+              <span class="bl-offer__radio" aria-hidden="true"></span>
+              <span class="bl-offer__body">
+                <span class="bl-offer__title">6 قطع — برنامج التحوّل الكامل</span>
+                <span class="bl-offer__marketing">4 أشهر من الالتزام · أقل سعر للوحدة — 83 د.إ فقط</span>
+              </span>
+              <span class="bl-offer__prices">
+                <span class="bl-offer__now">499 د.إ</span>
+                <span class="bl-offer__was">1074 د.إ</span>
+                <span class="bl-offer__save">وفّر 575 د.إ</span>
+              </span>
+            </span>
+          </label>
+        </fieldset>
+
+        <div class="bl-order__summary" data-bl-summary>
+          <span>الإجمالي المستحق عند الاستلام</span>
+          <strong data-bl-total>299 د.إ</strong>
+        </div>
+
+        <form id="bloom-order-form" class="bl-form" data-bl-form novalidate>
+          <div class="bl-field">
+            <label for="bl-name">الاسم الكامل<span class="req">*</span></label>
+            <input type="text" id="bl-name" name="name" autocomplete="name" required placeholder="مثال: أحمد محمد">
+          </div>
+          <div class="bl-field">
+            <label for="bl-phone">رقم الجوال (يفضل واتساب)<span class="req">*</span></label>
+            <input type="tel" id="bl-phone" name="phone" autocomplete="tel" required inputmode="tel" dir="ltr" placeholder="+971 5X XXX XXXX">
+          </div>
+          <div class="bl-field--half">
+            <div class="bl-field">
+              <label for="bl-emirate">الإمارة<span class="req">*</span></label>
+              <select id="bl-emirate" name="emirate" required>
+                <option value="">اختر الإمارة</option>
+                <option>دبي</option>
+                <option>أبوظبي</option>
+                <option>الشارقة</option>
+                <option>عجمان</option>
+                <option>رأس الخيمة</option>
+                <option>أم القيوين</option>
+                <option>الفجيرة</option>
+                <option>العين</option>
+              </select>
+            </div>
+            <div class="bl-field">
+              <label for="bl-city">المدينة / المنطقة<span class="req">*</span></label>
+              <input type="text" id="bl-city" name="city" autocomplete="address-level2" required placeholder="مثال: البرشاء">
+            </div>
+          </div>
+          <div class="bl-field">
+            <label for="bl-address">العنوان التفصيلي<span class="req">*</span></label>
+            <input type="text" id="bl-address" name="address" autocomplete="street-address" required placeholder="مثال: مبنى الوفاء، الطابق 3، شقة 12">
+          </div>
+          <div class="bl-field">
+            <label for="bl-notes">ملاحظات للمندوب (اختياري)</label>
+            <textarea id="bl-notes" name="notes" rows="2" placeholder="مثال: الاتصال قبل الوصول بـ 15 دقيقة"></textarea>
+          </div>
+
+          <button type="submit" class="bl-cta bl-cta--wide bl-form__submit" data-bl-submit>
+            تأكيد الطلب — الدفع عند الاستلام <span aria-hidden="true">←</span>
+          </button>
+          <p class="bl-form__error" data-bl-error role="alert"></p>
+          <p class="bl-order__note">🔒 معلوماتك تستخدم فقط لتجهيز الشحنة · دفع نقدي أو بطاقة للمندوب عند الاستلام.</p>
         </form>
-        <p class="bl-order__note">اختر العرض في نموذج الطلب أعلاه ثم أدخل بياناتك.</p>
       </div>
     </div>
   </section>
@@ -520,19 +669,145 @@
   (function () {
     var root = document.getElementById('bloom-uae-lp');
     if (!root) return;
-    var form = root.querySelector('#bloom-order-form');
-    var quantity = root.querySelector('[data-bloom-quantity]');
-    var offers = root.querySelectorAll('input[name="bloom-offer"]');
     var orderSection = root.querySelector('#lp-order');
-    if (form && quantity) {
-      offers.forEach(function (offer) {
-        offer.addEventListener('change', function () {
-          quantity.value = offer.value;
-          quantity.dispatchEvent(new Event('input', { bubbles: true }));
-          quantity.dispatchEvent(new Event('change', { bubbles: true }));
-        });
+    var form = root.querySelector('[data-bl-form]');
+    var offers = root.querySelectorAll('input[name="bl-offer"]');
+    var totalEl = root.querySelector('[data-bl-total]');
+    var errorEl = root.querySelector('[data-bl-error]');
+    var submitBtn = root.querySelector('[data-bl-submit]');
+    var fallbackVid = root.getAttribute('data-variant-id');
+
+    function getSelected () {
+      for (var i = 0; i < offers.length; i++) {
+        if (offers[i].checked) return offers[i];
+      }
+      return null;
+    }
+
+    function updateTotal () {
+      var sel = getSelected();
+      if (!sel || !totalEl) return;
+      totalEl.textContent = sel.getAttribute('data-price') + ' د.إ';
+    }
+
+    offers.forEach(function (r) { r.addEventListener('change', updateTotal); });
+    updateTotal();
+
+    function showError (msg) {
+      if (!errorEl) return;
+      errorEl.textContent = msg;
+      errorEl.classList.add('is-visible');
+      errorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    function clearError () {
+      if (!errorEl) return;
+      errorEl.textContent = '';
+      errorEl.classList.remove('is-visible');
+    }
+
+    if (form) {
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        clearError();
+
+        var sel = getSelected();
+        if (!sel) { showError('اختر أحد العروض أولاً.'); return; }
+
+        var name    = form.name.value.trim();
+        var phone   = form.phone.value.trim();
+        var emirate = form.emirate.value.trim();
+        var city    = form.city.value.trim();
+        var address = form.address.value.trim();
+        var notes   = form.notes.value.trim();
+
+        if (!name || name.length < 3)  { showError('يرجى إدخال الاسم الكامل.'); form.name.focus(); return; }
+        var phoneDigits = phone.replace(/\D/g,'');
+        if (phoneDigits.length < 9) { showError('يرجى إدخال رقم جوال صحيح.'); form.phone.focus(); return; }
+        if (!emirate)  { showError('يرجى اختيار الإمارة.'); form.emirate.focus(); return; }
+        if (!city)     { showError('يرجى إدخال المدينة / المنطقة.'); form.city.focus(); return; }
+        if (!address || address.length < 5) { showError('يرجى إدخال العنوان التفصيلي.'); form.address.focus(); return; }
+
+        var vid = sel.getAttribute('data-vid');
+        if (!vid || vid === '') vid = fallbackVid;
+        var offerLabel = sel.getAttribute('data-label');
+        var offerPrice = sel.getAttribute('data-price');
+
+        submitBtn.disabled = true;
+        var origText = submitBtn.innerHTML;
+        submitBtn.innerHTML = 'جارٍ التحويل إلى الدفع…';
+
+        try {
+          await fetch('/cart/clear.js', { method: 'POST', headers: { 'Content-Type': 'application/json' } });
+
+          var addBody = {
+            items: [{
+              id: parseInt(vid, 10),
+              quantity: 1,
+              properties: {
+                'الاسم الكامل': name,
+                'الهاتف': phone,
+                'الإمارة': emirate,
+                'المدينة': city,
+                'العنوان': address,
+                'العرض': offerLabel,
+                'ملاحظات': notes || '—'
+              }
+            }]
+          };
+          var addResp = await fetch('/cart/add.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify(addBody)
+          });
+          if (!addResp.ok) {
+            var msg = 'لم نتمكّن من إضافة المنتج إلى السلة. أعد المحاولة.';
+            try { var j = await addResp.json(); if (j && j.description) msg = j.description; } catch (_) {}
+            throw new Error(msg);
+          }
+
+          await fetch('/cart/update.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              note: 'طلب COD | الاسم: ' + name + ' | الهاتف: ' + phone + ' | الإمارة: ' + emirate + ' | المدينة: ' + city + ' | العنوان: ' + address + ' | العرض: ' + offerLabel + ' | ملاحظات: ' + (notes || '—'),
+              attributes: {
+                'Full Name': name,
+                'Phone': phone,
+                'Emirate': emirate,
+                'City': city,
+                'Address': address,
+                'Offer': offerLabel,
+                'Offer Price (AED)': offerPrice,
+                'Notes': notes || '',
+                'Source': 'bloom-uae-lp',
+                'Country': 'AE'
+              }
+            })
+          });
+
+          var checkoutUrl = '/checkout';
+          try {
+            var q = new URLSearchParams({
+              'checkout[shipping_address][first_name]': name.split(/\s+/)[0] || name,
+              'checkout[shipping_address][last_name]':  name.split(/\s+/).slice(1).join(' ') || '—',
+              'checkout[shipping_address][phone]':      phone,
+              'checkout[shipping_address][address1]':   address,
+              'checkout[shipping_address][city]':       city,
+              'checkout[shipping_address][province]':   emirate,
+              'checkout[shipping_address][country]':    'United Arab Emirates'
+            });
+            checkoutUrl = '/checkout?' + q.toString();
+          } catch (_) {}
+
+          window.location.href = checkoutUrl;
+        } catch (err) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = origText;
+          showError((err && err.message) ? err.message : 'حدث خطأ غير متوقّع. حاول مرة أخرى أو تواصل معنا على واتساب.');
+        }
       });
     }
+
     if (orderSection && 'IntersectionObserver' in window) {
       new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
@@ -569,7 +844,14 @@
   "name": "Bloom UAE landing page",
   "tag": "section",
   "class": "bloom-uae-lp-wrapper",
-  "settings": [],
+  "settings": [
+    { "type": "header",    "content": "COD offers — variant IDs" },
+    { "type": "paragraph", "content": "Create 4 variants (or products) in Shopify Admin: 1-pack 179 AED, 2-pack 239 AED, 3-pack 299 AED, 6-pack 499 AED. Paste each variant ID below. Blank = fall back to default variant." },
+    { "type": "text", "id": "offer_1_variant_id", "label": "1-pack variant ID (179 AED)" },
+    { "type": "text", "id": "offer_2_variant_id", "label": "2-pack variant ID (239 AED)" },
+    { "type": "text", "id": "offer_3_variant_id", "label": "3-pack variant ID (299 AED)" },
+    { "type": "text", "id": "offer_6_variant_id", "label": "6-pack variant ID (499 AED)" }
+  ],
   "presets": [{ "name": "Bloom UAE landing page", "category": "Products" }]
 }
 {% endschema %}
