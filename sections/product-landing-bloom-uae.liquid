@@ -162,7 +162,9 @@
 
   /* Order block (EasySell owns picker) */
   .bl-order { scroll-margin-top: 16px; }
-  .bl-order__frame { margin-top: 1rem; padding: 1.1rem; background: var(--bl-panel); border-radius: 26px; box-shadow: var(--bl-shadow-lg); border: 1px solid var(--bl-line); }
+  .bl-order > .bl-wrap { width: min(100% - 12px, 780px); }
+  .bl-order__frame { margin-top: 1rem; padding: 1rem .5rem; background: var(--bl-panel); border-radius: 26px; box-shadow: var(--bl-shadow-lg); border: 1px solid var(--bl-line); }
+  @media (min-width: 750px) { .bl-order__frame { padding: 1.4rem 1.1rem; } }
   .bl-order__teaser { position: relative; margin: -.35rem auto .9rem; max-width: 320px; padding: 3px; border-radius: 22px; background: linear-gradient(155deg, #f4d9ab, #dfa864 30%, #b47443 60%, #3a1e11); box-shadow: 0 22px 44px -18px rgba(58, 30, 17, .45); }
   .bl-order__teaser::after { content:""; position:absolute; inset:3px; border-radius: 19px; border: 1px solid rgba(255, 236, 205, .35); pointer-events:none; }
   .bl-order__teaser img { display: block; width: 100%; height: auto; border-radius: 19px; background: #1a0d06; }
