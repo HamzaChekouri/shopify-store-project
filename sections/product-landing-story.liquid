@@ -1340,32 +1340,10 @@
 
   {%- comment -%} ============ ORDER SECTION (EasySell renders its own form + offers below the anchor) ============ {%- endcomment -%}
   <section class="bm-section bm-order" id="lp-order">
-    <img
-      src="{{ 'lp-order-banner.avif' | asset_url }}"
-      alt="منتج أصلي 100% — كود تحقق على كل علبة"
-      class="bm-order__banner"
-      width="1024"
-      height="1823"
-      loading="lazy"
-      decoding="async"
-    >
-
     <div class="bm-section__head">
       <span class="bm-kicker">اطلب الآن</span>
       <h2 class="bm-section__title">اختر باقتك واملأ بياناتك</h2>
       <p class="bm-section__sub">كل الباقات شحن مجاني + الدفع عند الاستلام داخل الإمارات. الأسعار بـدرهم إماراتي.</p>
-    </div>
-
-    <div class="bm-order__intro">
-      <ul class="bm-order__benefits" aria-label="مزايا الطلب">
-        <li><span class="bm-order__benefit-ic" aria-hidden="true">💵</span><div><strong>ادفع كاش عند الاستلام</strong><span>ما تدفع أي شي الحين — تدفع لما يوصلك الطلب.</span></div></li>
-        <li><span class="bm-order__benefit-ic" aria-hidden="true">🚚</span><div><strong>توصيل مجاني داخل الإمارات</strong><span>يوصلك خلال ١-٣ أيام عمل مع رسالة تتبّع.</span></div></li>
-        <li><span class="bm-order__benefit-ic" aria-hidden="true">🔒</span><div><strong>ضمان استرجاع ٣٠ يوم</strong><span>ما عجبتك النتيجة؟ نرجّع لك مبلغك كامل.</span></div></li>
-      </ul>
-      <div class="bm-order__pointer" aria-hidden="true">
-        <span>اختر الباقة واملأ بياناتك بالأسفل</span>
-        <span class="bm-order__pointer-arrow">↓</span>
-      </div>
     </div>
 
     {%- comment -%}
@@ -1392,6 +1370,24 @@
       <input type="hidden" name="properties[Country]" value="AE">
       <button type="submit" name="add" hidden aria-hidden="true" tabindex="-1">اطلب</button>
     </form>
+
+    <div class="bm-order__intro">
+      <ul class="bm-order__benefits" aria-label="مزايا الطلب">
+        <li><span class="bm-order__benefit-ic" aria-hidden="true">💵</span><div><strong>ادفع كاش عند الاستلام</strong><span>ما تدفع أي شي الحين — تدفع لما يوصلك الطلب.</span></div></li>
+        <li><span class="bm-order__benefit-ic" aria-hidden="true">🚚</span><div><strong>توصيل مجاني داخل الإمارات</strong><span>يوصلك خلال ١-٣ أيام عمل مع رسالة تتبّع.</span></div></li>
+        <li><span class="bm-order__benefit-ic" aria-hidden="true">🔒</span><div><strong>ضمان استرجاع ٣٠ يوم</strong><span>ما عجبتك النتيجة؟ نرجّع لك مبلغك كامل.</span></div></li>
+      </ul>
+    </div>
+
+    <img
+      src="{{ 'lp-order-banner.avif' | asset_url }}"
+      alt="منتج أصلي 100% — كود تحقق على كل علبة"
+      class="bm-order__banner"
+      width="1024"
+      height="1823"
+      loading="lazy"
+      decoding="async"
+    >
   </section>
 
   {%- comment -%} ============ HOW TO USE (image infographic) ============ {%- endcomment -%}
