@@ -278,6 +278,23 @@
     var total = q.get('total');
     var currency = q.get('currency');
 
+    /* Fallback: hydrate from `bl_ty` cookie set by the LP just before submit
+       (covers the EasySell bridge flow where their redirect strips URL params). */
+    if (!name || !phone) {
+      try {
+        var m = document.cookie.match(/(?:^|; )bl_ty=([^;]+)/);
+        if (m) {
+          var stash = JSON.parse(decodeURIComponent(m[1]));
+          if (stash) {
+            if (!name)     name     = stash.name;
+            if (!phone)    phone    = stash.phone;
+            if (!total)    total    = stash.total;
+            if (!currency) currency = stash.currency;
+          }
+        }
+      } catch (_) {}
+    }
+
     var nameEl  = root.querySelector('[data-bl-ty-name]');
     var phoneEl = root.querySelector('[data-bl-ty-phone]');
     var orderEl = root.querySelector('[data-bl-ty-order]');

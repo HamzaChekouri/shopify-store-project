@@ -14,6 +14,7 @@
   assign v2 = section.settings.offer_2_variant_id | default: blank
   assign v3 = section.settings.offer_3_variant_id | default: blank
   assign v6 = section.settings.offer_6_variant_id | default: blank
+  assign checkout_mode = section.settings.checkout_mode | default: 'native'
 -%}
 
 {% style %}
@@ -173,11 +174,22 @@
   .bl-order__frame { margin-top: 1rem; padding: 1.1rem .9rem; background: var(--bl-panel); border-radius: 26px; box-shadow: var(--bl-shadow-lg); border: 1px solid var(--bl-line); }
   @media (min-width: 750px) { .bl-order__frame { padding: 1.6rem 1.4rem; } }
 
-  /* Hide any leftover EasySell app-embed form on the Bloom LP only */
+  /* Hide any leftover EasySell app-embed form on the Bloom LP only —
+     kept in the DOM (not display:none) so we can drive it programmatically
+     when checkout_mode == 'easysell_bridge'. */
   body.template-product-bloom-uae #easysell,
-  body.template-product-bloom-uae #es-form-container,
-  body.template-product-bloom-uae [id^="es-"],
-  body.template-product-bloom-uae [class*="easysell"] { display: none !important; }
+  body.template-product-bloom-uae #es-form-container {
+    position: fixed !important;
+    inset-inline-start: -99999px !important;
+    inset-block-start: -99999px !important;
+    width: 1px !important;
+    height: 1px !important;
+    max-height: 1px !important;
+    overflow: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    visibility: hidden !important;
+  }
   .bl-order__meta { margin: 0 0 .9rem; display: flex; flex-wrap: wrap; gap: .35rem .9rem; justify-content: center; color: var(--bl-muted); font-size: .82rem; font-weight: 800; text-align: center; }
   .bl-order__meta li { display: inline-flex; align-items: center; gap: .3rem; }
   .bl-order__meta b { color: var(--bl-espresso); }
@@ -316,7 +328,12 @@
   }
 {% endstyle %}
 
-<div id="bloom-uae-lp" dir="rtl" lang="ar" data-section-id="{{ section.id }}" data-product-handle="{{ product.handle | escape }}" data-product-sku="{{ current_variant.sku | escape }}" data-variant-id="{{ variant_id }}">
+<div id="bloom-uae-lp" dir="rtl" lang="ar"
+     data-section-id="{{ section.id }}"
+     data-product-handle="{{ product.handle | escape }}"
+     data-product-sku="{{ current_variant.sku | escape }}"
+     data-variant-id="{{ variant_id }}"
+     data-checkout-mode="{{ checkout_mode }}">
 
   {%- comment -%} ============ LOCAL HEADER ============ {%- endcomment -%}
   <header class="bl-header">
@@ -712,6 +729,69 @@
     }
 
     if (form) {
+      /* --- helper: set a React/Vue-controlled input value so their reactivity notices it --- */
+      function setReactiveValue(el, val) {
+        if (!el) return;
+        var proto = el.tagName === 'TEXTAREA' ? window.HTMLTextAreaElement.prototype
+                  : el.tagName === 'SELECT'   ? window.HTMLSelectElement.prototype
+                                              : window.HTMLInputElement.prototype;
+        var setter = Object.getOwnPropertyDescriptor(proto, 'value');
+        if (setter && setter.set) setter.set.call(el, val); else el.value = val;
+        el.dispatchEvent(new Event('input', { bubbles: true }));
+        el.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+
+      async function submitViaEasySell(data) {
+        /* Wait up to ~4s for EasySell to appear (it loads async) */
+        var esRoot = null;
+        for (var t = 0; t < 40 && !esRoot; t++) {
+          esRoot = document.querySelector('#easysell #es-form');
+          if (!esRoot) await new Promise(function (r) { setTimeout(r, 100); });
+        }
+        if (!esRoot) throw new Error('لم يتم تحميل خدمة الطلب. أعد المحاولة أو تواصل معنا.');
+
+        var nameInput    = esRoot.querySelector('#es-last_name, input[name="last_name"], input[name="name"], input[name="first_name"]');
+        var phoneInput   = esRoot.querySelector('#es-phone, input[name="phone"]');
+        var addressInput = esRoot.querySelector('#es-address, input[name="address"], textarea[name="address"]');
+        var countrySel   = esRoot.querySelector('#es-country, select[name="country"]');
+        var cityInput    = esRoot.querySelector('#es-city, input[name="city"]');
+        var emirateSel   = esRoot.querySelector('#es-state, #es-province, select[name="state"], select[name="province"]');
+
+        /* Merge address into one field so we lose no data if EasySell has no city/emirate field */
+        var mergedAddress = [data.emirate, data.city, data.address].filter(Boolean).join(' — ');
+        if (data.notes) mergedAddress += ' | ملاحظة: ' + data.notes;
+        mergedAddress += ' | العرض: ' + data.offerLabel + ' (' + data.offerPrice + ' د.إ)';
+
+        if (nameInput)    setReactiveValue(nameInput, data.name);
+        if (phoneInput)   setReactiveValue(phoneInput, data.phone);
+        if (addressInput) setReactiveValue(addressInput, mergedAddress);
+        if (cityInput)    setReactiveValue(cityInput, data.city);
+        if (emirateSel) {
+          var match = Array.from(emirateSel.options || []).find(function (o) { return (o.text || '').indexOf(data.emirate) !== -1; });
+          if (match) setReactiveValue(emirateSel, match.value);
+        }
+        if (countrySel) {
+          var uaeOpt = Array.from(countrySel.options || []).find(function (o) {
+            return /united arab emirates|الإمارات|الامارات|uae/i.test(o.text || '');
+          });
+          if (uaeOpt) setReactiveValue(countrySel, uaeOpt.value);
+        }
+
+        /* Stash order details for the Bloom thank-you page (EasySell decides where
+           to redirect on success; we drop a cookie so /pages/bloom-thank-you can
+           read the offer/name/phone even if EasySell's redirect strips URL params). */
+        try {
+          var payload = { name: data.name, phone: data.phone, offer: data.offerLabel, total: data.offerPrice, currency: 'AED', ts: Date.now() };
+          document.cookie = 'bl_ty=' + encodeURIComponent(JSON.stringify(payload)) + '; path=/; max-age=3600';
+        } catch (_) {}
+
+        /* Click EasySell's own CTA — this triggers their backend order creation */
+        var cta = document.querySelector('#easysell .es-cta-btn, #easysell button[type="submit"], #easysell [class*="cta-btn"]');
+        if (!cta) throw new Error('زر الطلب غير متاح. تواصل معنا مباشرة.');
+        cta.click();
+        /* EasySell handles redirect + Sheet + COD Network from here. */
+      }
+
       form.addEventListener('submit', async function (e) {
         e.preventDefault();
         clearError();
@@ -744,9 +824,23 @@
 
         submitBtn.disabled = true;
         var origText = submitBtn.innerHTML;
-        submitBtn.innerHTML = 'جارٍ التحويل إلى الدفع…';
+        submitBtn.innerHTML = 'جارٍ إرسال الطلب…';
+
+        var checkoutMode = root.getAttribute('data-checkout-mode') || 'native';
 
         try {
+          if (checkoutMode === 'easysell_bridge') {
+            /* --- EasySell backend mode: fill their form + click their CTA --- */
+            await submitViaEasySell({
+              name: name, phone: phone, emirate: emirate, city: city,
+              address: address, notes: notes,
+              offerLabel: offerLabel, offerPrice: offerPrice
+            });
+            /* EasySell owns the redirect. Do not return control. */
+            return;
+          }
+
+          /* --- Native Shopify mode: /cart/add + prefilled /checkout --- */
           await fetch('/cart/clear.js', { method: 'POST', headers: { 'Content-Type': 'application/json' } });
 
           var addBody = {
@@ -877,6 +971,18 @@
   "tag": "section",
   "class": "bloom-uae-lp-wrapper",
   "settings": [
+    { "type": "header",    "content": "Checkout mode" },
+    {
+      "type": "select",
+      "id": "checkout_mode",
+      "label": "Order submission mode",
+      "options": [
+        { "value": "native",          "label": "Native Shopify (prefilled checkout)" },
+        { "value": "easysell_bridge", "label": "EasySell bridge (background)" }
+      ],
+      "default": "native",
+      "info": "EasySell bridge: fill our form → EasySell submits in background → your Sheet + COD Network get the order. Native: our form → Shopify /checkout with COD."
+    },
     { "type": "header",    "content": "COD offers — variant IDs" },
     { "type": "paragraph", "content": "Create 4 variants (or products) in Shopify Admin: 1-pack 179 AED, 2-pack 239 AED, 3-pack 299 AED, 6-pack 499 AED. Paste each variant ID below. Blank = fall back to default variant." },
     { "type": "text", "id": "offer_1_variant_id", "label": "1-pack variant ID (179 AED)" },
