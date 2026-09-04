@@ -8,7 +8,7 @@
   {%- liquid
     assign is_product_landing_template = false
     if request.page_type == 'product' and template.suffix != blank
-      if template.suffix == 'landing' or template.suffix == 'bayel-moss-lp'
+      if template.suffix == 'landing' or template.suffix == 'bayel-moss-lp' or template.suffix == 'bloom-uae'
         assign is_product_landing_template = true
       endif
     endif
@@ -28,20 +28,22 @@
       Both are gated on the same settings as the view-transitions.js opt-out switch (see snippets/scripts.liquid).
       LP templates never use view transitions — skip both to avoid render-blocking on LCP.
     {% endcomment %}
-    {% if (settings.transition_to_main_product or settings.page_transition_enabled) and is_product_landing_template == false %}
-      {% style %}
-        @media (prefers-reduced-motion: no-preference) {
-          @view-transition {
-            navigation: auto;
+    {% if is_product_landing_template == false %}
+      {% if settings.transition_to_main_product or settings.page_transition_enabled %}
+        {% style %}
+          @media (prefers-reduced-motion: no-preference) {
+            @view-transition {
+              navigation: auto;
+            }
           }
-        }
-      {% endstyle %}
-      <link
-        rel="expect"
-        href="#MainContent"
-        blocking="render"
-        id="view-transition-render-blocker"
-      >
+        {% endstyle %}
+        <link
+          rel="expect"
+          href="#MainContent"
+          blocking="render"
+          id="view-transition-render-blocker"
+        >
+      {% endif %}
     {% endif %}
 
     {%- render 'meta-tags' -%}
@@ -52,13 +54,22 @@
       of whether the product has an SEO description set in Shopify admin.
     {%- endcomment -%}
     {%- if is_product_landing_template and page_description == blank -%}
-      <meta name="description" content="بابل موس — موس رغوي عشبي يغطّي الشيب بلون طبيعي من أول استخدام. بدون أمونيا. الدفع عند الاستلام، توصيل مجاني للإمارات.">
+      {%- if template.suffix == 'bloom-uae' -%}
+        <meta name="description" content="بلوم كولاجين كوفي — روتين قهوة يومي سهل. الدفع عند الاستلام والتوصيل داخل الإمارات خلال 1–2 يوم بعد تأكيد الطلب.">
+      {%- else -%}
+        <meta name="description" content="بابل موس — موس رغوي عشبي يغطّي الشيب بلون طبيعي من أول استخدام. بدون أمونيا. الدفع عند الاستلام، توصيل مجاني داخل سلطنة عُمان.">
+      {%- endif -%}
     {%- endif -%}
 
     {%- comment -%} Preload LP hero image to reduce LCP resource-load delay {%- endcomment -%}
     {%- if is_product_landing_template -%}
-      <link rel="preload" as="image" href="{{ 'lp-bottle-mobile.avif' | asset_url }}" type="image/avif" media="(max-width: 749px)">
-      <link rel="preload" as="image" href="{{ 'lp-bottle.avif' | asset_url }}" type="image/avif" media="(min-width: 750px)">
+      {%- if template.suffix == 'bloom-uae' -%}
+        <link rel="preload" as="image" href="{{ 'bloom-uae-hero-poster-mobile.webp' | asset_url }}" type="image/webp" media="(max-width: 749px)">
+        <link rel="preload" as="image" href="{{ 'bloom-uae-hero-poster.webp' | asset_url }}" type="image/webp" media="(min-width: 750px)">
+      {%- else -%}
+        <link rel="preload" as="image" href="{{ 'lp-bottle-mobile.avif' | asset_url }}" type="image/avif" media="(max-width: 749px)">
+        <link rel="preload" as="image" href="{{ 'lp-bottle.avif' | asset_url }}" type="image/avif" media="(min-width: 750px)">
+      {%- endif -%}
       {%- comment -%}
         LP template: load base.css non-blocking (LP has its own complete CSS inline).
         overflow-list.css is unused on LP — skip entirely.

@@ -1,0 +1,513 @@
+{%- comment -%}
+  Bloom UAE — isolated Arabic COD product landing page.
+  Order collection is owned by the existing EasySell app embed. This section
+  provides exactly one hidden native Shopify cart form for EasySell to detect.
+{%- endcomment -%}
+
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign variant_id = current_variant.id
+-%}
+
+{% style %}
+  /* Global suppression on Bloom UAE template */
+  body.template-product-bloom-uae .shopify-section:has(> .product-information),
+  body.template-product-bloom-uae .shopify-section:has(> .product-recommendations),
+  body.template-product-bloom-uae .shopify-section > .product-information,
+  body.template-product-bloom-uae .shopify-section > .product-recommendations,
+  body.template-product-bloom-uae #header-component,
+  body.template-product-bloom-uae header.header,
+  body.template-product-bloom-uae .shopify-section-header,
+  body.template-product-bloom-uae .shopify-section-group-header-group,
+  body.template-product-bloom-uae .header-wrapper,
+  body.template-product-bloom-uae .announcement-bar,
+  body.template-product-bloom-uae .utility-bar { display: none !important; }
+
+  /* Palette extracted from Bloom Collagen Coffee packaging */
+  #bloom-uae-lp {
+    --bl-page: #fbf4ea;
+    --bl-page-2: #f4e4cc;
+    --bl-panel: #ffffff;
+    --bl-espresso: #3a1e11;
+    --bl-espresso-2: #4d2a1a;
+    --bl-brown: #6d3b21;
+    --bl-copper: #b47443;
+    --bl-copper-2: #d19b5c;
+    --bl-gold: #dfa864;
+    --bl-cream: #f0d5b3;
+    --bl-ink: #1c0e08;
+    --bl-muted: #6e5849;
+    --bl-line: rgba(58, 30, 17, .12);
+    --bl-shadow-sm: 0 4px 12px rgba(58, 30, 17, .06);
+    --bl-shadow: 0 14px 34px rgba(58, 30, 17, .12);
+    --bl-shadow-lg: 0 22px 46px rgba(58, 30, 17, .18);
+    background: var(--bl-page);
+    color: var(--bl-ink);
+    direction: rtl;
+    font-family: 'DIN Next LT Arabic', 'Almarai', 'Cairo', 'Tajawal', system-ui, -apple-system, sans-serif;
+    line-height: 1.6;
+    overflow-x: clip;
+    padding-bottom: calc(80px + env(safe-area-inset-bottom));
+  }
+  #bloom-uae-lp *, #bloom-uae-lp *::before, #bloom-uae-lp *::after { box-sizing: border-box; }
+  #bloom-uae-lp img { display: block; max-width: 100%; height: auto; }
+  #bloom-uae-lp h1, #bloom-uae-lp h2, #bloom-uae-lp h3, #bloom-uae-lp h4,
+  #bloom-uae-lp p, #bloom-uae-lp ul, #bloom-uae-lp ol { margin: 0; padding: 0; }
+  #bloom-uae-lp ul, #bloom-uae-lp ol { list-style: none; }
+  #bloom-uae-lp a { color: inherit; text-decoration: none; }
+  .bl-wrap { width: min(100% - 28px, 780px); margin-inline: auto; }
+
+  .bl-eyebrow { display: inline-block; padding: .28rem .72rem; border-radius: 999px; background: rgba(180, 116, 67, .12); color: var(--bl-copper); font-size: .74rem; font-weight: 900; letter-spacing: .05em; text-transform: uppercase; }
+  .bl-heading { color: var(--bl-espresso); font-size: clamp(1.55rem, 6.4vw, 2.35rem); line-height: 1.18; letter-spacing: -.03em; font-weight: 900; }
+  .bl-heading em { color: var(--bl-copper); font-style: normal; }
+  .bl-copy { color: var(--bl-muted); font-size: 1rem; font-weight: 600; margin-top: .55rem !important; }
+
+  /* Top offer bar */
+  .bl-topbar { background: linear-gradient(90deg, var(--bl-espresso), var(--bl-brown)); color: #fbe6c8; font-size: .84rem; font-weight: 800; }
+  .bl-topbar__inner { min-height: 42px; display: flex; align-items: center; justify-content: center; gap: .55rem; text-align: center; padding: .35rem 1rem; }
+
+  /* Hero */
+  .bl-hero { position: relative; padding: 18px 0 10px; background:
+    radial-gradient(120% 78% at 50% 0%, #f5e1c4 0%, transparent 55%),
+    radial-gradient(80% 60% at 100% 100%, rgba(180, 116, 67, .18), transparent 70%),
+    var(--bl-page); }
+  .bl-hero__head { text-align: center; }
+  .bl-title { margin-top: .7rem !important; color: var(--bl-espresso); font-size: clamp(2rem, 8.4vw, 3.3rem); line-height: 1.08; letter-spacing: -.045em; font-weight: 900; }
+  .bl-title span { color: var(--bl-copper); }
+  .bl-lead { margin-top: .95rem !important; color: var(--bl-muted); font-size: clamp(1rem, 4.2vw, 1.12rem); font-weight: 600; }
+  .bl-hero__media { position: relative; margin: 1rem auto .7rem; max-width: 320px; }
+  .bl-hero__media::before { content:""; position:absolute; inset:-24px -18px; background: radial-gradient(60% 55% at 50% 42%, rgba(223,168,100,.28), rgba(223,168,100,0) 70%); filter: blur(6px); z-index: 0; pointer-events:none; }
+  .bl-hero__frame { position: relative; padding: 3px; border-radius: 26px; background: linear-gradient(155deg, #f4d9ab 0%, #dfa864 22%, #b47443 48%, #6d3b21 78%, #3a1e11 100%); box-shadow: 0 30px 60px -18px rgba(58, 30, 17, .42), 0 12px 26px -10px rgba(180, 116, 67, .35); aspect-ratio: 502 / 900; overflow: hidden; z-index: 1; }
+  .bl-hero__frame::before { content:""; position:absolute; inset:3px; border-radius: 23px; background: radial-gradient(120% 90% at 50% 0%, rgba(255,236,205,.45), rgba(255,236,205,0) 55%), #1a0d06; z-index: 0; }
+  .bl-hero__frame::after { content:""; position:absolute; inset:3px; border-radius: 23px; border: 1px solid rgba(255, 236, 205, .35); box-shadow: inset 0 0 0 1px rgba(58,30,17,.35); pointer-events: none; z-index: 3; }
+  #bloom-uae-lp .bl-hero__frame picture { position: relative; z-index: 2; display: block; width: 100%; height: 100%; border-radius: 23px; overflow: hidden; background: transparent; }
+  #bloom-uae-lp .bl-hero__frame img { display: block; width: 100%; height: 100%; object-fit: contain; object-position: center; aspect-ratio: auto; background: transparent; }
+  .bl-hero__badges { position: absolute; left: 50%; bottom: -18px; transform: translateX(-50%); display: flex; gap: .5rem; z-index: 2; flex-wrap: wrap; justify-content: center; padding-inline: 8px; }
+  .bl-hero__badge { padding: .38rem .78rem; border-radius: 999px; background: var(--bl-panel); color: var(--bl-espresso); font-size: .78rem; font-weight: 900; box-shadow: var(--bl-shadow-sm); border: 1px solid var(--bl-line); }
+  .bl-hero__trust { margin-top: 2rem; display: flex; justify-content: center; gap: .35rem 1rem; flex-wrap: wrap; color: var(--bl-espresso); font-size: .84rem; font-weight: 800; }
+  .bl-hero__trust li { display: inline-flex; align-items: center; gap: .3rem; }
+  .bl-hero__cta { margin-top: 1.1rem; text-align: center; }
+
+  /* CTA */
+  .bl-cta { display: inline-flex; align-items: center; justify-content: center; gap: .6rem; min-height: 56px; padding: 0 1.6rem; border-radius: 16px; background: linear-gradient(180deg, var(--bl-copper-2), var(--bl-copper)); color: #fff !important; font: inherit; font-weight: 900; font-size: 1.05rem; box-shadow: 0 12px 28px rgba(180, 116, 67, .38); text-align: center; letter-spacing: -.01em; border: 0; cursor: pointer; }
+  .bl-cta:active { transform: translateY(1px); }
+  .bl-cta--wide { display: flex; width: 100%; max-width: 380px; margin: 0 auto; }
+  .bl-cta--dark { background: linear-gradient(180deg, var(--bl-espresso-2), var(--bl-espresso)); box-shadow: 0 12px 28px rgba(58, 30, 17, .32); }
+  .bl-cta--cream { background: var(--bl-cream); color: var(--bl-espresso) !important; box-shadow: 0 12px 26px rgba(0,0,0,.14); }
+
+  /* Sections */
+  .bl-section { padding: 42px 0; }
+  .bl-section--cream { background: var(--bl-page-2); }
+  .bl-section--dark { background: linear-gradient(180deg, var(--bl-espresso), var(--bl-espresso-2)); color: #fbe6c8; }
+  .bl-section--dark .bl-heading { color: #fff2dc; }
+  .bl-section--dark .bl-copy { color: #e5c9a4; }
+  .bl-section__head { text-align: center; margin-bottom: 1.4rem; }
+  .bl-section__head .bl-heading { margin-top: .55rem; }
+
+  /* Desire tiles */
+  .bl-desires { display: grid; gap: .85rem; }
+  .bl-desire { display: flex; gap: 1rem; padding: 1.15rem 1.05rem; background: var(--bl-panel); border-radius: 20px; border: 1px solid var(--bl-line); box-shadow: var(--bl-shadow-sm); align-items: center; }
+  .bl-desire__ic { flex: 0 0 56px; width: 56px; height: 56px; display: grid; place-items: center; border-radius: 16px; background: var(--bl-cream); color: var(--bl-espresso); font-size: 1.6rem; }
+  .bl-desire:nth-child(2) .bl-desire__ic { background: #fbeed6; }
+  .bl-desire:nth-child(3) .bl-desire__ic { background: #f3d9b7; }
+  .bl-desire h3 { color: var(--bl-espresso); font-size: 1.05rem; font-weight: 900; }
+  .bl-desire p { margin-top: .22rem !important; color: var(--bl-muted); font-size: .92rem; font-weight: 600; }
+
+  /* Ingredients */
+  .bl-ings { display: grid; grid-template-columns: repeat(2, 1fr); gap: .85rem; }
+  .bl-ing { padding: 1.15rem .95rem 1.05rem; background: var(--bl-panel); border-radius: 20px; border: 1px solid var(--bl-line); box-shadow: var(--bl-shadow-sm); text-align: right; }
+  .bl-ing__badge { width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; margin-bottom: .75rem; font-weight: 900; font-size: 1.25rem; color: #fff; box-shadow: 0 10px 22px rgba(58, 30, 17, .16); }
+  .bl-ing:nth-child(1) .bl-ing__badge { background: linear-gradient(160deg, #d19b5c, #a86832); }
+  .bl-ing:nth-child(2) .bl-ing__badge { background: linear-gradient(160deg, #b47443, #6d3b21); }
+  .bl-ing:nth-child(3) .bl-ing__badge { background: linear-gradient(160deg, #e0b57a, #b57841); }
+  .bl-ing:nth-child(4) .bl-ing__badge { background: linear-gradient(160deg, #4d2a1a, #251008); }
+  .bl-ing h3 { color: var(--bl-espresso); font-size: 1rem; font-weight: 900; }
+  .bl-ing p { margin-top: .25rem !important; color: var(--bl-muted); font-size: .86rem; font-weight: 600; line-height: 1.5; }
+
+  /* Product showcase */
+  .bl-show { display: grid; gap: 1.1rem; align-items: center; }
+  .bl-show__media { border-radius: 24px; overflow: hidden; box-shadow: var(--bl-shadow-lg); background: #3a1e11; }
+  .bl-show__media img { width: 100%; }
+  .bl-show__facts { display: grid; gap: .6rem; }
+  .bl-show__fact { display: flex; gap: .7rem; align-items: center; padding: .85rem 1rem; background: var(--bl-panel); border-radius: 14px; border: 1px solid var(--bl-line); font-weight: 800; color: var(--bl-espresso); font-size: .95rem; box-shadow: var(--bl-shadow-sm); }
+  .bl-show__fact b { color: var(--bl-copper); font-weight: 900; }
+
+  /* Coffee moment (dark inset) */
+  .bl-moment { position: relative; margin: 32px 0; padding: 42px 0; background: linear-gradient(180deg, #4d2a1a, #3a1e11); color: #fbe6c8; overflow: hidden; }
+  .bl-moment::before, .bl-moment::after { content: ""; position: absolute; inset-inline-start: -60px; top: -40px; width: 220px; height: 220px; border-radius: 50%; background: radial-gradient(circle, rgba(223, 168, 100, .18) 0%, transparent 70%); pointer-events: none; }
+  .bl-moment::after { inset-inline-start: auto; inset-inline-end: -80px; top: auto; bottom: -60px; width: 260px; height: 260px; }
+  .bl-moment__wrap { position: relative; display: grid; gap: 1.4rem; align-items: center; }
+  .bl-moment__media { border-radius: 24px; overflow: hidden; box-shadow: var(--bl-shadow-lg); }
+  .bl-moment__media img { width: 100%; }
+  .bl-moment__title { color: #fff2dc; font-size: clamp(1.4rem, 5.8vw, 2rem); font-weight: 900; line-height: 1.2; }
+  .bl-moment__title em { color: var(--bl-copper-2); font-style: normal; }
+  .bl-moment__copy { margin-top: .8rem !important; color: #e5c9a4; font-size: 1rem; font-weight: 600; }
+
+  /* Routine steps */
+  .bl-steps { display: grid; gap: .8rem; margin-top: 1.1rem; }
+  .bl-step { display: grid; grid-template-columns: 56px 1fr; gap: 1rem; align-items: center; padding: 1rem 1.1rem; background: var(--bl-panel); border-radius: 20px; border: 1px solid var(--bl-line); box-shadow: var(--bl-shadow-sm); }
+  .bl-step__num { width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center; background: linear-gradient(160deg, var(--bl-copper-2), var(--bl-copper)); color: #fff; font-weight: 900; font-size: 1.4rem; box-shadow: 0 10px 22px rgba(180, 116, 67, .28); }
+  .bl-step h3 { color: var(--bl-espresso); font-size: 1rem; font-weight: 900; }
+  .bl-step p { margin-top: .2rem !important; color: var(--bl-muted); font-size: .9rem; font-weight: 600; }
+  .bl-steps__media { margin-top: 1.1rem; border-radius: 20px; overflow: hidden; box-shadow: var(--bl-shadow); }
+
+  /* Full-width poster (image is the section) */
+  .bl-poster { padding: 0; }
+  .bl-poster__wrap { width: min(100% - 20px, 780px); margin: 22px auto; border-radius: 22px; overflow: hidden; box-shadow: var(--bl-shadow-lg); background: #fff; }
+  .bl-poster__wrap img { width: 100%; height: auto; display: block; }
+  .bl-poster--tight .bl-poster__wrap { margin: 12px auto; }
+  .bl-poster--dark { background: #2b160c; }
+
+  /* Order block (EasySell owns picker) */
+  .bl-order { scroll-margin-top: 16px; }
+  .bl-order__frame { margin-top: 1rem; padding: 1.1rem; background: var(--bl-panel); border-radius: 26px; box-shadow: var(--bl-shadow-lg); border: 1px solid var(--bl-line); }
+  .bl-order__teaser { position: relative; margin: -.35rem auto .9rem; max-width: 320px; padding: 3px; border-radius: 22px; background: linear-gradient(155deg, #f4d9ab, #dfa864 30%, #b47443 60%, #3a1e11); box-shadow: 0 22px 44px -18px rgba(58, 30, 17, .45); }
+  .bl-order__teaser::after { content:""; position:absolute; inset:3px; border-radius: 19px; border: 1px solid rgba(255, 236, 205, .35); pointer-events:none; }
+  .bl-order__teaser img { display: block; width: 100%; height: auto; border-radius: 19px; background: #1a0d06; }
+  .bl-order__meta { margin-top: .2rem; margin-bottom: .6rem; display: flex; flex-wrap: wrap; gap: .35rem .9rem; justify-content: center; color: var(--bl-muted); font-size: .82rem; font-weight: 800; text-align: center; }
+  .bl-order__meta li { display: inline-flex; align-items: center; gap: .3rem; }
+  .bl-order__meta b { color: var(--bl-espresso); }
+  .bl-order__note { margin-top: .35rem; text-align: center; color: var(--bl-muted); font-size: .82rem; font-weight: 700; }
+
+  .bl-easysell-anchor { position: absolute !important; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+  #bloom-uae-lp .easysell-form-container,
+  #bloom-uae-lp [class*="easysell-form"],
+  #bloom-uae-lp [id*="easysell-form"] { direction: rtl; width: 100%; max-width: 640px; margin: 1.2rem auto 0; }
+
+  /* Trust bento */
+  .bl-trust { display: grid; grid-template-columns: repeat(2, 1fr); gap: .7rem; margin-top: 1.2rem; }
+  .bl-trust__item { display: flex; gap: .7rem; align-items: flex-start; padding: 1rem .9rem; background: var(--bl-panel); border-radius: 16px; border: 1px solid var(--bl-line); box-shadow: var(--bl-shadow-sm); }
+  .bl-trust__ic { flex: 0 0 40px; width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; background: var(--bl-cream); font-size: 1.15rem; }
+  .bl-trust__item strong { display: block; color: var(--bl-espresso); font-size: .95rem; }
+  .bl-trust__item span { display: block; color: var(--bl-muted); font-size: .8rem; font-weight: 600; margin-top: .14rem; }
+  .bl-trust__item b { color: var(--bl-espresso); }
+  .bl-trust__note { margin-top: 1rem; padding: .95rem 1.1rem; border-radius: 16px; background: rgba(255, 255, 255, .6); border: 1px dashed var(--bl-line); color: var(--bl-espresso); font-size: .88rem; font-weight: 800; text-align: center; }
+  .bl-trust__note a { color: var(--bl-copper); text-decoration: underline; text-underline-offset: 3px; font-weight: 900; }
+
+  /* Why block */
+  .bl-why { display: grid; gap: .8rem; }
+  .bl-why__card { padding: 1.1rem 1rem; background: rgba(255, 233, 200, .06); border-radius: 18px; border: 1px solid rgba(255, 233, 200, .12); }
+  .bl-why__ic { display: inline-grid; place-items: center; width: 44px; height: 44px; border-radius: 14px; background: rgba(223, 168, 100, .18); color: var(--bl-gold); margin-bottom: .6rem; font-size: 1.3rem; }
+  .bl-why__card h3 { color: #fff2dc; font-size: 1.05rem; font-weight: 900; }
+  .bl-why__card p { margin-top: .22rem !important; color: #e5c9a4; font-size: .92rem; font-weight: 600; }
+  .bl-eyebrow--dark { background: rgba(223, 168, 100, .18); color: var(--bl-gold); }
+
+  /* FAQ */
+  .bl-faq { display: grid; gap: .55rem; }
+  .bl-faq details { background: var(--bl-panel); border: 1px solid var(--bl-line); border-radius: 16px; padding: 0; box-shadow: var(--bl-shadow-sm); overflow: hidden; }
+  .bl-faq summary { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1rem 1.1rem; color: var(--bl-espresso); cursor: pointer; font-weight: 900; list-style: none; }
+  .bl-faq summary::-webkit-details-marker { display: none; }
+  .bl-faq summary::after { content: "+"; color: var(--bl-copper); font-weight: 900; font-size: 1.4rem; line-height: 1; }
+  .bl-faq details[open] summary::after { content: "−"; }
+  .bl-faq p { padding: 0 1.1rem 1rem; color: var(--bl-muted); font-size: .92rem; font-weight: 600; }
+  .bl-faq a { color: var(--bl-copper); text-decoration: underline; text-underline-offset: 3px; font-weight: 900; }
+
+  /* Final CTA */
+  .bl-final { position: relative; text-align: center; background:
+    radial-gradient(80% 60% at 50% 0%, rgba(223, 168, 100, .28), transparent 70%),
+    linear-gradient(160deg, #3a1e11 0%, #4d2a1a 40%, #2b160c 100%);
+    color: #fff2dc; overflow: hidden; }
+  .bl-final .bl-heading { color: #fff2dc; }
+  .bl-final .bl-copy { color: #e5c9a4; }
+  .bl-final__media { max-width: 300px; margin: 1.2rem auto 1rem; border-radius: 20px; overflow: hidden; box-shadow: var(--bl-shadow-lg); }
+  .bl-final__media img { width: 100%; }
+  .bl-final__prices { margin-top: 1.1rem; display: flex; justify-content: center; gap: .5rem; flex-wrap: wrap; color: #fff2dc; font-weight: 900; }
+  .bl-final__prices span { padding: .35rem .7rem; border-radius: 999px; background: rgba(255, 233, 200, .1); border: 1px solid rgba(255, 233, 200, .25); font-size: .8rem; }
+  .bl-final__cta { margin-top: 1.15rem; }
+
+  /* Sticky CTA */
+  .bl-sticky { position: fixed; z-index: 25; inset-inline: 12px; bottom: max(10px, env(safe-area-inset-bottom)); min-height: 56px; transition: transform .18s ease, opacity .18s ease; }
+  body.bl-order-visible .bl-sticky { transform: translateY(140%); opacity: 0; pointer-events: none; }
+
+  /* Desktop layout */
+  @media (min-width: 700px) {
+    #bloom-uae-lp { padding-bottom: 0; }
+    .bl-section { padding: 60px 0; }
+    .bl-desires { grid-template-columns: repeat(3, 1fr); }
+    .bl-ings { grid-template-columns: repeat(4, 1fr); }
+    .bl-show { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .bl-moment__wrap { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .bl-trust { grid-template-columns: repeat(4, 1fr); }
+    .bl-why { grid-template-columns: repeat(3, 1fr); }
+    .bl-hero__frame { max-width: 340px; margin-inline: auto; aspect-ratio: 502 / 900; }
+    .bl-sticky { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .bl-sticky, .bl-offer { transition: none; }
+  }
+{% endstyle %}
+
+<div id="bloom-uae-lp" dir="rtl" lang="ar" data-section-id="{{ section.id }}" data-product-handle="{{ product.handle | escape }}" data-product-sku="{{ current_variant.sku | escape }}" data-variant-id="{{ variant_id }}">
+
+  <div class="bl-topbar"><div class="bl-wrap bl-topbar__inner">🚚 التوصيل داخل الإمارات 1–2 يوم · 💵 الدفع عند الاستلام</div></div>
+
+  <section class="bl-hero" id="top">
+    <div class="bl-wrap">
+      <h1 class="visually-hidden" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;">Bloom Collagen Coffee — قهوة بلوم كولاجين فاخرة داخل الإمارات</h1>
+      <div class="bl-hero__media">
+        <div class="bl-hero__frame">
+          {%- render 'optimized-image',
+            src: 'bloom-uae-hero-poster.webp',
+            mobile_src: 'bloom-uae-hero-poster-mobile.webp',
+            alt: 'قهوة الكولاجين والبروبيوتيك من نوجن بلوم — سرّ إشراقتك ورشاقتك',
+            width: 502,
+            height: 900,
+            mobile_width: 301,
+            mobile_height: 540,
+            loading: 'eager',
+            fetchpriority: 'high'
+          -%}
+        </div>
+      </div>
+      <ul class="bl-hero__trust">
+        <li>✓ روتين يومي سهل</li>
+        <li>✓ بروبيوتيك · كولاجين بحري</li>
+        <li>✓ 10 أكياس جاهزة</li>
+      </ul>
+      <div class="bl-hero__cta">
+        <a class="bl-cta bl-cta--wide" href="#lp-order">اطلب الآن — الدفع عند الاستلام <span aria-hidden="true">←</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="bl-section bl-section--cream">
+    <div class="bl-wrap">
+      <div class="bl-section__head">
+        <span class="bl-eyebrow">فوائد بلوم</span>
+        <h2 class="bl-heading">قهوة تدعم <em>حرق الدهون</em> وتشدّ البشرة</h2>
+      </div>
+    </div>
+    <div class="bl-poster">
+      <div class="bl-poster__wrap">
+        <img src="{{ 'bloom-uae-benefit-01.webp' | asset_url }}" alt="فوائد قهوة بلوم — حرق الدهون، شد البشرة، الهضم، الطاقة" width="1080" height="1878" loading="lazy" decoding="async">
+      </div>
+    </div>
+  </section>
+
+  <section class="bl-section">
+    <div class="bl-wrap">
+      <div class="bl-section__head">
+        <span class="bl-eyebrow">نتائج حقيقية</span>
+        <h2 class="bl-heading">قبل و<em>بعد</em> — مع قهوة بلوم</h2>
+        <p class="bl-copy">صور حقيقية لأشخاص أدخلوا بلوم في روتينهم اليومي.</p>
+      </div>
+    </div>
+    <div class="bl-poster bl-poster--tight">
+      <div class="bl-poster__wrap">
+        <img src="{{ 'before-after1.webp' | asset_url }}" alt="قبل وبعد — قهوة بلوم كولاجين" width="1200" height="896" loading="lazy" decoding="async">
+      </div>
+      <div class="bl-poster__wrap">
+        <img src="{{ 'before-after2.webp' | asset_url }}" alt="قبل وبعد — قهوة بلوم للرجال" width="1200" height="896" loading="lazy" decoding="async">
+      </div>
+    </div>
+  </section>
+
+  <section class="bl-section">
+    <div class="bl-wrap">
+      <div class="bl-section__head">
+        <span class="bl-eyebrow">لماذا بلوم</span>
+        <h2 class="bl-heading">ما الذي يميّز قهوة <em>بلوم</em>؟</h2>
+      </div>
+    </div>
+    <div class="bl-poster">
+      <div class="bl-poster__wrap">
+        <img src="{{ 'results.webp' | asset_url }}" alt="مميزات قهوة بلوم — كولاجين بحري، بروبيوتيك، قليلة السعرات" width="1080" height="2075" loading="lazy" decoding="async">
+      </div>
+    </div>
+  </section>
+
+  <section class="bl-section bl-section--cream">
+    <div class="bl-wrap">
+      <div class="bl-section__head">
+        <span class="bl-eyebrow">هضم أفضل</span>
+        <h2 class="bl-heading">بروبيوتيك يساعد على <em>الهضم</em> ويقلل الانتفاخ</h2>
+      </div>
+    </div>
+    <div class="bl-poster">
+      <div class="bl-poster__wrap">
+        <img src="{{ 'benefits-03.webp' | asset_url }}" alt="بلوم مع البروبيوتيك يقلل من مشاكل الانتفاخ والهضم" width="1080" height="1328" loading="lazy" decoding="async">
+      </div>
+    </div>
+  </section>
+
+  <section class="bl-section">
+    <div class="bl-wrap">
+      <div class="bl-section__head">
+        <span class="bl-eyebrow">المكونات</span>
+        <h2 class="bl-heading">المكونات الأساسية في <em>بلوم كولاجين</em></h2>
+      </div>
+    </div>
+    <div class="bl-poster">
+      <div class="bl-poster__wrap">
+        <img src="{{ 'ingredients.webp' | asset_url }}" alt="مكونات قهوة بلوم كولاجين — كولاجين بحري، بروبيوتيك، بروتين، مستخلص القهوة" width="1080" height="2075" loading="lazy" decoding="async">
+      </div>
+    </div>
+  </section>
+
+  <section class="bl-section bl-section--cream">
+    <div class="bl-wrap">
+      <div class="bl-section__head">
+        <span class="bl-eyebrow">آراء العملاء</span>
+        <h2 class="bl-heading">ماذا قالوا عن <em>قهوة بلوم</em>؟</h2>
+      </div>
+    </div>
+    <div class="bl-poster">
+      <div class="bl-poster__wrap">
+        <img src="{{ 'testemonials.webp' | asset_url }}" alt="آراء عملاء بلوم كولاجين كوفي" width="1080" height="1820" loading="lazy" decoding="async">
+      </div>
+    </div>
+  </section>
+
+  <section class="bl-section">
+    <div class="bl-wrap">
+      <div class="bl-section__head">
+        <span class="bl-eyebrow">طريقة الاستعمال</span>
+        <h2 class="bl-heading">كوب واحد في اليوم <em>كافي</em></h2>
+      </div>
+    </div>
+    <div class="bl-poster">
+      <div class="bl-poster__wrap">
+        <img src="{{ 'how-to-use.webp' | asset_url }}" alt="طريقة استعمال قهوة بلوم كولاجين" width="1080" height="1436" loading="lazy" decoding="async">
+      </div>
+    </div>
+  </section>
+
+  <section class="bl-section bl-order" id="lp-order">
+    <div class="bl-wrap">
+      <div class="bl-section__head">
+        <span class="bl-eyebrow">اطلب الآن</span>
+        <h2 class="bl-heading">اطلب <em>بلوم</em> داخل الإمارات</h2>
+        <p class="bl-copy">اختر عرضك في النموذج بالأسفل — الدفع عند الاستلام.</p>
+      </div>
+      <div class="bl-order__frame">
+        <ul class="bl-order__meta">
+          <li>🚚 <span>1–2 يوم داخل الإمارات</span></li>
+          <li>💵 <span>الدفع عند الاستلام</span></li>
+          <li>📞 <span>تأكيد من <b dir="ltr">+971</b></span></li>
+        </ul>
+        <div class="bl-order__teaser" aria-hidden="true">
+          <img src="{{ 'bloom-uae-hero-luxe-mobile.webp' | asset_url }}" alt="" width="384" height="480" loading="lazy" decoding="async">
+        </div>
+        <div id="bloom-easysell-anchor" aria-hidden="true"></div>
+        <form method="post" action="{{ routes.cart_add_url }}" class="bl-easysell-anchor" id="bloom-order-form" accept-charset="UTF-8" enctype="multipart/form-data" data-product-form data-easysell-form aria-hidden="true">
+          <input type="hidden" name="form_type" value="product">
+          <input type="hidden" name="utf8" value="✓">
+          <input type="hidden" name="id" value="{{ variant_id }}">
+          <input type="hidden" name="quantity" value="1" data-bloom-quantity>
+          <input type="hidden" name="properties[Country]" value="AE">
+          <button type="submit" name="add" hidden aria-hidden="true" tabindex="-1">اطلب</button>
+        </form>
+        <p class="bl-order__note">اختر العرض في نموذج الطلب أعلاه ثم أدخل بياناتك.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="bl-section bl-section--cream">
+    <div class="bl-wrap">
+      <div class="bl-section__head">
+        <span class="bl-eyebrow">شهادات و اعتماد</span>
+        <h2 class="bl-heading">منتج معتمد بشهادات <em>موثوقة</em></h2>
+      </div>
+    </div>
+    <div class="bl-poster">
+      <div class="bl-poster__wrap bl-poster--dark">
+        <img src="{{ 'certifications.webp' | asset_url }}" alt="شهادات و اعتمادات قهوة بلوم كولاجين" width="2752" height="1536" loading="lazy" decoding="async">
+      </div>
+    </div>
+  </section>
+
+  <section class="bl-section">
+    <div class="bl-wrap">
+      <div class="bl-section__head">
+        <span class="bl-eyebrow">ضمانات</span>
+        <h2 class="bl-heading">الضمانات و <em>الاسترجاع</em></h2>
+      </div>
+    </div>
+    <div class="bl-poster">
+      <div class="bl-poster__wrap">
+        <img src="{{ 'garantires.webp' | asset_url }}" alt="ضمانات قهوة بلوم — دفع عند الاستلام، توصيل سريع، ضمان" width="1080" height="1677" loading="lazy" decoding="async">
+      </div>
+    </div>
+    <div class="bl-wrap">
+      <p class="bl-trust__note">
+        <a href="/policies/shipping-policy">سياسة الشحن</a> ·
+        <a href="/policies/refund-policy">سياسة الاسترجاع</a> ·
+        <a href="/policies/privacy-policy">سياسة الخصوصية</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="bl-section">
+    <div class="bl-wrap">
+      <div class="bl-section__head">
+        <span class="bl-eyebrow">أسئلة شائعة</span>
+        <h2 class="bl-heading">كل ما تحتاج معرفته</h2>
+      </div>
+      <div class="bl-faq">
+        <details><summary>هل تساعد قهوة بلوم على إنقاص الوزن؟</summary><p>قهوة بلوم قليلة السعرات ومناسبة لمن يسعون لخسارة الوزن، وتحتوي على مستخلص القهوة والبروتين لدعم الشعور بالشبع، ضمن نمط حياة صحي وحمية متوازنة.</p></details>
+        <details><summary>ما هي مكونات قهوة بلوم؟</summary><p>كولاجين بحري عالي الامتصاص، بروبيوتيك طبيعي، بروتين حيوي، ومستخلص القهوة — كما هو موضح على العبوة.</p></details>
+        <details><summary>كم كيس داخل العلبة؟</summary><p>العبوة تحتوي على 10 أكياس، كيس واحد في اليوم.</p></details>
+        <details><summary>كيف أستخدمها؟</summary><p>افتحي كيساً واحداً وأضيفيه إلى كوب ماء ساخن، حرّكي جيداً حتى يذوب، واشربيها صباحاً على معدة فارغة أو بعد الوجبات.</p></details>
+        <details><summary>كم مدة التوصيل داخل الإمارات؟</summary><p>1–2 يوم بعد تأكيد الطلب. تفاصيل إضافية في <a href="/policies/shipping-policy">سياسة الشحن</a>.</p></details>
+        <details><summary>هل الدفع عند الاستلام متوفر؟</summary><p>نعم، تدفع قيمة الطلب نقداً عند وصوله إلى عنوانك داخل الإمارات.</p></details>
+        <details><summary>كيف يتم تأكيد الطلب؟</summary><p>يصلك اتصال لتأكيد الطلب والعنوان من رقم إماراتي يبدأ بـ <span dir="ltr">+971</span>.</p></details>
+        <details><summary>كيف تعمل سياسة الاسترجاع؟</summary><p>ضمان لمدة 14 يوماً حسب الشروط الواردة في <a href="/policies/refund-policy">سياسة الاسترجاع</a>.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="bl-section bl-final">
+    <div class="bl-wrap">
+      <div class="bl-section__head">
+        <span class="bl-eyebrow bl-eyebrow--dark">آخر خطوة</span>
+        <h2 class="bl-heading">جاهز تبدأ <em>روتين بلوم</em>؟</h2>
+        <p class="bl-copy">اطلب اليوم — الدفع عند الاستلام داخل الإمارات.</p>
+      </div>
+      <figure class="bl-final__media">
+        <img src="{{ 'bloom-uae-product-group.webp' | asset_url }}" alt="مجموعة عبوات بلوم كولاجين كوفي" width="300" height="300" loading="lazy" decoding="async">
+      </figure>
+      <div class="bl-final__cta">
+        <a class="bl-cta bl-cta--cream" href="#lp-order">اطلب الآن — الدفع عند الاستلام <span aria-hidden="true">←</span></a>
+      </div>
+    </div>
+  </section>
+
+  <a class="bl-cta bl-cta--dark bl-sticky" href="#lp-order" aria-label="اطلب بلوم الآن — الدفع عند الاستلام">اطلب الآن — الدفع عند الاستلام <span aria-hidden="true">←</span></a>
+</div>
+
+{% javascript %}
+  (function () {
+    var root = document.getElementById('bloom-uae-lp');
+    if (!root) return;
+    var form = root.querySelector('#bloom-order-form');
+    var quantity = root.querySelector('[data-bloom-quantity]');
+    var offers = root.querySelectorAll('input[name="bloom-offer"]');
+    var orderSection = root.querySelector('#lp-order');
+    if (form && quantity) {
+      offers.forEach(function (offer) {
+        offer.addEventListener('change', function () {
+          quantity.value = offer.value;
+          quantity.dispatchEvent(new Event('input', { bubbles: true }));
+          quantity.dispatchEvent(new Event('change', { bubbles: true }));
+        });
+      });
+    }
+    if (orderSection && 'IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          document.body.classList.toggle('bl-order-visible', entry.isIntersecting);
+        });
+      }, { threshold: 0.18 }).observe(orderSection);
+    }
+  })();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Bloom UAE landing page",
+  "tag": "section",
+  "class": "bloom-uae-lp-wrapper",
+  "settings": [],
+  "presets": [{ "name": "Bloom UAE landing page", "category": "Products" }]
+}
+{% endschema %}
