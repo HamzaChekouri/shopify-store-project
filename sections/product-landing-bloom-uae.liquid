@@ -271,6 +271,33 @@
     </div>
   </section>
 
+  <section class="bl-section bl-order" id="lp-order">
+    <div class="bl-wrap">
+      <div class="bl-section__head">
+        <span class="bl-eyebrow">اطلب الآن</span>
+        <h2 class="bl-heading">اطلب <em>بلوم</em> داخل الإمارات</h2>
+        <p class="bl-copy">اختر عرضك في النموذج بالأسفل — الدفع عند الاستلام.</p>
+      </div>
+      <div class="bl-order__frame">
+        <ul class="bl-order__meta">
+          <li>🚚 <span>1–2 يوم داخل الإمارات</span></li>
+          <li>💵 <span>الدفع عند الاستلام</span></li>
+          <li>📞 <span>تأكيد من <b dir="ltr">+971</b></span></li>
+        </ul>
+        <div id="bloom-easysell-anchor" aria-hidden="true"></div>
+        <form method="post" action="{{ routes.cart_add_url }}" class="bl-easysell-anchor" id="bloom-order-form" accept-charset="UTF-8" enctype="multipart/form-data" data-product-form data-easysell-form aria-hidden="true">
+          <input type="hidden" name="form_type" value="product">
+          <input type="hidden" name="utf8" value="✓">
+          <input type="hidden" name="id" value="{{ variant_id }}">
+          <input type="hidden" name="quantity" value="1" data-bloom-quantity>
+          <input type="hidden" name="properties[Country]" value="AE">
+          <button type="submit" name="add" hidden aria-hidden="true" tabindex="-1">اطلب</button>
+        </form>
+        <p class="bl-order__note">اختر العرض في نموذج الطلب أعلاه ثم أدخل بياناتك.</p>
+      </div>
+    </div>
+  </section>
+
   <section class="bl-section bl-section--cream">
     <div class="bl-wrap">
       <div class="bl-section__head">
@@ -369,36 +396,6 @@
     <div class="bl-poster">
       <div class="bl-poster__wrap">
         <img src="{{ 'how-to-use.webp' | asset_url }}" alt="طريقة استعمال قهوة بلوم كولاجين" width="1080" height="1436" loading="lazy" decoding="async">
-      </div>
-    </div>
-  </section>
-
-  <section class="bl-section bl-order" id="lp-order">
-    <div class="bl-wrap">
-      <div class="bl-section__head">
-        <span class="bl-eyebrow">اطلب الآن</span>
-        <h2 class="bl-heading">اطلب <em>بلوم</em> داخل الإمارات</h2>
-        <p class="bl-copy">اختر عرضك في النموذج بالأسفل — الدفع عند الاستلام.</p>
-      </div>
-      <div class="bl-order__frame">
-        <ul class="bl-order__meta">
-          <li>🚚 <span>1–2 يوم داخل الإمارات</span></li>
-          <li>💵 <span>الدفع عند الاستلام</span></li>
-          <li>📞 <span>تأكيد من <b dir="ltr">+971</b></span></li>
-        </ul>
-        <div class="bl-order__teaser" aria-hidden="true">
-          <img src="{{ 'bloom-uae-hero-luxe-mobile.webp' | asset_url }}" alt="" width="384" height="480" loading="lazy" decoding="async">
-        </div>
-        <div id="bloom-easysell-anchor" aria-hidden="true"></div>
-        <form method="post" action="{{ routes.cart_add_url }}" class="bl-easysell-anchor" id="bloom-order-form" accept-charset="UTF-8" enctype="multipart/form-data" data-product-form data-easysell-form aria-hidden="true">
-          <input type="hidden" name="form_type" value="product">
-          <input type="hidden" name="utf8" value="✓">
-          <input type="hidden" name="id" value="{{ variant_id }}">
-          <input type="hidden" name="quantity" value="1" data-bloom-quantity>
-          <input type="hidden" name="properties[Country]" value="AE">
-          <button type="submit" name="add" hidden aria-hidden="true" tabindex="-1">اطلب</button>
-        </form>
-        <p class="bl-order__note">اختر العرض في نموذج الطلب أعلاه ثم أدخل بياناتك.</p>
       </div>
     </div>
   </section>
