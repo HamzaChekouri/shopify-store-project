@@ -79,7 +79,7 @@
   .bl-hero > .bl-wrap { width: min(100% - 12px, 780px); }
   .bl-hero__media { position: relative; margin: .6rem auto .7rem; max-width: 100%; }
   .bl-hero__media::before { content:""; position:absolute; inset:-24px -18px; background: radial-gradient(60% 55% at 50% 42%, rgba(223,168,100,.28), rgba(223,168,100,0) 70%); filter: blur(6px); z-index: 0; pointer-events:none; }
-  .bl-hero__frame { position: relative; padding: 3px; border-radius: 26px; background: linear-gradient(155deg, #f4d9ab 0%, #dfa864 22%, #b47443 48%, #6d3b21 78%, #3a1e11 100%); box-shadow: 0 30px 60px -18px rgba(58, 30, 17, .42), 0 12px 26px -10px rgba(180, 116, 67, .35); aspect-ratio: 502 / 900; overflow: hidden; z-index: 1; }
+  .bl-hero__frame { position: relative; padding: 3px; border-radius: 26px; background: linear-gradient(155deg, #f4d9ab 0%, #dfa864 22%, #b47443 48%, #6d3b21 78%, #3a1e11 100%); box-shadow: 0 30px 60px -18px rgba(58, 30, 17, .42), 0 12px 26px -10px rgba(180, 116, 67, .35); aspect-ratio: 1086 / 1448; overflow: hidden; z-index: 1; }
   .bl-hero__frame::before { content:""; position:absolute; inset:3px; border-radius: 23px; background: radial-gradient(120% 90% at 50% 0%, rgba(255,236,205,.45), rgba(255,236,205,0) 55%), #1a0d06; z-index: 0; }
   .bl-hero__frame::after { content:""; position:absolute; inset:3px; border-radius: 23px; border: 1px solid rgba(255, 236, 205, .35); box-shadow: inset 0 0 0 1px rgba(58,30,17,.35); pointer-events: none; z-index: 3; }
   #bloom-uae-lp .bl-hero__frame picture { position: relative; z-index: 2; display: block; width: 100%; height: 100%; border-radius: 23px; overflow: hidden; background: transparent; }
@@ -262,7 +262,7 @@
     .bl-moment__wrap { grid-template-columns: 1fr 1fr; gap: 2rem; }
     .bl-trust { grid-template-columns: repeat(4, 1fr); }
     .bl-why { grid-template-columns: repeat(3, 1fr); }
-    .bl-hero__frame { max-width: 520px; margin-inline: auto; aspect-ratio: 502 / 900; }
+    .bl-hero__frame { max-width: 520px; margin-inline: auto; aspect-ratio: 1086 / 1448; }
     .bl-sticky { display: none; }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -310,13 +310,13 @@
       <div class="bl-hero__media">
         <div class="bl-hero__frame">
           {%- render 'optimized-image',
-            src: 'bloom-uae-product-01.jpg',
-            mobile_src: 'bloom-uae-product-01.jpg',
+            src: 'c62e2b3f-bb19-4a28-9fe9-4e67c05ee1d5.avif',
+            mobile_src: 'c62e2b3f-bb19-4a28-9fe9-4e67c05ee1d5.avif',
             alt: 'قهوة الكولاجين والبروبيوتيك من نوجن بلوم — سرّ إشراقتك ورشاقتك',
-            width: 1536,
-            height: 2752,
-            mobile_width: 1536,
-            mobile_height: 2752,
+            width: 1086,
+            height: 1448,
+            mobile_width: 1086,
+            mobile_height: 1448,
             loading: 'eager',
             fetchpriority: 'high'
           -%}

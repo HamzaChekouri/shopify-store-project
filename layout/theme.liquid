@@ -64,7 +64,7 @@
     {%- comment -%} Preload LP hero image to reduce LCP resource-load delay {%- endcomment -%}
     {%- if is_product_landing_template -%}
       {%- if template.suffix == 'bloom-uae' -%}
-        <link rel="preload" as="image" href="{{ 'bloom-uae-product-01.jpg' | asset_url }}" type="image/jpeg">
+        <link rel="preload" as="image" href="{{ 'c62e2b3f-bb19-4a28-9fe9-4e67c05ee1d5.avif' | asset_url }}" type="image/avif">
       {%- else -%}
         <link rel="preload" as="image" href="{{ 'lp-bottle-mobile.avif' | asset_url }}" type="image/avif" media="(max-width: 749px)">
         <link rel="preload" as="image" href="{{ 'lp-bottle.avif' | asset_url }}" type="image/avif" media="(min-width: 750px)">
