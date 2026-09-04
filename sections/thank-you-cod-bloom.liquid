@@ -1,0 +1,322 @@
+{%- comment -%}
+  Bloom UAE — Thank You (COD) page.
+  Reached after Shopify's checkout completes an order for the Bloom LP.
+  Redirect from Shopify's default Order Status page via a Checkout script
+  that lives in Settings → Checkout → Additional scripts (Order status page).
+
+  Rules baked in:
+    - Everything scoped under `#bl-ty` — no global CSS bleed.
+    - Theme header/footer hidden via `body.template-page-bloom-thank-you`.
+    - No pixel / analytics / fetch / beacon fired from this section.
+    - No `/cart/add`, no `/checkout`, no order mutation.
+    - Order data comes from URL query params passed by the Order Status
+      script (order_number, total, currency, phone, name). Everything
+      degrades gracefully if a param is missing.
+{%- endcomment -%}
+
+{%- liquid
+  assign wa_number   = section.settings.whatsapp_number | default: '971542585701'
+  assign call_window = section.settings.call_window     | default: 'أقل من 10 دقائق'
+-%}
+
+<div id="bl-ty" class="bl-ty" dir="rtl" lang="ar" data-section-id="{{ section.id }}">
+
+  <section class="bl-ty__hero">
+    <div class="bl-ty__inner">
+      <span class="bl-ty__success" role="status">
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+          <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+        <span>تم استلام طلبك بنجاح</span>
+      </span>
+
+      <h1 class="bl-ty__title">
+        شكراً <span data-bl-ty-name>لك</span> — طلبك محجوز <span aria-hidden="true">🎉</span>
+      </h1>
+
+      <p class="bl-ty__ordernum">
+        رقم الطلب: <strong dir="ltr" data-bl-ty-order>#—</strong>
+      </p>
+
+      <p class="bl-ty__urgent">
+        <span aria-hidden="true">🔥</span>
+        <span>طلبك محجوز من آخر الكميات المتوفرة</span>
+      </p>
+
+      <p class="bl-ty__next">
+        <span class="bl-ty__hr" aria-hidden="true"></span>
+        <span>باقي خطوة واحدة فقط</span>
+        <span class="bl-ty__hr" aria-hidden="true"></span>
+      </p>
+    </div>
+  </section>
+
+  <section class="bl-ty__section">
+    <div class="bl-ty__call" data-bl-ty-commitment>
+      <div class="bl-ty__call-row">
+        <span class="bl-ty__ic" aria-hidden="true">📞</span>
+        <div>
+          <strong>بنتصل بك خلال {{ call_window }}</strong>
+          <span>خلّك قريب من جوالك <span data-bl-ty-phone dir="ltr"></span></span>
+        </div>
+      </div>
+
+      <div class="bl-ty__call-row">
+        <span class="bl-ty__ic" aria-hidden="true">👩</span>
+        <div>
+          <strong>موظفة من خدمة العملاء</strong>
+          <span>تأكيد الاسم والعنوان قبل شحن الطلب.</span>
+        </div>
+      </div>
+
+      <div class="bl-ty__call-row">
+        <span class="bl-ty__ic" aria-hidden="true">🇦🇪</span>
+        <div>
+          <strong>رقم إماراتي يبدأ بـ <span dir="ltr">+971</span></strong>
+          <span>إذا شفت رقم <span dir="ltr">+971</span> غير محفوظ، رد عليه لتأكيد طلبك.</span>
+        </div>
+      </div>
+
+      <p class="bl-ty__reinforce">
+        عشان نحافظ على حجز طلبك، رد على مكالمة التأكيد.
+      </p>
+
+      <button
+        type="button"
+        class="bl-ty__cta"
+        data-bl-ty-commit
+        aria-pressed="false"
+      >
+        <span class="bl-ty__cta-default">
+          <span aria-hidden="true">✅</span>
+          <span>طلبي صحيح وسأرد على الاتصال</span>
+        </span>
+        <span class="bl-ty__cta-done">
+          <span aria-hidden="true">✓</span>
+          <span>ممتاز — خلّك قريب من جوالك</span>
+        </span>
+      </button>
+
+      <p class="bl-ty__note">
+        <span aria-hidden="true">💡</span>
+        التأكيد بيكون <strong>بالاتصال الهاتفي</strong> — مو واتساب.
+      </p>
+    </div>
+  </section>
+
+  <section class="bl-ty__section">
+    <h2 class="bl-ty__h2">ملخص طلبك</h2>
+    <article class="bl-ty__summary">
+      <div class="bl-ty__summary-media">
+        <img
+          src="{{ 'c62e2b3f-bb19-4a28-9fe9-4e67c05ee1d5.avif' | asset_url }}"
+          alt="قهوة الكولاجين والبروبيوتيك من نوجن بلوم"
+          width="120"
+          height="160"
+          loading="eager"
+          decoding="async"
+        >
+      </div>
+      <div class="bl-ty__summary-body">
+        <h3 class="bl-ty__summary-title">قهوة بلوم كولاجين — Bloom Collagen Coffee</h3>
+        <p class="bl-ty__summary-total">
+          الإجمالي عند الاستلام:
+          <span class="bl-ty__price">
+            <span data-bl-ty-total>—</span>
+            <span data-bl-ty-currency>د.إ</span>
+          </span>
+        </p>
+        <ul class="bl-ty__badges">
+          <li><span aria-hidden="true">✅</span> تم استلام طلبك</li>
+          <li><span aria-hidden="true">💵</span> الدفع عند الاستلام</li>
+          <li><span aria-hidden="true">🚚</span> التوصيل داخل الإمارات 1–2 يوم</li>
+        </ul>
+      </div>
+    </article>
+  </section>
+
+  <section class="bl-ty__section">
+    <h2 class="bl-ty__h2">لماذا نتصل بك؟</h2>
+    <ul class="bl-ty__why">
+      <li>
+        <span class="bl-ty__ic" aria-hidden="true">📦</span>
+        <div>
+          <strong>تأكيد الشحنة</strong>
+          <span>نتحقق من العنوان الكامل لتوصيل صحيح من أول مرة.</span>
+        </div>
+      </li>
+      <li>
+        <span class="bl-ty__ic" aria-hidden="true">🛡️</span>
+        <div>
+          <strong>حماية طلبك</strong>
+          <span>نضمن أن الطلب من قبلك شخصياً — لا نشحن بدون تأكيد.</span>
+        </div>
+      </li>
+      <li>
+        <span class="bl-ty__ic" aria-hidden="true">⏱️</span>
+        <div>
+          <strong>تسريع الشحن</strong>
+          <span>بمجرد ما تؤكد، طلبك ينزل لخط التغليف مباشرة.</span>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <section class="bl-ty__section bl-ty__section--dark">
+    <h2 class="bl-ty__h2 bl-ty__h2--light">تحتاج مساعدة؟</h2>
+    <p class="bl-ty__help">تواصل معنا مباشرة على واتساب لأي استفسار عن طلبك.</p>
+    <a
+      class="bl-ty__wa"
+      href="https://wa.me/{{ wa_number }}?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D8%B9%D9%86%D8%AF%D9%8A%20%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%B7%D9%84%D8%A8%D9%8A%20-%20%D8%A8%D9%84%D9%88%D9%85%20%D9%83%D9%88%D9%84%D8%A7%D8%AC%D9%8A%D9%86"
+      target="_blank"
+      rel="noopener"
+    >
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="currentColor">
+        <path d="M12.04 2C6.58 2 2.15 6.43 2.15 11.89c0 1.96.55 3.83 1.6 5.44L2 22l4.79-1.27a9.87 9.87 0 0 0 5.25 1.5h.01c5.46 0 9.89-4.43 9.89-9.89S17.5 2 12.04 2zM17.4 15.9c-.23.65-1.32 1.18-1.85 1.25-.47.07-1.05.09-1.7-.12-.4-.14-.9-.31-1.55-.6-2.72-1.18-4.5-3.94-4.63-4.12-.13-.18-1.11-1.47-1.11-2.8s.7-1.99.95-2.26c.25-.27.55-.34.73-.34.18 0 .36 0 .52.01.17.01.4-.06.62.47.23.55.79 1.92.86 2.06.07.14.12.31.02.5-.09.19-.14.31-.28.47-.14.16-.29.36-.42.48-.14.14-.28.29-.12.57.16.28.72 1.19 1.55 1.93 1.07.95 1.97 1.24 2.25 1.38.28.14.44.12.6-.07.16-.19.7-.82.88-1.1.18-.28.37-.23.62-.14.25.09 1.6.75 1.88.89.28.14.46.21.53.32.07.11.07.64-.16 1.29z"/>
+      </svg>
+      تواصل عبر واتساب: <span dir="ltr">+{{ wa_number }}</span>
+    </a>
+  </section>
+</div>
+
+{% style %}
+  /* Hide theme header/footer on the Bloom thank-you page only */
+  body.template-page-bloom-thank-you #header-component,
+  body.template-page-bloom-thank-you header.header,
+  body.template-page-bloom-thank-you .shopify-section-header,
+  body.template-page-bloom-thank-you .shopify-section-group-header-group,
+  body.template-page-bloom-thank-you .header-wrapper,
+  body.template-page-bloom-thank-you .announcement-bar,
+  body.template-page-bloom-thank-you .utility-bar,
+  body.template-page-bloom-thank-you footer.footer,
+  body.template-page-bloom-thank-you .shopify-section-group-footer-group { display: none !important; }
+
+  #bl-ty {
+    --bt-page: #fbf4ea;
+    --bt-panel: #ffffff;
+    --bt-espresso: #3a1e11;
+    --bt-brown: #6d3b21;
+    --bt-copper: #b47443;
+    --bt-copper-2: #d19b5c;
+    --bt-gold: #dfa864;
+    --bt-cream: #f0d5b3;
+    --bt-muted: #6e5849;
+    --bt-line: rgba(58, 30, 17, .12);
+    --bt-shadow: 0 14px 34px rgba(58, 30, 17, .12);
+
+    background: var(--bt-page);
+    color: var(--bt-espresso);
+    direction: rtl;
+    font-family: 'DIN Next LT Arabic', 'Almarai', 'Cairo', 'Tajawal', system-ui, -apple-system, sans-serif;
+    line-height: 1.65;
+    min-height: 100vh;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  #bl-ty *, #bl-ty *::before, #bl-ty *::after { box-sizing: border-box; }
+  #bl-ty h1, #bl-ty h2, #bl-ty h3, #bl-ty p, #bl-ty ul { margin: 0; padding: 0; }
+  #bl-ty ul { list-style: none; }
+  #bl-ty a { color: inherit; text-decoration: none; }
+
+  .bl-ty__inner { width: min(100% - 24px, 640px); margin: 0 auto; }
+  .bl-ty__hero { padding: 1.6rem 0 .6rem; text-align: center; background: linear-gradient(180deg, #fbf4ea 0%, #f7e6c9 100%); border-bottom: 1px solid var(--bt-line); }
+  .bl-ty__success { display: inline-flex; align-items: center; gap: .5rem; padding: .4rem .9rem; border-radius: 999px; background: linear-gradient(180deg, #22c55e, #16a34a); color: #fff; font-weight: 900; font-size: .9rem; box-shadow: 0 8px 16px rgba(22,163,74,.28); }
+  .bl-ty__title { margin-top: .85rem !important; font-size: clamp(1.35rem, 6vw, 1.8rem); font-weight: 900; letter-spacing: -.02em; color: var(--bt-espresso); }
+  .bl-ty__ordernum { margin-top: .45rem !important; color: var(--bt-muted); font-weight: 800; font-size: .9rem; }
+  .bl-ty__ordernum strong { color: var(--bt-copper); font-weight: 900; }
+  .bl-ty__urgent { margin-top: .75rem !important; display: inline-flex; align-items: center; gap: .4rem; padding: .45rem .9rem; border-radius: 999px; background: rgba(180,116,67,.14); color: var(--bt-copper); font-weight: 900; font-size: .88rem; }
+  .bl-ty__next { margin-top: 1rem !important; display: flex; align-items: center; gap: .6rem; justify-content: center; color: var(--bt-espresso); font-weight: 900; font-size: .85rem; }
+  .bl-ty__hr { flex: 0 0 26px; height: 2px; background: var(--bt-copper); border-radius: 2px; opacity: .55; }
+
+  .bl-ty__section { width: min(100% - 24px, 640px); margin: 1.2rem auto 0; padding: 1.1rem 1rem; background: var(--bt-panel); border-radius: 20px; box-shadow: var(--bt-shadow); border: 1px solid var(--bt-line); }
+  .bl-ty__section--dark { background: linear-gradient(160deg, #3a1e11 0%, #4d2a1a 40%, #2b160c 100%); border-color: transparent; color: #fbe6c8; }
+  .bl-ty__h2 { color: var(--bt-espresso); font-weight: 900; font-size: 1.1rem; margin-bottom: .8rem; }
+  .bl-ty__h2--light { color: #fbe6c8; }
+
+  .bl-ty__call { display: grid; gap: .8rem; }
+  .bl-ty__call-row { display: grid; grid-template-columns: 36px 1fr; gap: .7rem; align-items: start; }
+  .bl-ty__call-row strong { display: block; color: var(--bt-espresso); font-weight: 900; font-size: .96rem; }
+  .bl-ty__call-row span { display: block; color: var(--bt-muted); font-size: .85rem; font-weight: 600; margin-top: .1rem; }
+  .bl-ty__ic { width: 36px; height: 36px; border-radius: 12px; background: rgba(180,116,67,.12); color: var(--bt-copper); display: grid; place-items: center; font-size: 1.1rem; }
+  .bl-ty__reinforce { margin-top: .3rem !important; padding: .7rem .85rem; border-radius: 12px; background: rgba(180,116,67,.08); color: var(--bt-espresso); font-weight: 800; font-size: .9rem; text-align: center; border: 1px dashed var(--bt-line); }
+  .bl-ty__cta { position: relative; display: block; width: 100%; margin-top: .35rem; padding: 1rem 1.1rem; border: 0; cursor: pointer; border-radius: 14px; background: linear-gradient(180deg, var(--bt-copper-2), var(--bt-copper)); color: #fff; font-family: inherit; font-weight: 900; font-size: 1rem; box-shadow: 0 12px 22px -8px rgba(180,116,67,.5); }
+  .bl-ty__cta:hover { transform: translateY(-1px); }
+  .bl-ty__cta[aria-pressed="true"] { background: linear-gradient(180deg, #22c55e, #16a34a); box-shadow: 0 12px 22px -8px rgba(22,163,74,.5); }
+  .bl-ty__cta-done { display: none; align-items: center; justify-content: center; gap: .4rem; }
+  .bl-ty__cta[aria-pressed="true"] .bl-ty__cta-default { display: none; }
+  .bl-ty__cta[aria-pressed="true"] .bl-ty__cta-done { display: inline-flex; }
+  .bl-ty__cta-default { display: inline-flex; align-items: center; justify-content: center; gap: .4rem; }
+  .bl-ty__note { margin-top: .55rem !important; text-align: center; color: var(--bt-muted); font-weight: 700; font-size: .82rem; }
+
+  .bl-ty__summary { display: grid; grid-template-columns: 100px 1fr; gap: .9rem; align-items: center; }
+  .bl-ty__summary-media img { width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--bt-line); background: #fbe6c8; }
+  .bl-ty__summary-title { color: var(--bt-espresso); font-weight: 900; font-size: 1rem; }
+  .bl-ty__summary-total { margin-top: .35rem !important; color: var(--bt-muted); font-weight: 800; font-size: .9rem; }
+  .bl-ty__price { color: var(--bt-copper); font-weight: 900; font-size: 1.1rem; margin-inline-start: .4rem; }
+  .bl-ty__badges { display: flex; flex-wrap: wrap; gap: .4rem .75rem; margin-top: .7rem !important; font-size: .82rem; font-weight: 800; color: var(--bt-muted); }
+  .bl-ty__badges li { display: inline-flex; align-items: center; gap: .3rem; }
+
+  .bl-ty__why { display: grid; gap: .8rem; }
+  .bl-ty__why li { display: grid; grid-template-columns: 36px 1fr; gap: .7rem; align-items: start; }
+  .bl-ty__why strong { display: block; color: var(--bt-espresso); font-weight: 900; font-size: .96rem; }
+  .bl-ty__why span { display: block; color: var(--bt-muted); font-weight: 600; font-size: .85rem; margin-top: .1rem; }
+
+  .bl-ty__help { color: #f0d5b3; text-align: center; font-weight: 700; font-size: .95rem; }
+  .bl-ty__wa { margin-top: .9rem; display: flex; align-items: center; justify-content: center; gap: .55rem; padding: .9rem 1.1rem; border-radius: 14px; background: #25d366; color: #0f2417 !important; font-weight: 900; font-size: 1rem; box-shadow: 0 12px 22px -8px rgba(37,211,102,.45); }
+  .bl-ty__wa:hover { transform: translateY(-1px); }
+{% endstyle %}
+
+{% javascript %}
+  (function () {
+    var root = document.getElementById('bl-ty');
+    if (!root) return;
+
+    /* Hydrate from URL query params passed by the Order Status script */
+    var q = new URLSearchParams(window.location.search);
+    var name  = q.get('name');
+    var phone = q.get('phone');
+    var order = q.get('order_number') || q.get('order_id');
+    var total = q.get('total');
+    var currency = q.get('currency');
+
+    var nameEl  = root.querySelector('[data-bl-ty-name]');
+    var phoneEl = root.querySelector('[data-bl-ty-phone]');
+    var orderEl = root.querySelector('[data-bl-ty-order]');
+    var totalEl = root.querySelector('[data-bl-ty-total]');
+    var curEl   = root.querySelector('[data-bl-ty-currency]');
+
+    if (name  && nameEl)  nameEl.textContent = name;
+    if (phone && phoneEl) phoneEl.textContent = ' — ' + phone;
+    if (order && orderEl) orderEl.textContent = '#' + order;
+    if (total && totalEl) {
+      /* Shopify passes total in cents (or already-formatted string). Normalize. */
+      var n = parseFloat(total);
+      totalEl.textContent = isNaN(n) ? total : (n > 999 ? (n / 100).toFixed(0) : n.toFixed(0));
+    }
+    if (currency && curEl && currency !== 'AED') curEl.textContent = currency;
+
+    /* Commitment CTA — pure UI toggle, persists client-side only */
+    var btn = root.querySelector('[data-bl-ty-commit]');
+    if (btn) {
+      var storageKey = 'bl-ty-committed-' + (order || 'anon');
+      try { if (localStorage.getItem(storageKey) === '1') btn.setAttribute('aria-pressed', 'true'); } catch (_) {}
+      btn.addEventListener('click', function () {
+        var pressed = btn.getAttribute('aria-pressed') === 'true';
+        btn.setAttribute('aria-pressed', pressed ? 'false' : 'true');
+        try { localStorage.setItem(storageKey, pressed ? '0' : '1'); } catch (_) {}
+      });
+    }
+  })();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Bloom Thank You (COD)",
+  "tag": "section",
+  "class": "bloom-ty-wrapper",
+  "settings": [
+    { "type": "text", "id": "whatsapp_number", "label": "WhatsApp number (no +)", "default": "971542585701" },
+    { "type": "text", "id": "call_window",     "label": "Call window (Arabic)", "default": "أقل من 10 دقائق" }
+  ],
+  "presets": [{ "name": "Bloom Thank You (COD)", "category": "Custom" }]
+}
+{% endschema %}

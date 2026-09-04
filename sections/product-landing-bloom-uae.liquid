@@ -797,15 +797,37 @@
 
           var checkoutUrl = '/checkout';
           try {
-            var q = new URLSearchParams({
-              'checkout[shipping_address][first_name]': name.split(/\s+/)[0] || name,
-              'checkout[shipping_address][last_name]':  name.split(/\s+/).slice(1).join(' ') || '—',
-              'checkout[shipping_address][phone]':      phone,
-              'checkout[shipping_address][address1]':   address,
-              'checkout[shipping_address][city]':       city,
-              'checkout[shipping_address][province]':   emirate,
-              'checkout[shipping_address][country]':    'United Arab Emirates'
-            });
+            /* Map Arabic emirate → Shopify province code so pre-fill actually sticks */
+            var EMIRATE_MAP = {
+              'دبي': 'DU',
+              'أبوظبي': 'AZ',
+              'الشارقة': 'SH',
+              'عجمان': 'AJ',
+              'رأس الخيمة': 'RK',
+              'أم القيوين': 'UQ',
+              'الفجيرة': 'FU',
+              'العين': 'AZ' /* Al Ain sits inside Abu Dhabi emirate */
+            };
+            var provinceCode = EMIRATE_MAP[emirate] || '';
+            var parts = name.split(/\s+/);
+            var firstName = parts[0] || name;
+            var lastName  = parts.slice(1).join(' ') || '-';
+            /* Synthetic email keyed to phone — Shopify checkout requires an email
+               field; we hand it a stable one so customer skips 1 more step. */
+            var syntheticEmail = 'cod-' + phoneDigits + '@dr-sami.store';
+
+            var q = new URLSearchParams();
+            q.set('checkout[email]',                                syntheticEmail);
+            q.set('checkout[shipping_address][first_name]',         firstName);
+            q.set('checkout[shipping_address][last_name]',          lastName);
+            q.set('checkout[shipping_address][phone]',              phone);
+            q.set('checkout[shipping_address][address1]',           address);
+            q.set('checkout[shipping_address][city]',               city);
+            q.set('checkout[shipping_address][province]',           emirate);
+            if (provinceCode) q.set('checkout[shipping_address][province_code]', provinceCode);
+            q.set('checkout[shipping_address][country]',            'United Arab Emirates');
+            q.set('checkout[shipping_address][country_code]',       'AE');
+            q.set('checkout[shipping_address][zip]',                '00000');
             checkoutUrl = '/checkout?' + q.toString();
           } catch (_) {}
 
