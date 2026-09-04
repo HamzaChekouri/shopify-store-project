@@ -223,6 +223,35 @@
   .bl-sticky { position: fixed; z-index: 25; inset-inline: 12px; bottom: max(10px, env(safe-area-inset-bottom)); min-height: 56px; transition: transform .18s ease, opacity .18s ease; }
   body.bl-order-visible .bl-sticky { transform: translateY(140%); opacity: 0; pointer-events: none; }
 
+  /* ============ LOCAL HEADER ============ */
+  .bl-header { position: sticky; top: 0; z-index: 40; background: rgba(251, 244, 234, .96); backdrop-filter: saturate(140%) blur(8px); -webkit-backdrop-filter: saturate(140%) blur(8px); border-bottom: 1px solid var(--bl-line); }
+  .bl-header__inner { width: min(100% - 20px, 1180px); margin: 0 auto; padding: .55rem 0; display: flex; align-items: center; justify-content: space-between; gap: .6rem; }
+  .bl-header__brand { display: inline-flex; align-items: center; gap: .5rem; color: var(--bl-espresso); font-weight: 900; letter-spacing: -.01em; }
+  .bl-header__brand-mark { color: var(--bl-copper); font-size: 1.2rem; line-height: 1; transform: translateY(-1px); }
+  .bl-header__brand-name { font-size: 1.05rem; }
+  .bl-header__brand-sub { color: var(--bl-copper); font-size: .68rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
+  .bl-header__nav { display: none; align-items: center; gap: 1.3rem; font-size: .92rem; font-weight: 800; color: var(--bl-espresso); }
+  .bl-header__nav a { position: relative; padding: .3rem 0; transition: color .15s ease; }
+  .bl-header__nav a::after { content:""; position: absolute; inset-inline: 0; bottom: 0; height: 2px; background: var(--bl-copper); transform: scaleX(0); transform-origin: right; transition: transform .18s ease; }
+  .bl-header__nav a:hover { color: var(--bl-copper); }
+  .bl-header__nav a:hover::after { transform: scaleX(1); }
+  .bl-header__cta { display: inline-flex; align-items: center; gap: .35rem; padding: .55rem 1.05rem; border-radius: 999px; background: linear-gradient(180deg, var(--bl-copper-2), var(--bl-copper)); color: #fff !important; font-weight: 900; font-size: .92rem; box-shadow: 0 8px 20px rgba(180, 116, 67, .32); white-space: nowrap; }
+  .bl-header__cta:hover { transform: translateY(-1px); box-shadow: 0 12px 24px rgba(180, 116, 67, .42); }
+  .bl-header__burger { display: inline-flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; width: 40px; height: 40px; padding: 0; border: 1px solid var(--bl-line); background: #fff; border-radius: 10px; cursor: pointer; }
+  .bl-header__burger span { display: block; width: 18px; height: 2px; background: var(--bl-espresso); border-radius: 2px; transition: transform .2s ease, opacity .2s ease; }
+  .bl-header.is-open .bl-header__burger span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .bl-header.is-open .bl-header__burger span:nth-child(2) { opacity: 0; }
+  .bl-header.is-open .bl-header__burger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .bl-header__drawer { display: none; flex-direction: column; gap: .35rem; padding: .5rem 12px 1rem; border-top: 1px solid var(--bl-line); background: rgba(251, 244, 234, .98); }
+  .bl-header__drawer:not([hidden]) { display: flex; }
+  .bl-header__drawer a { padding: .8rem .8rem; border-radius: 12px; font-weight: 800; color: var(--bl-espresso); background: rgba(255,255,255,.7); }
+  .bl-header__drawer-cta { background: linear-gradient(180deg, var(--bl-copper-2), var(--bl-copper)) !important; color: #fff !important; text-align: center; box-shadow: 0 8px 20px rgba(180, 116, 67, .32); }
+  @media (min-width: 750px) {
+    .bl-header__nav { display: inline-flex; }
+    .bl-header__burger { display: none; }
+    .bl-header__drawer { display: none !important; }
+  }
+
   /* Desktop layout */
   @media (min-width: 700px) {
     #bloom-uae-lp { padding-bottom: 0; }
@@ -242,6 +271,36 @@
 {% endstyle %}
 
 <div id="bloom-uae-lp" dir="rtl" lang="ar" data-section-id="{{ section.id }}" data-product-handle="{{ product.handle | escape }}" data-product-sku="{{ current_variant.sku | escape }}" data-variant-id="{{ variant_id }}">
+
+  {%- comment -%} ============ LOCAL HEADER ============ {%- endcomment -%}
+  <header class="bl-header">
+    <div class="bl-header__inner">
+      <a href="#top" class="bl-header__brand" aria-label="بلوم كولاجين">
+        <span class="bl-header__brand-mark" aria-hidden="true">✦</span>
+        <span>
+          <span class="bl-header__brand-name">بلوم</span>
+          <span class="bl-header__brand-sub" style="display:block;margin-top:-2px">BLOOM COFFEE</span>
+        </span>
+      </a>
+      <nav class="bl-header__nav" aria-label="روابط الصفحة">
+        <a href="#top">الرئيسية</a>
+        <a href="#lp-benefits">الفوائد</a>
+        <a href="#lp-how">الاستعمال</a>
+        <a href="#lp-faq">أسئلة</a>
+      </nav>
+      <a href="#lp-order" class="bl-header__cta">اطلب الآن</a>
+      <button type="button" class="bl-header__burger" aria-label="القائمة" data-bl-burger>
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="bl-header__drawer" data-bl-drawer hidden>
+      <a href="#top">الرئيسية</a>
+      <a href="#lp-benefits">الفوائد</a>
+      <a href="#lp-how">طريقة الاستعمال</a>
+      <a href="#lp-faq">الأسئلة الشائعة</a>
+      <a href="#lp-order" class="bl-header__drawer-cta">اطلب الآن</a>
+    </div>
+  </header>
 
   <div class="bl-topbar"><div class="bl-wrap bl-topbar__inner">🚚 التوصيل داخل الإمارات 1–2 يوم · 💵 الدفع عند الاستلام</div></div>
 
@@ -300,7 +359,7 @@
     </div>
   </section>
 
-  <section class="bl-section bl-section--cream">
+  <section class="bl-section bl-section--cream" id="lp-benefits">
     <div class="bl-wrap">
       <div class="bl-section__head">
         <span class="bl-eyebrow">فوائد بلوم</span>
@@ -370,7 +429,7 @@
     </div>
   </section>
 
-  <section class="bl-section">
+  <section class="bl-section" id="lp-how">
     <div class="bl-wrap">
       <div class="bl-section__head">
         <span class="bl-eyebrow">طريقة الاستعمال</span>
@@ -419,7 +478,7 @@
     </div>
   </section>
 
-  <section class="bl-section">
+  <section class="bl-section" id="lp-faq">
     <div class="bl-wrap">
       <div class="bl-section__head">
         <span class="bl-eyebrow">أسئلة شائعة</span>
@@ -480,6 +539,27 @@
           document.body.classList.toggle('bl-order-visible', entry.isIntersecting);
         });
       }, { threshold: 0.18 }).observe(orderSection);
+    }
+    /* Burger drawer */
+    var burger = root.querySelector('[data-bl-burger]');
+    var drawer = root.querySelector('[data-bl-drawer]');
+    var header = root.querySelector('.bl-header');
+    if (burger && drawer && header) {
+      burger.addEventListener('click', function () {
+        if (drawer.hasAttribute('hidden')) {
+          drawer.removeAttribute('hidden');
+          header.classList.add('is-open');
+        } else {
+          drawer.setAttribute('hidden', '');
+          header.classList.remove('is-open');
+        }
+      });
+      drawer.querySelectorAll('a').forEach(function (a) {
+        a.addEventListener('click', function () {
+          drawer.setAttribute('hidden', '');
+          header.classList.remove('is-open');
+        });
+      });
     }
   })();
 {% endjavascript %}

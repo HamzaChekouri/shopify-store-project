@@ -12,7 +12,16 @@
     "bloom_uae_landing": {
       "type": "product-landing-bloom-uae",
       "settings": {}
+    },
+    "bloom_uae_footer": {
+      "type": "product-landing-bloom-uae-footer",
+      "settings": {
+        "brand_name": "بلوم كولاجين",
+        "brand_latin": "BLOOM COFFEE",
+        "whatsapp_number": "971542585701",
+        "email": "contact@dr-sami.com"
+      }
     }
   },
-  "order": ["bloom_uae_landing"]
+  "order": ["bloom_uae_landing", "bloom_uae_footer"]
 }
