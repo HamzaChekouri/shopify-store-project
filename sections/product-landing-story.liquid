@@ -16,6 +16,7 @@
   assign compare_1 = section.settings.compare_1 | default: 249
   assign compare_2 = section.settings.compare_2 | default: 299
   assign compare_3 = section.settings.compare_3 | default: 349
+  assign savings = compare_1 | minus: price_1
 -%}
 
 {%- comment -%}
@@ -1225,6 +1226,150 @@
     .bm-hero__inner { max-width: 1000px; }
     .bm-hero__title { font-size: 3.4rem; }
   }
+
+  /* =========================================================================
+     CR-OPT: Conversion rate optimizations added on top of the base LP styles.
+     All rules are scoped under #bayel-moss-lp to avoid theme bleed.
+     ========================================================================= */
+
+  /* Urgency / savings badge (hero + final CTA) */
+  #bayel-moss-lp .bm-urgency {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: linear-gradient(90deg, #fff4d6 0%, #fde3a7 100%);
+    color: #7a4a00;
+    border: 1px solid #f0c56a;
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 800;
+    box-shadow: 0 4px 12px rgba(240, 197, 106, 0.22);
+  }
+
+  /* Hero CTA — two-line version (main + strike-through compare price) */
+  #bayel-moss-lp .bm-hero__cta { flex-direction: column; gap: 0.15rem; padding: 0.85rem 1.5rem; min-height: 62px; }
+  #bayel-moss-lp .bm-hero__cta-primary { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 1.05rem; }
+  #bayel-moss-lp .bm-hero__cta-sub { font-size: 0.75rem; font-weight: 600; opacity: 0.9; }
+  #bayel-moss-lp .bm-hero__cta-sub s { opacity: 0.85; }
+
+  /* Hero "live" social proof strip */
+  #bayel-moss-lp .bm-hero__live {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #fff;
+    border: 1px solid var(--bm-border);
+    color: var(--bm-green-dark);
+    padding: 0.4rem 0.85rem;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    box-shadow: var(--bm-shadow);
+  }
+  #bayel-moss-lp .bm-hero__live-dot {
+    width: 8px; height: 8px; background: #22a35a; border-radius: 50%; flex: none;
+    animation: bmLivePulse 1.6s ease-in-out infinite;
+  }
+  @keyframes bmLivePulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(34,163,90,0.55); }
+    50% { transform: scale(1.15); box-shadow: 0 0 0 6px rgba(34,163,90,0); }
+  }
+
+  /* Mid-page inline CTA (repeated between sections) */
+  #bayel-moss-lp .bm-inline-cta {
+    text-align: center;
+    padding: 1.5rem 1rem;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  #bayel-moss-lp .bm-inline-cta__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: linear-gradient(180deg, #3a8250 0%, var(--bm-green-dark) 100%);
+    color: #fff;
+    padding: 0.95rem 1.75rem;
+    border-radius: 999px;
+    font-weight: 800;
+    font-size: 1rem;
+    box-shadow: 0 12px 28px rgba(30,74,43,0.28);
+    transition: transform 0.15s ease;
+    min-height: 54px;
+  }
+  #bayel-moss-lp .bm-inline-cta__btn:hover { transform: translateY(-2px); }
+  #bayel-moss-lp .bm-inline-cta__trust {
+    display: block;
+    margin-top: 0.55rem;
+    color: var(--bm-muted);
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  /* "For whom" self-qualification block */
+  #bayel-moss-lp .bm-forwho {
+    background: #f5f9f6;
+    border: 1px solid var(--bm-border);
+    border-radius: var(--bm-radius);
+    padding: 1.4rem 1.2rem;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  #bayel-moss-lp .bm-forwho__list {
+    display: grid; grid-template-columns: 1fr; gap: 0.7rem; list-style: none; padding: 0; margin: 0;
+  }
+  #bayel-moss-lp .bm-forwho__list li {
+    display: flex; align-items: flex-start; gap: 0.6rem;
+    font-size: 0.95rem; color: var(--bm-text); line-height: 1.55;
+  }
+  #bayel-moss-lp .bm-forwho__list li strong { color: var(--bm-green-dark); }
+  #bayel-moss-lp .bm-forwho__check {
+    flex: none; width: 22px; height: 22px; border-radius: 50%;
+    background: var(--bm-green); color: #fff;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 0.75rem; font-weight: 900; margin-top: 0.15rem;
+  }
+  @media (min-width: 750px) {
+    #bayel-moss-lp .bm-forwho__list { grid-template-columns: 1fr 1fr; gap: 0.9rem 1.5rem; }
+  }
+
+  /* Reviews rating summary strip */
+  #bayel-moss-lp .bm-reviews__summary {
+    display: flex; flex-direction: column; align-items: center; gap: 0.3rem;
+    background: #fff; border: 1px solid var(--bm-border); border-radius: var(--bm-radius);
+    padding: 1.1rem 1rem; max-width: 460px; margin: 0 auto 1.5rem; box-shadow: var(--bm-shadow);
+  }
+  #bayel-moss-lp .bm-reviews__score {
+    display: inline-flex; align-items: baseline; gap: 0.35rem;
+    font-weight: 900; color: var(--bm-text);
+  }
+  #bayel-moss-lp .bm-reviews__score-big { font-size: 2.1rem; line-height: 1; }
+  #bayel-moss-lp .bm-reviews__score-max { font-size: 1rem; color: var(--bm-muted); }
+  #bayel-moss-lp .bm-reviews__stars-big { color: #f5b400; letter-spacing: 3px; font-size: 1.1rem; }
+  #bayel-moss-lp .bm-reviews__count { font-size: 0.88rem; color: var(--bm-muted); font-weight: 600; }
+
+  /* Final CTA — trust icons + urgency badge */
+  #bayel-moss-lp .bm-final__stars { color: #f5b400; letter-spacing: 2px; font-size: 0.95rem; margin-bottom: 0.4rem; }
+  #bayel-moss-lp .bm-final__urgency {
+    display: inline-flex; align-items: center; gap: 0.35rem;
+    background: #fff4d6; color: #7a4a00; border: 1px solid #f0c56a;
+    padding: 0.35rem 0.85rem; border-radius: 999px;
+    font-size: 0.82rem; font-weight: 800; margin-bottom: 0.9rem;
+  }
+  #bayel-moss-lp .bm-final__trust {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem 1.3rem;
+    color: var(--bm-muted); font-size: 0.85rem; font-weight: 700;
+    margin-top: 1rem; list-style: none; padding: 0;
+  }
+  #bayel-moss-lp .bm-final__trust li { display: inline-flex; align-items: center; gap: 0.35rem; }
+
+  /* Sticky CTA — COD reassurance line */
+  #bayel-moss-lp .bm-sticky-cta__label { display: flex; flex-direction: column; align-items: flex-end; gap: 0.05rem; }
+  #bayel-moss-lp .bm-sticky-cta__cod {
+    display: inline-block; font-size: 0.7rem; font-weight: 600; opacity: 0.9;
+  }
+
 {% endstyle %}
 
 
@@ -1275,10 +1420,12 @@
   {%- comment -%} ============ ANNOUNCEMENT BAR ============ {%- endcomment -%}
   <div class="bm-announce">
     <div class="bm-announce__track">
+      <span>🔥 خصم اليوم فقط · وفّر {{ savings }} درهم</span>
       <span>✦ توصيل ١-٣ أيام لكل الإمارات</span>
       <span>✦ الدفع عند الاستلام</span>
       <span>✦ ضمان استرجاع ٣٠ يوم</span>
       <span>✦ مكونات عشبية ١٠٠٪</span>
+      <span>🔥 خصم اليوم فقط · وفّر {{ savings }} درهم</span>
       <span>✦ توصيل ١-٣ أيام لكل الإمارات</span>
       <span>✦ الدفع عند الاستلام</span>
       <span>✦ ضمان استرجاع ٣٠ يوم</span>
@@ -1289,6 +1436,7 @@
   {%- comment -%} ============ HERO ============ {%- endcomment -%}
   <section class="bm-hero" id="top">
     <div class="bm-hero__inner">
+      <span class="bm-urgency">🔥 عرض اليوم فقط · وفّر {{ savings }} درهم</span>
       <p class="bm-hero__eyebrow">بابل موس · العناية بشعر الرجل</p>
       <h1 class="bm-hero__title">
         غطِّ الشيب من أول استخدام<br>
@@ -1326,9 +1474,17 @@
       </div>
 
       <a href="#lp-form" class="bm-hero__cta">
-        اطلب الآن — {{ price_1 }} درهم
-        <span class="bm-hero__cta-arrow" aria-hidden="true">←</span>
+        <span class="bm-hero__cta-primary">
+          اطلب الآن — {{ price_1 }} درهم · دفع عند الاستلام
+          <span class="bm-hero__cta-arrow" aria-hidden="true">←</span>
+        </span>
+        <span class="bm-hero__cta-sub"><s>{{ compare_1 }} درهم</s> · توفير {{ savings }} درهم</span>
       </a>
+
+      <span class="bm-hero__live">
+        <span class="bm-hero__live-dot" aria-hidden="true"></span>
+        أكثر من ١٢٠ طلب في آخر ٢٤ ساعة
+      </span>
 
       <ul class="bm-hero__mini-trust" aria-label="مزايا الطلب">
         <li>✓ الدفع عند الاستلام</li>
@@ -1446,6 +1602,22 @@
     </div>
   </section>
 
+  {%- comment -%} ============ FOR-WHOM (self-qualification) ============ {%- endcomment -%}
+  <section class="bm-section" aria-labelledby="bm-forwho-title">
+    <div class="bm-section__head">
+      <span class="bm-kicker">لمن هذا المنتج؟</span>
+      <h2 class="bm-section__title" id="bm-forwho-title">بابل موس مصمّم لك إذا…</h2>
+    </div>
+    <div class="bm-forwho">
+      <ul class="bm-forwho__list">
+        <li><span class="bm-forwho__check" aria-hidden="true">✓</span><span><strong>الشيب طلع بدري</strong> وتبي حل بسيط بدون كوافير.</span></li>
+        <li><span class="bm-forwho__check" aria-hidden="true">✓</span><span><strong>ما تبي أمونيا أو مواد ضارّة</strong> — تركيبة عشبية آمنة.</span></li>
+        <li><span class="bm-forwho__check" aria-hidden="true">✓</span><span><strong>تبي نتيجة طبيعية</strong> ما ينكشف إنها مصبوغة.</span></li>
+        <li><span class="bm-forwho__check" aria-hidden="true">✓</span><span><strong>وقتك ثمين</strong> — ٥ دقائق في البيت وخلاص.</span></li>
+      </ul>
+    </div>
+  </section>
+
   {%- comment -%} ============ PROBLEM ============ {%- endcomment -%}
   <section class="bm-section bm-problem">
     <div class="bm-section__head">
@@ -1522,6 +1694,15 @@
     </ol>
   </section>
 
+  {%- comment -%} ============ INLINE CTA (post-timeline) ============ {%- endcomment -%}
+  <div class="bm-inline-cta">
+    <a href="#lp-form" class="bm-inline-cta__btn">
+      جرّبه اليوم — {{ price_1 }} درهم
+      <span aria-hidden="true">←</span>
+    </a>
+    <span class="bm-inline-cta__trust">✓ دفع عند الاستلام · ✓ شحن مجاني · ✓ ضمان ٣٠ يوم</span>
+  </div>
+
   {%- comment -%} ============ INGREDIENTS ============ {%- endcomment -%}
   <section class="bm-section bm-ingredients">
     <div class="bm-section__head bm-section__head--light">
@@ -1583,16 +1764,16 @@
             <td><span class="bm-x">✕</span> ساعة حجز + مواعيد</td>
           </tr>
           <tr>
-            <th scope="row">التكلفة الشهرية</th>
-            <td class="bm-compare__cell--us"><span class="bm-tick">✓</span> من {{ price_1 }} درهم</td>
-            <td><span class="bm-x">✕</span> ~٤٠ درهم + ضرر</td>
-            <td><span class="bm-x">✕</span> ١٠٠+ درهم للجلسة</td>
+            <th scope="row">تكلفة الجلسة</th>
+            <td class="bm-compare__cell--us"><span class="bm-tick">✓</span> {{ price_1 }} درهم · تكفي أسابيع</td>
+            <td><span class="bm-x">✕</span> تكلفة متكررة + ضرر</td>
+            <td><span class="bm-x">✕</span> ١٠٠+ درهم لكل جلسة</td>
           </tr>
           <tr>
             <th scope="row">الفوضى</th>
             <td class="bm-compare__cell--us"><span class="bm-tick">✓</span> بدون فرشاة أو قفّاز</td>
             <td><span class="bm-x">✕</span> بقع ورائحة</td>
-            <td><span class="bm-tick">✓</span> ما فيه منك فوضى</td>
+            <td><span class="bm-x">✕</span> حجز مواعيد وانتظار</td>
           </tr>
           <tr>
             <th scope="row">خصوصية</th>
@@ -1611,6 +1792,15 @@
       <span class="bm-kicker">آراء عملائنا</span>
       <h2 class="bm-section__title">ثقة آلاف الرجال في الخليج</h2>
       <p class="bm-section__sub">تجارب حقيقية من عملاء استخدموا بابل موس.</p>
+    </div>
+
+    <div class="bm-reviews__summary">
+      <div class="bm-reviews__stars-big" aria-hidden="true">★★★★★</div>
+      <div class="bm-reviews__score">
+        <span class="bm-reviews__score-big">٤٫٩</span>
+        <span class="bm-reviews__score-max">/ ٥</span>
+      </div>
+      <div class="bm-reviews__count">بناءً على +١٢,٠٠٠ تقييم موثّق</div>
     </div>
 
     <div class="bm-reviews__grid">
@@ -1653,6 +1843,15 @@
     </div>
   </section>
 
+  {%- comment -%} ============ INLINE CTA (post-reviews) ============ {%- endcomment -%}
+  <div class="bm-inline-cta">
+    <a href="#lp-form" class="bm-inline-cta__btn">
+      انضم لـ +١٢,٠٠٠ رجّال مرتاحين
+      <span aria-hidden="true">←</span>
+    </a>
+    <span class="bm-inline-cta__trust">{{ price_1 }} درهم · دفع عند الاستلام · ضمان ٣٠ يوم</span>
+  </div>
+
   {%- comment -%} ============ FAQ ============ {%- endcomment -%}
   <section class="bm-section bm-faq" id="lp-faq">
     <div class="bm-section__head">
@@ -1661,17 +1860,9 @@
     </div>
 
     <div class="bm-faq__list">
-      <details class="bm-faq__item">
-        <summary>وش يميّز بابل موس عن الصبغات العادية؟</summary>
-        <p>بابل موس تركيبة رغوية عشبية بدون أمونيا أو بيروكسيد، تغطّي الشيب بلون طبيعي غامق بدون ما تضرّ شعرك، وبدون الفوضى اللي تجي مع الصبغات العادية.</p>
-      </details>
-      <details class="bm-faq__item">
-        <summary>هل اللون يبان طبيعي ولا يكشف إنه مصبوغ؟</summary>
-        <p>اللون يطلع طبيعي ومتجانس مع لون شعرك، وما يبيّن إنه مصبوغ. أغلب عملائنا يقولون إن أحد ما يلاحظ الفرق.</p>
-      </details>
-      <details class="bm-faq__item">
-        <summary>الدفع عند الاستلام متوفر في الإمارات؟</summary>
-        <p>نعم، الدفع عند الاستلام متوفر لكل الإمارات. تدفع كاش عند وصول الطلب لباب بيتك.</p>
+      <details class="bm-faq__item" open>
+        <summary>متى راح ألاحظ النتيجة؟</summary>
+        <p>من أول تطبيق. الشيب يختفي خلال ٥-١٠ دقائق، واللون يثبت أكثر مع الاستخدام المنتظم (مرتين في الأسبوع).</p>
       </details>
       <details class="bm-faq__item">
         <summary>كم ياخذ التوصيل؟</summary>
@@ -1679,7 +1870,19 @@
       </details>
       <details class="bm-faq__item">
         <summary>فيه ضمان لو ما عجبتني النتيجة؟</summary>
-        <p>أكيد. عندك ضمان استرجاع ٣٠ يوم كامل — لو ما عجبتك النتيجة تواصل معنا ونرجّع لك المبلغ.</p>
+        <p>أكيد. ضمان استرجاع ٣٠ يوم كامل · بدون أسئلة · نرجّع لك المبلغ كاملاً.</p>
+      </details>
+      <details class="bm-faq__item">
+        <summary>الدفع عند الاستلام متوفر في الإمارات؟</summary>
+        <p>نعم، الدفع عند الاستلام متوفر لكل الإمارات. تدفع كاش عند وصول الطلب لباب بيتك.</p>
+      </details>
+      <details class="bm-faq__item">
+        <summary>هل اللون يبان طبيعي ولا يكشف إنه مصبوغ؟</summary>
+        <p>اللون يطلع طبيعي ومتجانس مع لون شعرك، وما يبيّن إنه مصبوغ. أغلب عملائنا يقولون إن أحد ما يلاحظ الفرق.</p>
+      </details>
+      <details class="bm-faq__item">
+        <summary>وش يميّز بابل موس عن الصبغات العادية؟</summary>
+        <p>تركيبة رغوية عشبية بدون أمونيا أو بيروكسيد، تغطّي الشيب بلون طبيعي غامق بدون ما تضرّ شعرك، وبدون الفوضى اللي تجي مع الصبغات العادية.</p>
       </details>
       <details class="bm-faq__item">
         <summary>كم مرة أستخدمه في الأسبوع؟</summary>
@@ -1690,15 +1893,25 @@
 
   {%- comment -%} ============ FINAL CTA ============ {%- endcomment -%}
   <section class="bm-section bm-final">
+    <div class="bm-final__stars" aria-hidden="true">★★★★★</div>
+    <span class="bm-final__urgency">🔥 عرض اليوم فقط · وفّر {{ savings }} درهم</span>
     <h2>جاهز تودّع الشيب؟</h2>
-    <p>اطلب الحين وادفع كاش عند الاستلام. جرّب بابل موس بضمان ٣٠ يوم.</p>
-    <a href="#lp-form" class="bm-final__cta">اطلب الآن — ابدأ من {{ price_1 }} درهم</a>
+    <p>اطلب الحين — تدفع لمّا يوصلك الطلب، ومضمون ٣٠ يوم.</p>
+    <a href="#lp-form" class="bm-final__cta">اطلب الآن — {{ price_1 }} درهم · دفع عند الاستلام</a>
+    <ul class="bm-final__trust">
+      <li>💵 أدفع لمّا يوصل</li>
+      <li>🚚 شحن مجاني</li>
+      <li>🔒 ضمان ٣٠ يوم</li>
+    </ul>
   </section>
 
   {%- comment -%} ============ STICKY MOBILE CTA ============ {%- endcomment -%}
   <a href="#lp-form" class="bm-sticky-cta" data-bm-sticky-cta aria-label="اطلب الآن">
-    <span class="bm-sticky-cta__label">اطلب الآن — دفع عند الاستلام</span>
-    <span class="bm-sticky-cta__price">من {{ price_1 }} درهم</span>
+    <span class="bm-sticky-cta__label">
+      <span>اطلب الآن — {{ price_1 }} درهم</span>
+      <span class="bm-sticky-cta__cod">✓ دفع عند الاستلام · ضمان ٣٠ يوم</span>
+    </span>
+    <span class="bm-sticky-cta__price"><s>{{ compare_1 }}</s> وفّر {{ savings }}</span>
     <span class="bm-sticky-cta__arrow" aria-hidden="true">←</span>
   </a>
 
